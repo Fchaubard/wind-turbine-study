@@ -1,0 +1,352 @@
+{
+ "field_factors": {
+  "sail": 0.75,
+  "rigid": 0.55,
+  "savonius": 0.75,
+  "kite_ring": null,
+  "drag": 0.75
+ },
+ "gen_kit": 425,
+ "concepts": [
+  {
+   "name": "Sail windmill on a pole, 5 m, 8 cloth sails",
+   "kind": "sail",
+   "cp_rotor": 0.22939175243604432,
+   "lam": 1.4,
+   "dia": 5.0,
+   "area": 19.634954084936208,
+   "field": 0.75,
+   "ratio": 4.4,
+   "cut_in": 2.5,
+   "avg_W": 57.97447710634176,
+   "kWh_yr": 508.20426631419184,
+   "P4": 76.66519472894812,
+   "P6": 236.86003299044557,
+   "P8": 484.33514658366306,
+   "rpm6": 32.085636527326095,
+   "cost": 886.5135135135135,
+   "parts": [
+    [
+     "Pole: 2 x galvanised post tube 73 mm x 3.05 m (MX$545 each), sleeved",
+     58.91891891891892
+    ],
+    [
+     "Guys: 30 m of 3/16 in steel cable (MX$27/m), clamps, 3 buried anchors",
+     60.0
+    ],
+    [
+     "Used bicycle (bearing + chain drive), bolts, plywood hub disc (MX$599)",
+     162.3783783783784
+    ],
+    [
+     "8 spars: 1 in steel conduit 3 m (MX$249 each), bowsprit + stay ropes",
+     132.97297297297297
+    ],
+    [
+     "Sails: polyethylene tarp 4.87 x 3.65 m (MX$765), cord",
+     47.24324324324324
+    ]
+   ],
+   "kWh_per_usd_5yr": 2.866308626813984,
+   "usd_per_MWh_5yr": 348.880783682928,
+   "thrust12_N": 1070.6473173247543,
+   "base_moment12_Nm": 5353.2365866237715,
+   "notes": "Spars need a bowsprit with a stay rope to each tip (unstayed conduit yields above about 8 m/s). Furl or untie sails above 10 m/s."
+  },
+  {
+   "name": "Sail windmill on a pole, 4 m, 8 cloth sails",
+   "kind": "sail",
+   "cp_rotor": 0.22939175243604426,
+   "lam": 1.4,
+   "dia": 4.0,
+   "area": 12.566370614359172,
+   "field": 0.75,
+   "ratio": 4.4,
+   "cut_in": 2.5,
+   "avg_W": 48.00434255293893,
+   "kWh_yr": 420.80606681906266,
+   "P4": 61.15634158313184,
+   "P6": 205.98563742104488,
+   "P8": 474.35329510043755,
+   "rpm6": 40.10704565915762,
+   "cost": 886.5135135135135,
+   "parts": [
+    [
+     "Pole: 2 x galvanised post tube 73 mm x 3.05 m (MX$545 each), sleeved",
+     58.91891891891892
+    ],
+    [
+     "Guys: 30 m of 3/16 in steel cable (MX$27/m), clamps, 3 buried anchors",
+     60.0
+    ],
+    [
+     "Used bicycle (bearing + chain drive), bolts, plywood hub disc (MX$599)",
+     162.3783783783784
+    ],
+    [
+     "8 spars: 1 in steel conduit 3 m (MX$249 each), bowsprit + stay ropes",
+     132.97297297297297
+    ],
+    [
+     "Sails: polyethylene tarp 4.87 x 3.65 m (MX$765), cord",
+     47.24324324324324
+    ]
+   ],
+   "kWh_per_usd_5yr": 2.3733764934461323,
+   "usd_per_MWh_5yr": 421.3406523412576,
+   "thrust12_N": 685.2142830878427,
+   "base_moment12_Nm": 3426.0714154392135,
+   "notes": "Spars need a bowsprit with a stay rope to each tip (unstayed conduit yields above about 8 m/s). Furl or untie sails above 10 m/s."
+  },
+  {
+   "name": "3-blade rotor on a pole, 3.6 m, foam + carbon-spar blades",
+   "kind": "rigid",
+   "cp_rotor": 0.3253510040075551,
+   "lam": 4.6,
+   "dia": 3.6,
+   "area": 10.17876019763093,
+   "field": 0.55,
+   "ratio": 4.4,
+   "cut_in": 3.0,
+   "avg_W": 47.770484160044106,
+   "kWh_yr": 418.75606414694664,
+   "P4": 62.74451857161461,
+   "P6": 213.67573337244312,
+   "P8": 508.04348787901336,
+   "rpm6": 146.4225476445437,
+   "cost": 896.2972972972973,
+   "parts": [
+    [
+     "Pole: 2 x galvanised post tube 73 mm x 3.05 m (MX$545 each), sleeved",
+     58.91891891891892
+    ],
+    [
+     "Guys: 30 m of 3/16 in steel cable (MX$27/m), clamps, 3 buried anchors",
+     60.0
+    ],
+    [
+     "Used bicycle (bearing + chain drive), bolts, plywood hub disc (MX$599)",
+     162.3783783783784
+    ],
+    [
+     "blades, hub plate, tail vane",
+     190.0
+    ]
+   ],
+   "kWh_per_usd_5yr": 2.3360332861075634,
+   "usd_per_MWh_5yr": 428.0760920433026,
+   "thrust12_N": 607.3476762068915,
+   "base_moment12_Nm": 3036.7383810344572,
+   "notes": "Fast tips (noise, injury risk); needs a furling tail or brake."
+  },
+  {
+   "name": "Sail windmill on a pole, 3 m, 6 cloth sails",
+   "kind": "sail",
+   "cp_rotor": 0.21747820206454352,
+   "lam": 1.4,
+   "dia": 3.0,
+   "area": 7.0685834705770345,
+   "field": 0.75,
+   "ratio": 4.4,
+   "cut_in": 2.5,
+   "avg_W": 28.93067337435475,
+   "kWh_yr": 253.60628279959374,
+   "P4": 36.409729691800344,
+   "P6": 125.43244644585447,
+   "P8": 298.1971366744015,
+   "rpm6": 53.47606087887682,
+   "cost": 859.5945945945946,
+   "parts": [
+    [
+     "Pole: 2 x galvanised post tube 73 mm x 3.05 m (MX$545 each), sleeved",
+     58.91891891891892
+    ],
+    [
+     "Guys: 30 m of 3/16 in steel cable (MX$27/m), clamps, 3 buried anchors",
+     60.0
+    ],
+    [
+     "Used bicycle (bearing + chain drive), bolts, plywood hub disc (MX$599)",
+     162.3783783783784
+    ],
+    [
+     "6 spars: 1 in steel conduit 3 m (MX$249 each), bowsprit + stay ropes",
+     106.05405405405405
+    ],
+    [
+     "Sails: polyethylene tarp 4.87 x 3.65 m (MX$765), cord",
+     47.24324324324324
+    ]
+   ],
+   "kWh_per_usd_5yr": 1.47515052092202,
+   "usd_per_MWh_5yr": 677.896923613575,
+   "thrust12_N": 382.7642258445637,
+   "base_moment12_Nm": 1913.8211292228186,
+   "notes": "Spars need a bowsprit with a stay rope to each tip (unstayed conduit yields above about 8 m/s). Furl or untie sails above 10 m/s."
+  },
+  {
+   "name": "Savonius S-rotor, 3.0 m \u00d7 1.5 m, tarp on a plywood-and-conduit frame",
+   "kind": "savonius",
+   "cp_rotor": 0.22,
+   "lam": 0.9,
+   "dia": 1.5,
+   "area": 4.5,
+   "field": 0.75,
+   "ratio": 4.4,
+   "cut_in": 3.0,
+   "avg_W": 18.7123795623411,
+   "kWh_yr": 164.03271924348206,
+   "P4": 24.424405741171643,
+   "P6": 84.16210905389696,
+   "P8": 201.00702514606584,
+   "rpm6": 68.75493541569878,
+   "cost": 675.0,
+   "parts": [
+    [
+     "frame, bearings, guy lines",
+     120.0
+    ],
+    [
+     "rotor: tarp on a plywood-and-conduit frame",
+     130.0
+    ]
+   ],
+   "kWh_per_usd_5yr": 1.2150571795813485,
+   "usd_per_MWh_5yr": 823.0065356632458,
+   "thrust12_N": 420.552,
+   "base_moment12_Nm": 1051.38,
+   "notes": "Any wind direction, no yaw; very slow, needs a big step-up."
+  },
+  {
+   "name": "3-blade rotor on a pole, 2.4 m, PVC-pipe blades",
+   "kind": "rigid",
+   "cp_rotor": 0.2791801290153047,
+   "lam": 4.4,
+   "dia": 2.4,
+   "area": 4.523893421169302,
+   "field": 0.55,
+   "ratio": 4.4,
+   "cut_in": 3.0,
+   "avg_W": 18.534931469105107,
+   "kWh_yr": 162.47720925817538,
+   "P4": 24.298479020086464,
+   "P6": 82.63347764053664,
+   "P8": 196.5635317857082,
+   "rpm6": 210.0845248813019,
+   "cost": 796.2972972972973,
+   "parts": [
+    [
+     "Pole: 2 x galvanised post tube 73 mm x 3.05 m (MX$545 each), sleeved",
+     58.91891891891892
+    ],
+    [
+     "Guys: 30 m of 3/16 in steel cable (MX$27/m), clamps, 3 buried anchors",
+     60.0
+    ],
+    [
+     "Used bicycle (bearing + chain drive), bolts, plywood hub disc (MX$599)",
+     162.3783783783784
+    ],
+    [
+     "blades, hub plate, tail vane",
+     90.0
+    ]
+   ],
+   "kWh_per_usd_5yr": 1.0202044500818805,
+   "usd_per_MWh_5yr": 980.1956852077453,
+   "thrust12_N": 250.58596976523629,
+   "base_moment12_Nm": 1252.9298488261813,
+   "notes": "Fast tips (noise, injury risk); needs a furling tail or brake."
+  },
+  {
+   "name": "Savonius S-rotor, 1.8 m \u00d7 0.9 m, two split 200 L drums stacked",
+   "kind": "savonius",
+   "cp_rotor": 0.22,
+   "lam": 0.9,
+   "dia": 0.9,
+   "area": 1.62,
+   "field": 0.75,
+   "ratio": 4.4,
+   "cut_in": 3.0,
+   "avg_W": 7.002130535445989,
+   "kWh_yr": 61.38067627371954,
+   "P4": 9.156693818589451,
+   "P6": 31.354395054279646,
+   "P8": 74.83039836749224,
+   "rpm6": 114.59155902616465,
+   "cost": 635.0,
+   "parts": [
+    [
+     "frame, bearings, guy lines",
+     120.0
+    ],
+    [
+     "rotor: two split 200 L drums stacked",
+     90.0
+    ]
+   ],
+   "kWh_per_usd_5yr": 0.4833124116040909,
+   "usd_per_MWh_5yr": 2069.0550790554867,
+   "thrust12_N": 151.39872000000003,
+   "base_moment12_Nm": 378.49680000000006,
+   "notes": "Any wind direction, no yaw; very slow, needs a big step-up."
+  },
+  {
+   "name": "Kite ring on a rope shaft with lifter kite, 4.8 m",
+   "kind": "kite_ring",
+   "cp_rotor": 0.21253275723694603,
+   "lam": 2.25,
+   "dia": 4.8,
+   "area": 13.571680263507904,
+   "field": 0.26598654177190606,
+   "ratio": 3.14,
+   "cut_in": 3.0,
+   "avg_W": 20.994203122574373,
+   "kWh_yr": 184.03518457248694,
+   "P4": 28.970176731562237,
+   "P6": 97.77434646902255,
+   "P8": null,
+   "rpm6": 62.024500734951616,
+   "cost": 2231.891351351351,
+   "parts": [],
+   "kWh_per_usd_5yr": 0.4122852675177457,
+   "usd_per_MWh_5yr": 2425.5050538689397,
+   "thrust12_N": 635.4979804794019,
+   "base_moment12_Nm": 0.0,
+   "notes": "Tension only, no tower; hardest to launch. Field factor is electrical/ideal, from Daisy tests."
+  },
+  {
+   "name": "Drag carousel: 4 flapping tarp panels, 3 m \u00d7 2 m",
+   "kind": "drag",
+   "cp_rotor": 0.06,
+   "lam": 0.4,
+   "dia": 3.0,
+   "area": 6.0,
+   "field": 0.75,
+   "ratio": 4.4,
+   "cut_in": 3.5,
+   "avg_W": 4.285875707645344,
+   "kWh_yr": 37.56998645321909,
+   "P4": 5.787842145921218,
+   "P6": 21.89139811880611,
+   "P8": 53.24303062308057,
+   "rpm6": 15.278874536821956,
+   "cost": 605.0,
+   "parts": [
+    [
+     "frame, bearings, guy lines",
+     120.0
+    ],
+    [
+     "tarp panels and hinges",
+     60.0
+    ]
+   ],
+   "kWh_per_usd_5yr": 0.310495755811728,
+   "usd_per_MWh_5yr": 3220.6559390343464,
+   "thrust12_N": 611.712,
+   "base_moment12_Nm": 1529.28,
+   "notes": "The 'catch the wind' machine. Simple, but the panels fight the wind half the turn."
+  }
+ ]
+}
