@@ -193,7 +193,8 @@ def main():
     rot.pop("fea_geom_full", None)
     T10 = json.load(open("out/target10.json")) if os.path.exists("out/target10.json") else None
     X3 = lbm3d_summary()
-    data = dict(t10=T10, lbm3d=X3, models=M, mem=mem, frame=frame, cfd=cfd, cfdimg=imgs, fabric_area=fabric_area, rot=rot, comp=comp, lcoe=LO,
+    PRO = json.load(open("out/proto_bom.json")) if os.path.exists("out/proto_bom.json") else None
+    data = dict(proto=PRO, t10=T10, lbm3d=X3, models=M, mem=mem, frame=frame, cfd=cfd, cfdimg=imgs, fabric_area=fabric_area, rot=rot, comp=comp, lcoe=LO,
                 mesh=dict(x=np.round(mm["x"], 2).tolist(), T=mm["T"].tolist(), s1=np.round(mm["s1"], 2).tolist()))
     tpl = open("web/template.html").read()
     html = tpl.replace("/*__DATA__*/null", json.dumps(data, separators=(",", ":"), default=float))

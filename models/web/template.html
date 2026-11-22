@@ -244,8 +244,22 @@ ring node load = 2·T_line·(chord/L_line)·sin(δ/2)  →  polygon compression 
   <p id="lbm3d-text">The 3D simulation of the stacked rotors has not finished yet.</p>
   <figure id="lbm3d-fig" style="display:none"><img id="lbm3d-img" alt="Velocity field around three stacked tilted rotors" style="width:100%;border-radius:8px"><figcaption>Centre-plane wind speed from a 3D lattice-Boltzmann run (D3Q19, 232 × 84 × 116 cells): tilted actuator annuli on a 22° tether. Red is faster than the free wind, blue is the wake.</figcaption></figure>
 
+  <h2>10 · A prototype for the beach at Punta Mita</h2>
+  <p id="pr-intro"></p>
+  <div class="tbl"><table id="pr-cal"></table></div>
+  <p id="pr-design"></p>
+  <div class="tbl"><table id="pr-curve"></table></div>
+  <div class="tbl"><table id="pr-pred"></table></div>
+  <h3>Shaft check (nonlinear FEA)</h3>
+  <div class="tbl"><table id="pr-shaft"></table></div>
+  <h3>Parts list</h3>
+  <p id="pr-bomtext"></p>
+  <div id="pr-bom"></div>
+  <p>Build notes, the test plan and safety rules are in <code>PROTOTYPE.md</code> in the repository.</p>
+
   <h2>Assumptions and limits</h2>
   <ul>
+    <li>Reality check on every kite-ring number above: when the rotor model used throughout this study is run on the Daisy prototype's own geometry, it predicts about 3.7 times the electrical power that was measured in the field. Part of that is drivetrain loss and off-design running at 1 kW scale, but sections 7 to 9 use the uncalibrated model and should be read as upper bounds until a larger rotor is measured.</li>
     <li>Section 8 is a parametric cost model, not a design: the fly-gen ring's wings, on-wing turbines and conductive tether are costed from per-m², per-kW and per-m rates with span and airspeed scaling, and the conventional turbine's components from NREL-style scaling laws calibrated to the 5 MW reference. Neither includes technology learning. The optimiser will find any weakness in such a model, so the stretch case especially should be read as "what the assumptions imply", not a forecast. Hard limits imposed on the ring: diameter ≤ 320 m (the optimiser sits on this limit), wing span ≤ 60 m, tip speed ≤ 90 m/s, tether ≤ 120 mm, top rotor ≤ 1,100 m; on the single wings: span ≤ 120 m, airspeed ≤ 80 m/s. The ladder's last row compares stretch-technology kites with a base-technology turbine; on the same technology basis the kite's lead at a 10.5 m/s site is about 12%, not 40%.</li>
     <li>The momentum model is 1D and inviscid with lumped loss K. Cp_b and the diffuser ratio for each scenario are set from the literature on flanged diffusers.</li>
     <li>The CFD is 2D and runs at a lower Reynolds number than full scale. It is meant to show how much flow is captured versus spilled, not to produce absolute Cp values. Bounce-back walls add some viscous loss in the narrow throat.</li>
@@ -560,6 +574,20 @@ function lineChart(el, {series, xlog, ylog, xlabel, ylabel, xticks, yticks, xfmt
   const p1 = X.single.P[0];
   $('#lbm3d-text').innerHTML = `Section 8 assumed each stacked rotor loses 10% of power to the wake of the one before it. A 3D lattice-Boltzmann simulation checks that directly: tilted actuator annuli on a 22° tether, compared with one isolated rotor in the same domain. ` + X.runs.map(r => `With ${r.n} rotors spaced ${r.spacing} diameters apart, the rotors make ${r.P.map(p => (100*p/p1).toFixed(0) + '%').join(', ')} of the isolated rotor's power.`).join(' ') + ` ${X.note}`;
   if (X.img) { $('#lbm3d-img').src = X.img; $('#lbm3d-fig').style.display = ''; }
+})();
+
+/* ---------------- section 10: Punta Mita prototype ---------------- */
+(function proto(){
+  const P = DATA.proto; if (!P) return;
+  const R = P.rotor, W = P.wind, usd = v => '$' + fmt(v, v < 100 ? 2 : 0);
+  $('#pr-intro').innerHTML = `Three years of hourly wind for Punta Mita (NASA POWER reanalysis, 2022–2024) give a mean of <b>${fmt(W.mean10,1)} m/s at 10 m</b>; the wind passes 4 m/s in ${(W.frac4*100).toFixed(0)}% of hours and 6 m/s in ${(W.frac6*100).toFixed(0)}%. That is about a twelfth of the wind power of the study site, so this prototype is a learning rig, not a power source. Before sizing it, the rotor model was checked against the only published field data for this kind of machine (Tulloch et al., Energies 2023):`;
+  $('#pr-cal').innerHTML = '<tr><th>Daisy field measurement</th><th class="n">Measured electrical</th><th class="n">Model, mechanical</th><th class="n">Measured ÷ model</th></tr>' + P.calibration.map(c => `<tr><td>${c.v} m/s wind</td><td class="n">${fmt(c.measured_W,0)} W</td><td class="n">${fmt(c.model_mech_W,0)} W</td><td class="n">${fmt(c.ratio,2)}</td></tr>`).join('');
+  $('#pr-design').innerHTML = `Every prediction below is the model multiplied by <b>${fmt(P.K.mid,2)}</b>, the ratio at the two steady measurements. The design that came out of a sweep of 54 buildable rotors: <b>${R.N} foam blades of ${R.b} m × ${R.c.toFixed(2)} m on a ${fmt(2*R.r_in,1)} m ring, ${fmt(2*R.R_out,1)} m across</b> (${fmt(R.A,1)} m² swept), on a ${fmt(P.shaft.shaft.length,0)} m rope shaft at 30° that turns an e-bike hub motor through a 3:1 bicycle chain. The chain matters: driven directly the generator is under 30% efficient at these speeds; at 3:1 it is about 86%.`;
+  $('#pr-curve').innerHTML = '<tr><th>Wind</th>' + P.curve.map(c => `<th class="n">${c.v} m/s</th>`).join('') + '</tr><tr><td>Rotor speed</td>' + P.curve.map(c => `<td class="n">${fmt(c.rpm,0)} rpm</td>`).join('') + '</tr><tr><td>Electrical power</td>' + P.curve.map(c => `<td class="n">${fmt(c.P_el,0)} W</td>`).join('') + '</tr>';
+  $('#pr-pred').innerHTML = '<tr><th>Year-round expectation at Punta Mita</th><th class="n">Average power</th><th class="n">Energy per year</th></tr>' + Object.entries(P.pred).map(([k, v]) => `<tr><td>${k}</td><td class="n">${fmt(v.avg_W,0)} W</td><td class="n">${fmt(v.kWh_yr,0)} kWh</td></tr>`).join('');
+  $('#pr-shaft').innerHTML = '<tr><th>Wind (torque basis)</th><th class="n">Torque</th><th class="n">Tension</th><th class="n">Twist per bay</th><th class="n">Peak line load</th><th class="n">Ring buckling SF</th><th>Result</th></tr>' + P.shaft.cases.filter(c => c.fea).map(c => `<tr><td>${c.v} m/s (${c.basis})</td><td class="n">${fmt(c.Q,0)} N·m</td><td class="n">${fmt(c.F_ax,0)} N</td><td class="n">${fmt(c.max_seg_twist,0)}°</td><td class="n">${fmt(c.fea.max_line_T,0)} N</td><td class="n">${fmt(c.ring_buckling_SF,1)}</td><td>${c.fea.collapsed ? '<span class="pill no">collapses</span>' : '<span class="pill ok">stable</span>'}</td></tr>`).join('');
+  $('#pr-bomtext').innerHTML = `About <b>${usd(P.total)}</b> in total. Prices were read on the sellers' own pages on 22 Nov 2026 unless marked; none of the US shops can be relied on to deliver to Mexico within a week, so those parts travel in luggage.`;
+  $('#pr-bom').innerHTML = Object.entries(P.bom).map(([g, rows]) => `<div class="tbl"><table><tr><th>${g} (about ${usd(P.subtotals[g])})</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Price</th></tr>` + rows.map(r => `<tr><td>${r.url ? `<a href="${r.url}">${r.item}</a>` : r.item}<div class="eyebrow" style="margin-top:.2rem;text-transform:none;letter-spacing:0">${r.where}${r.note ? ' · ' + r.note : ''}</div></td><td class="n">${r.qty}</td><td class="n">${usd(r.unit)}</td><td class="n">${usd(r.total)}</td><td>${r.status === 'verified' ? '<span class="pill ok">seen</span>' : '<span class="pill">estimate</span>'}</td></tr>`).join('') + '</table></div>').join('');
 })();
 
 /* ---------------- 3D model ---------------- */
