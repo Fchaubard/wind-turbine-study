@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: wind-turbine-study
+    runtime: static
+    buildCommand: "true"
+    staticPublishPath: .
+    autoDeploy: true

@@ -1,0 +1,293 @@
+{
+ "target": 10.0,
+ "beliefs": [
+  {
+   "key": "drive",
+   "label": "On-wing turbine + generator + converter, $/kW",
+   "base": 620.0,
+   "floor": 100.0,
+   "analogue": "EV drive units are $15\u201325/kW in volume; add propeller, HV DC-DC, mounts"
+  },
+  {
+   "key": "wing",
+   "label": "Wing cost, $/m\u00b2 (fabric wings; rigid wings $1,800 \u2192 $1,000)",
+   "base": 150.0,
+   "floor": 60.0,
+   "analogue": "paraglider / sailcloth structures in volume are $40\u201380/m\u00b2; turbine blades are ~$1,000\u20132,000/m\u00b2"
+  },
+  {
+   "key": "wlife",
+   "label": "Wing life, years",
+   "base": 5.0,
+   "floor": 12.0,
+   "analogue": "PVDF/PTFE architectural membranes last 15\u201325 yr outdoors; flexing wings less"
+  },
+  {
+   "key": "teth",
+   "label": "Tether fibre, $/kg",
+   "base": 60.0,
+   "floor": 25.0,
+   "analogue": "commodity UHMWPE yarn is $15\u201325/kg"
+  },
+  {
+   "key": "tlife",
+   "label": "Tether life, years",
+   "base": 5.0,
+   "floor": 10.0,
+   "analogue": "static (non-reeled) mooring-grade rope"
+  },
+  {
+   "key": "bos",
+   "label": "Balance of system, $/kW",
+   "base": 250.0,
+   "floor": 120.0,
+   "analogue": "utility solar electrical BOS + interconnect"
+  },
+  {
+   "key": "gconv",
+   "label": "Ground converter + grid tie, $/kW",
+   "base": 80.0,
+   "floor": 40.0,
+   "analogue": "central PV inverters are ~$40/kW"
+  },
+  {
+   "key": "om",
+   "label": "Other O&M, % of capex per year",
+   "base": 2.0,
+   "floor": 1.0,
+   "analogue": "utility solar O&M is ~1 %"
+  },
+  {
+   "key": "avail",
+   "label": "Availability, %",
+   "base": 92.0,
+   "floor": 97.0,
+   "analogue": "modern wind turbines reach 97 %"
+  },
+  {
+   "key": "wacc",
+   "label": "Cost of capital, %",
+   "base": 7.0,
+   "floor": 4.0,
+   "analogue": "regulated utility / sovereign-backed debt"
+  },
+  {
+   "key": "life",
+   "label": "Project life, years",
+   "base": 25.0,
+   "floor": 35.0,
+   "analogue": "ground hardware only; wings and tether are consumables"
+  },
+  {
+   "key": "wind",
+   "label": "Site mean wind at 90 m, m/s",
+   "base": 7.5,
+   "floor": 11.0,
+   "analogue": "best onshore sites: Patagonia, Tehuantepec, Turkana, Great Plains ridges"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Fly-gen rotary kite ring, semi-rigid wings",
+   "lcoe": 6.699165463213322,
+   "cf": 0.6303449127288575,
+   "capex_per_MW": 507789.2214855462,
+   "label": "10.2 MW, 6\u00d72 wings 40 m span on a 319 m ring, rotors 152\u2013328 m, 21\u00b0 tether, rated at 11.8 m/s"
+  },
+  {
+   "name": "Fly-gen rotary kite ring, rigid wings",
+   "lcoe": 9.358599872710517,
+   "cf": 0.5223450563557541,
+   "capex_per_MW": 584504.7271857865,
+   "label": "16.0 MW, 6\u00d73 wings 28 m span on a 222 m ring, rotors 272\u2013483 m, 18\u00b0 tether, rated at 15.1 m/s"
+  },
+  {
+   "name": "Fly-gen rigid wing (Makani-type)",
+   "lcoe": 5.378903394075344,
+   "cf": 0.6284830463713096,
+   "capex_per_MW": 410980.8213409775,
+   "label": "10.9 MW, 1,200 m\u00b2 wing (120 m span) at 150 m, 21\u00b0 tether, rated at 10.8 m/s, flies at 74 m/s"
+  },
+  {
+   "name": "Pumping kite, rigid wing",
+   "lcoe": 7.711456480571482,
+   "cf": 0.6457781525225516,
+   "capex_per_MW": 588636.9287709338,
+   "label": "6.0 MW avg, 1,200 m\u00b2 wing (120 m span) at 150 m, 23\u00b0 tether, rated at 10.4 m/s"
+  },
+  {
+   "name": "Pumping kite, soft kite",
+   "lcoe": 7.616655210540432,
+   "cf": 0.6496172238641893,
+   "capex_per_MW": 568435.489170706,
+   "label": "3.5 MW avg, 2,880 m\u00b2 wing (120 m span) at 150 m, 22\u00b0 tether, rated at 10.4 m/s"
+  },
+  {
+   "name": "Conventional turbine, same site and finance (its own costs unchanged)",
+   "lcoe": 23.1862336391231,
+   "cf": 0.585172141758259,
+   "capex_per_MW": 1440069.9820352213,
+   "label": "6.4 MW, 135 m rotor (447 W/m\u00b2), 93 m hub"
+  }
+ ],
+ "floor_best": {
+  "name": "Fly-gen rigid wing (Makani-type)",
+  "lcoe": 5.378903394075344,
+  "cf": 0.6284830463713096,
+  "capex_per_MW": 410980.8213409775,
+  "label": "10.9 MW, 1,200 m\u00b2 wing (120 m span) at 150 m, 21\u00b0 tether, rated at 10.8 m/s, flies at 74 m/s"
+ },
+ "indispensable": [
+  {
+   "key": "drive",
+   "label": "On-wing turbine + generator + converter, $/kW",
+   "base": 620.0,
+   "floor": 100.0,
+   "lcoe_without": 9.97714181099072
+  },
+  {
+   "key": "wing",
+   "label": "Wing cost, $/m\u00b2 (fabric wings; rigid wings $1,800 \u2192 $1,000)",
+   "base": 150.0,
+   "floor": 60.0,
+   "lcoe_without": 4.47389868636246
+  },
+  {
+   "key": "wlife",
+   "label": "Wing life, years",
+   "base": 5.0,
+   "floor": 12.0,
+   "lcoe_without": 4.45394094446566
+  },
+  {
+   "key": "teth",
+   "label": "Tether fibre, $/kg",
+   "base": 60.0,
+   "floor": 25.0,
+   "lcoe_without": 4.834660335226145
+  },
+  {
+   "key": "tlife",
+   "label": "Tether life, years",
+   "base": 5.0,
+   "floor": 10.0,
+   "lcoe_without": 4.723981946263969
+  },
+  {
+   "key": "bos",
+   "label": "Balance of system, $/kW",
+   "base": 250.0,
+   "floor": 120.0,
+   "lcoe_without": 5.808963539387596
+  },
+  {
+   "key": "gconv",
+   "label": "Ground converter + grid tie, $/kW",
+   "base": 80.0,
+   "floor": 40.0,
+   "lcoe_without": 4.854899382817101
+  },
+  {
+   "key": "om",
+   "label": "Other O&M, % of capex per year",
+   "base": 2.0,
+   "floor": 1.0,
+   "lcoe_without": 5.053436828522508
+  },
+  {
+   "key": "avail",
+   "label": "Availability, %",
+   "base": 92.0,
+   "floor": 97.0,
+   "lcoe_without": 4.670946213282313
+  },
+  {
+   "key": "wacc",
+   "label": "Cost of capital, %",
+   "base": 7.0,
+   "floor": 4.0,
+   "lcoe_without": 5.902796328924772
+  },
+  {
+   "key": "life",
+   "label": "Project life, years",
+   "base": 25.0,
+   "floor": 35.0,
+   "lcoe_without": 5.079390863431017
+  },
+  {
+   "key": "wind",
+   "label": "Site mean wind at 90 m, m/s",
+   "base": 7.5,
+   "floor": 11.0,
+   "lcoe_without": 5.939589763370134
+  }
+ ],
+ "least": {
+  "t": [
+   1.0,
+   6.648531009588454e-17,
+   0.0,
+   0.13500333366976494,
+   0.16748866903571671,
+   0.4300788569792073,
+   0.13238673344382232,
+   0.17909065448969688,
+   0.10563726097151648,
+   0.39622264116618544,
+   5.831991248435309e-17,
+   0.4627172638588486
+  ],
+  "values": [
+   100.0,
+   150.0,
+   5.0,
+   55.27488332155823,
+   5.837443345178584,
+   194.08974859270305,
+   74.70453066224711,
+   1.8209093455103031,
+   92.52818630485758,
+   5.811332076501444,
+   25.0,
+   9.11951042350597
+  ],
+  "lcoe": 9.995661924409083,
+  "cf": 0.6472236672753658,
+  "capex_per_MW": 517560.8424192205,
+  "label": "4.6 MW, 1,200 m\u00b2 wing (120 m span) at 150 m, 26\u00b0 tether, rated at 8.3 m/s, flies at 56 m/s",
+  "items": [
+   [
+    "rigid composite wing 1,200 m\u00b2, span 120 m, L/D 11.4 with tether @ $0/m\u00b2",
+    5.246651412436054e-10
+   ],
+   [
+    "On-wing turbines, generators, HV converters (4,599 kW)",
+    459930.3693299351
+   ],
+   [
+    "Conductive tether 336 m, \u00d866 mm",
+    155267.86333642164
+   ],
+   [
+    "Ground: HV converter + grid connection",
+    343588.82378106774
+   ],
+   [
+    "Perch / launch-land tower, controls",
+    383972.147731974
+   ],
+   [
+    "Foundation / anchor (tension only)",
+    144982.5923324838
+   ],
+   [
+    "Balance of system",
+    892677.6975339616
+   ]
+  ],
+  "capex": 2380419.4940458443,
+  "opex": 77943.88835718483,
+  "aep_kwh": 26094437.730043124
+ }
+}

@@ -1,0 +1,877 @@
+<meta charset="utf-8">
+<title>Windsock Turbine Study</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a wind-tunnel test report. Full-bleed 3D test-section at top, then a single 68ch reading column with wide figure breakouts. */
+:root{
+  --bg:#f3f5f6; --panel:#ffffff; --ink:#10202b; --ink-2:#4a5a66; --ink-3:#7d8b95;
+  --rule:#d5dde2; --accent:#d4471f; --accent-ink:#b23a17; --steel:#2f5d7c;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
+  --good:#1f8a4c; --bad:#c62f2f;
+  --viewer-bg:#dfe7ec;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1519; --panel:#172027; --ink:#e7edf1; --ink-2:#a9b6bf; --ink-3:#7a8892;
+  --rule:#2a3740; --accent:#f06a3f; --accent-ink:#ff8a62; --steel:#7fb2d6;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+  --good:#3fbf74; --bad:#f06464; --viewer-bg:#1b252c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1519; --panel:#172027; --ink:#e7edf1; --ink-2:#a9b6bf; --ink-3:#7a8892;
+  --rule:#2a3740; --accent:#f06a3f; --accent-ink:#ff8a62; --steel:#7fb2d6;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+  --good:#3fbf74; --bad:#f06464; --viewer-bg:#1b252c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;margin:0}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:68ch;margin:0 auto}
+.wide{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.05;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:700;letter-spacing:.005em}
+h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:600;margin-top:3.2rem}
+h3{font-size:1.3rem;font-weight:600;margin-top:1.8rem}
+p{margin:.8rem 0}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:1.15rem;color:var(--ink-2)}
+header{padding-block:2.2rem 1.2rem}
+.verdict{display:inline-flex;gap:.5rem;align-items:center;font-family:var(--f-mono);font-size:.8rem;border:1px solid var(--accent);color:var(--accent-ink);padding:.25rem .6rem;border-radius:3px;margin-top:1rem}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+/* viewer */
+.viewer{position:relative;background:var(--viewer-bg);border-radius:6px;overflow:hidden;height:min(68vh,620px);min-height:380px}
+.viewer canvas{display:block;width:100%;height:100%}
+.vbar{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0}
+.vbar button,.vbar label{font-family:var(--f-mono);font-size:.78rem;background:var(--panel);color:var(--ink);border:1px solid var(--rule);padding:.4rem .7rem;border-radius:3px;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+.vbar button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.vbar button:focus-visible,.vbar input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hud{position:absolute;left:12px;top:12px;max-width:min(360px,calc(100% - 24px));background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--rule);border-radius:4px;padding:.6rem .75rem;font-size:.8rem;line-height:1.45}
+.hud b{font-family:var(--f-display);font-size:1.1rem;font-weight:600;display:block}
+.legend-bar{position:absolute;right:12px;bottom:12px;background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--rule);border-radius:4px;padding:.45rem .6rem;font-family:var(--f-mono);font-size:.7rem}
+.legend-bar .grad{width:160px;height:8px;border-radius:2px;margin:.25rem 0}
+.legend-bar .ends{display:flex;justify-content:space-between}
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:1.6rem 0}
+.tile{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.9rem 1rem}
+.tile .v{font-family:var(--f-display);font-size:2.1rem;font-weight:600;line-height:1}
+.tile .v small{font-size:1rem;color:var(--ink-3);font-weight:500}
+.tile .k{font-size:.82rem;color:var(--ink-2);margin-top:.35rem}
+/* figures */
+figure{margin:1.6rem 0}
+figcaption{font-size:.82rem;color:var(--ink-2);margin-top:.5rem}
+.chart{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.8rem;position:relative}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart text{fill:var(--ink-2);font-family:var(--f-mono);font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-size:.72rem;padding:.35rem .5rem;border-radius:3px;white-space:nowrap;opacity:0;transition:opacity .1s}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.78rem;color:var(--ink-2);margin-bottom:.4rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.cfd img{width:100%;border-radius:3px;display:block;background:var(--panel)}
+.cfd .cell{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.6rem;min-width:0}
+.cfd .cell h4{margin:0 0 .35rem;font-family:var(--f-display);font-size:1.05rem;font-weight:600;display:flex;justify-content:space-between;gap:.5rem}
+/* tables */
+.tbl{overflow-x:auto;margin:1rem 0;border:1px solid var(--rule);border-radius:4px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{padding:.45rem .7rem;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{font-weight:600;border-bottom:none}
+.tabs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem}
+.tabs button{font-family:var(--f-mono);font-size:.76rem;background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:.35rem .6rem;border-radius:3px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
+.eq{font-family:var(--f-mono);background:var(--panel);border-left:3px solid var(--steel);padding:.7rem .9rem;margin:1rem 0;font-size:.9rem;overflow-x:auto;white-space:pre}
+.callout{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1rem;margin:1.4rem 0}
+.callout p{margin:.3rem 0}
+.pill{font-family:var(--f-mono);font-size:.7rem;padding:.1rem .45rem;border-radius:2px;border:1px solid currentColor;white-space:nowrap}
+.pill.ok{color:var(--good)} .pill.no{color:var(--bad)}
+ol.src{font-size:.82rem;color:var(--ink-2);padding-left:1.2rem}
+ol.src a{color:var(--steel)}
+footer{padding-block:3rem 4rem;color:var(--ink-3);font-size:.8rem}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="wide">
+  <div class="eyebrow">Concept study · 126 m windsock concentrator vs. 5 MW reference · Oct 2026</div>
+  <h1>Windsock Turbine Study</h1>
+  <p class="lede col" style="margin-left:0">Can a 126&nbsp;m spinnaker funnel feed a 1.26&nbsp;m turbine and make the power of a 126&nbsp;m rotor at 1/100th the cost? I modelled it four ways: a momentum balance, 2D CFD, nonlinear membrane FEA and frame FEA, then priced it. Then I took the idea's real insight, kites that move across the wind, and pushed a rotary kite ring through twenty design levers, each checked by nonlinear FEA, to see if it beats a conventional turbine on capex per MW. Finally, section 8 sets every design variable free and searches for the lowest cost per MWh any wind machine can reach on this site.</p>
+  <div class="verdict"><span>VERDICT</span> windsock funnel: no (≈1/3,000 of the power) · optimised rotary kite ring: <b id="v-rot"></b></div>
+</header>
+
+<section class="wide">
+  <div class="vbar" role="toolbar" aria-label="3D model">
+    <button id="m-rot" aria-pressed="true">Rotary kite ring</button>
+    <button id="m-car" aria-pressed="false">Ground carousel</button>
+    <button id="m-sock" aria-pressed="false">Windsock d → d/100</button>
+    <button id="m-sock10" aria-pressed="false">Windsock d → d/10</button>
+    <button id="m-kite" aria-pressed="false">Pumping spinnaker kite</button>
+    <button id="m-hawt" aria-pressed="false">5 MW HAWT reference</button>
+    <label><input type="checkbox" id="t-fea" checked> FEA colours</label>
+    <label><input type="checkbox" id="t-flow" checked> Flow</label>
+    <label><input type="checkbox" id="t-ref" checked> Show HAWT for scale</label>
+    <label><input type="checkbox" id="t-fast" checked> Speed up rotation ×4</label>
+  </div>
+  <div class="viewer" id="viewer">
+    <div class="hud" id="hud"></div>
+    <div class="legend-bar" id="legend"></div>
+  </div>
+  <p class="eyebrow" style="margin-top:.5rem">Drag to orbit · scroll to zoom · everything is to scale in metres · the kite ring's shaft is the deformed nonlinear-FEA geometry at design torque · the windsock membrane is the deformed FEA mesh at the 20 m/s gust</p>
+</section>
+
+<section class="col">
+  <div class="tiles" id="tiles"></div>
+
+  <h2>Final answer: capex per MW against a conventional turbine</h2>
+  <div id="final-text"></div>
+  <div class="tbl"><table id="comp-tbl"></table></div>
+  <p class="eyebrow">"Per average MW" divides capex by rated MW × capacity factor, so it prices the power actually delivered. Every row uses the same wind (Weibull mean 7.5 m/s at 90 m, k = 2, shear exponent 0.14) and the same finance (7%, 25 years).</p>
+
+  <h2>Why the windsock fails</h2>
+  <p>The funnel's mouth size drops out of the physics. A turbine in a duct sees power set by the <em>pressure</em> available across it, and wind only carries one dynamic pressure, <span class="mono">q = ½ρV²</span> (80&nbsp;Pa at 11.4&nbsp;m/s). A funnel cannot raise that. With the outlet open to the atmosphere, the air in the throat moves at roughly wind speed, not 100× or 10,000× wind speed. Everything the mouth catches beyond what the throat can swallow stagnates and spills around the outside.</p>
+  <p>Your spec also hides a factor: d/100 in diameter is 1/10,000 in area. Even the 100× area version (d/10 throat) makes about 3% of the reference turbine's power on the same 126&nbsp;m structure. That structure takes <em>more</em> wind load than the 5&nbsp;MW rotor it replaces.</p>
+  <div class="callout">
+    <p><b>The part of your intuition that is right:</b> blade material should not scale with swept area. Something light really can harvest a huge area. It just has to <em>move across</em> the wind, as a blade tip or a kite does, instead of catching the wind and squeezing it. A crosswind kite's power goes as <span class="mono">(L/D)²</span>, which is 30–100× more per square metre than a drag device. That multiplier is the 100× you are after. See the last section.</p>
+  </div>
+
+  <h2>1 · Momentum model: why the mouth doesn't matter</h2>
+  <p>Energy balance along the streamline that actually passes through the turbine. Total pressure upstream, minus the turbine's pressure drop, minus duct losses, equals the exit's static plus dynamic pressure:</p>
+  <div class="eq">p∞ + q  −  Δp_T  −  K·½ρv_t²  =  p∞ + Cp_b·q  +  ½ρ(ε·v_t)²
+
+u = v_t/V,  ε = A_throat/A_exit,  Cp_b = exit base-pressure coefficient
+P/(q·V·A_t) = u·[(1−Cp_b) − (ε²+K)·u²]   → maximise over u
+
+C_P,throat,max = (2/3)(1−Cp_b)·√[(1−Cp_b)/(3(ε²+K))]</div>
+  <p><b>A_mouth does not appear anywhere.</b> The mouth only needs to be big enough not to choke the throat. The best plausible duct, a flanged 3:1 diffuser of the kind used on the Kyushu "wind lens", gives <span class="mono" id="cp-lens"></span> on throat area, about 3× a bare rotor of the throat's size. That matches published diffuser-augmented turbine results of 2–5×. It is nowhere near 10,000×.</p>
+  <figure>
+    <div class="chart" id="ch-sweep"></div>
+    <figcaption>Power at rated wind (11.4 m/s) as a fraction of the 5 MW reference, vs. throat diameter / mouth diameter. Log–log. Your hypothesis is the flat line at 1.0. The modelled curves follow (d_t/d)² because power tracks throat area, not mouth area.</figcaption>
+  </figure>
+
+  <h2>2 · CFD: does the air actually spill around?</h2>
+  <p>A 2D lattice-Boltzmann solver (D2Q9, Smagorinsky LES, 600×320 cells, float32) puts an actuator-disk "turbine" inside each geometry. The disk loading is swept to find maximum power. The funnel is 60 cells wide at the mouth and 6 at the throat. In 2D that is a 10:1 width ratio, the planar analogue of your d/10 → "100×" case.</p>
+  <div class="grid2 cfd" id="cfd"></div>
+  <div class="tbl"><table id="cfd-tbl"></table></div>
+  <p id="cfd-text"></p>
+
+  <h2>3 · Membrane FEA: the sock itself</h2>
+  <p>A geometrically nonlinear membrane model: 7,584 nodes and 14,976 constant-strain triangles, St. Venant–Kirchhoff PVC-polyester (E·t = 800 kN/m, ν = 0.35, 2 kN/m prestress). Wrinkling uses a tension-field model, so compressive principal stress is dropped. Pressure follows the deforming surface, self-weight is included, and the mesh is solved by dynamic relaxation with kinetic damping. Inside the sock the air stagnates (Cp = +1). Outside it is separated suction, −1.1 at the lip relaxing to −0.45, plus a ±0.25 yaw/gust asymmetry. The fabric is pinned to the mouth ring and to a rigid steel nozzle at r = 6.3 m, which necks down to the 1.26 m throat.</p>
+  <div class="tbl"><table id="mem-tbl"></table></div>
+  <p id="mem-text"></p>
+  <figure>
+    <div class="chart" id="ch-loads"></div>
+    <figcaption>Wind load on the structure: closed windsock (Cd ≈ 1.35, like a parachute) vs. rotor thrust of a pitch-regulated 5 MW turbine. The windsock cannot shed load by pitching. It has to be furled.</figcaption>
+  </figure>
+
+  <h2>4 · Frame FEA: ring, spokes, boom, tower</h2>
+  <p>A 3D frame model (12-DOF Euler–Bernoulli beams plus pretensioned cables) of a dished "bicycle-wheel" mouth. A 126 m steel ring is held by 48 radial spokes running to a hub 60 m upwind, and by 48 laced spokes running to a second hub 40 m downwind, inside the sock's dead air. Both hubs sit on an axial boom that runs to the nozzle. A front tower under the mouth is the yaw pivot. A rear mast under the nozzle rides a circular yaw rail, like a large radio telescope. Members were sized automatically over two load cases: operating at a 20 m/s gust with the membrane reactions ×1.35, and a 50 m/s storm with the sock furled onto the boom.</p>
+  <div class="tbl"><table id="frame-tbl"></table></div>
+  <p id="frame-text"></p>
+
+  <h2>5 · Bill of materials and cost</h2>
+  <p>Unit prices come from public ranges: steel fabricated at $4.0–4.5k/t, architectural membrane by grade, and Dyneema rope at about $60/kg. The HAWT is at NREL's ~$1,500/kW installed, with WindEurope component shares. LCOE uses a 7% discount rate over 25 years, with a Weibull wind of mean 7.5 m/s and k = 2 at hub height, sheared to 250 m for the kite.</p>
+  <div class="tabs" role="tablist" id="bom-tabs"></div>
+  <div class="tbl"><table id="bom-tbl"></table></div>
+  <figure>
+    <div class="chart" id="ch-lcoe"></div>
+    <figcaption>Levelized cost of energy, log scale. The windsock's structure costs more than the turbine it was meant to replace, while its energy output is 3,000× smaller (d/100) or 30× smaller (d/10).</figcaption>
+  </figure>
+  <p>The premise that blade size drives turbine cost also doesn't hold up. Blades are about 22% of turbine cost and roughly 15% of an installed project. The rest is the tower and foundation, which scale with <em>thrust</em>, plus the drivetrain and electrics, which scale with <em>power</em>. Extracting power from wind always produces thrust (P = T · v at the rotor). Any device making 5 MW must react roughly a meganewton. The only real question is whether that force goes through a steel tower in bending (expensive) or a fibre rope in tension (cheap).</p>
+
+  <h2>6 · The version that works: a crosswind spinnaker</h2>
+  <p>Fly the spinnaker <em>across</em> the wind in figure-eights instead of holding it square to the wind. A wing moving crosswind at speed v_k sees an apparent wind of about (L/D)·V. Lift goes as the square of that. Loyd (1980):</p>
+  <div class="eq">P = (2/27) · ρ · A_kite · V³ · C_L · (C_L/C_D)² · cos³β · η_cycle</div>
+  <p id="kite-text"></p>
+  <h3>More directions that respect the physics</h3>
+  <ul>
+    <li><b>Kite carousel / rotary kite ring.</b> Several soft kites on one rotating tether ring drive a ground shaft directly, with no reel-in phase and no storage. This is the "Daisy" style rotary kite, scaled up.</li>
+    <li><b>Use the sock as a diffuser, not a funnel.</b> Put the big fabric cone <em>behind</em> a normal rotor, flaring outward with a flange. That is the wind-lens result: 2–3× power from a given rotor size, so a smaller, cheaper rotor for the same power. It helps most for small turbines where blades are a larger share of cost.</li>
+    <li><b>Go up, not wide.</b> Power density at 250–400 m is 1.5–2.5× hub-height values. A tethered wing reaches that altitude cheaply. A tower does not.</li>
+    <li><b>Everything in tension.</b> The windsock lost mostly on its compression ring, boom and bending tower. Any future variant should route the meganewton of thrust into ropes and ground anchors.</li>
+  </ul>
+
+  <h2>7 · Rotary kite ring: the full model</h2>
+  <p>A ring of kite wings flies as a rotor at the top of an inclined, flexible shaft. The shaft is a TRPT (tensile rotary power transmission): stacked rings joined by lines. It carries torque by <em>twisting</em> under axial tension, in the way a chandelier on strings resists being turned. A ground generator takes the torque. This is the Daisy concept from Windswept and Interesting, scaled up and optimised here. Every link the meganewton of thrust passes through is in tension except the rings.</p>
+  <h3>Rotor: blade-element momentum theory on a thin annulus</h3>
+  <p>Each wing has C<sub>D</sub> = C<sub>D0</sub> + C<sub>L</sub>²/(π·0.85·AR) + line drag, giving an effective L/D of about 7.6 (baseline) to 8.9 (better wings). The model solves annulus momentum with Prandtl tip and root loss and Buhl's high-induction correction, then optimises tip-speed ratio and C<sub>L</sub>. The rotor is tilted at the shaft angle β, so power falls as cos³β.</p>
+  <div class="eq">TRPT torque  Q = F_ax · r² · sin δ / l_ax          (δ = twist per segment, r = ring radius)
+ring node load = 2·T_line·(chord/L_line)·sin(δ/2)  →  polygon compression  →  ring buckling w_cr</div>
+  <p id="rot-text"></p>
+  <figure>
+    <div class="chart" id="ch-levers"></div>
+    <figcaption>Each design lever applied in turn at the best unit size. Bars show capex per <em>average</em> MW delivered; the dashed line is the 5 MW HAWT ($3.9M). A lever that made LCOE worse, or made the shaft over-twist in the nonlinear FEA, was tried, shown in grey, and reverted (hover a bar for the reason).</figcaption>
+  </figure>
+  <figure>
+    <div class="chart" id="ch-size"></div>
+    <figcaption>Capex per rated MW vs. unit size. The baseline ring gets <em>worse</em> above about 500 kW: torque grows as P<sup>1.5</sup>, so shaft rings grow faster than power. Spoked rings plus a crosswind lifter break that limit. The FEA-verified optimum is 1–2 MW per unit (1 MW once the ground station is direct-drive, because the shaft turns faster at that size). The fly-gen variant has no shaft, and its cost keeps falling up to 10 MW.</figcaption>
+  </figure>
+  <h3>Nonlinear FEA of the TRPT shaft</h3>
+  <p>A geometrically nonlinear cable–truss model. Rings are CFRP polygons with skip-one chords standing in for bending stiffness. Lines are tension-only Dyneema. The shaft is inclined at β with gravity, and the solution is by dynamic relaxation. The bottom ring is fixed to the generator; the top ring takes the rotor's axial pull plus the design torque (1.6× rated). Torque is then ramped up until the rings collide (over-twist collapse).</p>
+  <div class="tbl"><table id="trpt-tbl"></table></div>
+  <h3>Ground carousel (KiteGen-type)</h3>
+  <p id="car-text"></p>
+
+  <h2>8 · Lowest cost per MWh: every variable free</h2>
+  <p>Sections 1–7 asked whether a given idea beats a turbine. This section asks the question that actually matters: <em>with everything free to change, which wind machine makes the cheapest MWh?</em> Four architectures were each handed to a global optimiser (differential evolution) with unit size, flying altitude or hub height, tether angle, rated wind, the number of stacked rotors (spaced 1.5 diameters apart along the tether, each downstream rotor losing 10% to wake), wings per rotor and annulus width free, on the same site and the same finance. The conventional turbine got the same treatment: rotor diameter, hub height and rating free, so it could become a tall, low-specific-power machine. Two sites: the study's onshore site (7.5 m/s at 90 m) and a floating-offshore site (9.5 m/s at 100 m). Finance is 7% over 25 years for everything. The fly-gen ring's on-wing turbines are sized from the wing's airspeed, tether drag is solved with the wing for the single-wing machines, and the pumping kite's winch generator is rated for its reel-out peak.</p>
+  <figure>
+    <div class="chart" id="ch-rank"></div>
+    <figcaption>Levelised cost of energy of each architecture at its own LCOE-optimal design, onshore and floating offshore. Hover a bar for the design the optimiser chose.</figcaption>
+  </figure>
+  <p id="lcoe-text"></p>
+  <div class="tbl"><table id="lcoe-bom"></table></div>
+  <figure>
+    <div class="chart" id="ch-tornado"></div>
+    <figcaption>One-at-a-time sensitivities on the winning onshore design (same geometry, re-evaluated). Each bar runs between the two values tried; the dashed line is the base case.</figcaption>
+  </figure>
+  <figure>
+    <div class="chart" id="ch-site"></div>
+    <figcaption>Cost of energy against the site's mean wind at 90 m, with the kite ring and the conventional turbine each re-optimised for every site. The wind resource moves both machines more than any design lever does.</figcaption>
+  </figure>
+  <h3>How low can it go?</h3>
+  <p>Each step keeps the ones before it. The first two rows are technology; the next two are finance; the last is where you build.</p>
+  <div class="tbl"><table id="lcoe-stretch"></table></div>
+  <p id="lcoe-floor"></p>
+
+  <h2>9 · The road to $10/MWh</h2>
+  <p>The ladder in section 8 stops at about $16. This section turns the question round: <em>what would have to be true for wind to cost under $10/MWh?</em> Twelve beliefs each run from the study's base value to a floor that has a real-world analogue. The model is solved twice: once with every belief at its floor, to see whether $10 is reachable at all, and once for the least-stretched set of beliefs that just reaches it.</p>
+  <div class="tbl"><table id="t10-floors"></table></div>
+  <p id="t10-text"></p>
+  <div class="tbl"><table id="t10-beliefs"></table></div>
+  <p id="t10-crit"></p>
+  <h3>3D flow check of the stacked rotors</h3>
+  <p id="lbm3d-text">The 3D simulation of the stacked rotors has not finished yet.</p>
+  <figure id="lbm3d-fig" style="display:none"><img id="lbm3d-img" alt="Velocity field around three stacked tilted rotors" style="width:100%;border-radius:8px"><figcaption>Centre-plane wind speed from a 3D lattice-Boltzmann run (D3Q19, 232 × 84 × 116 cells): tilted actuator annuli on a 22° tether. Red is faster than the free wind, blue is the wake.</figcaption></figure>
+
+  <h2>Assumptions and limits</h2>
+  <ul>
+    <li>Section 8 is a parametric cost model, not a design: the fly-gen ring's wings, on-wing turbines and conductive tether are costed from per-m², per-kW and per-m rates with span and airspeed scaling, and the conventional turbine's components from NREL-style scaling laws calibrated to the 5 MW reference. Neither includes technology learning. The optimiser will find any weakness in such a model, so the stretch case especially should be read as "what the assumptions imply", not a forecast. Hard limits imposed on the ring: diameter ≤ 320 m (the optimiser sits on this limit), wing span ≤ 60 m, tip speed ≤ 90 m/s, tether ≤ 120 mm, top rotor ≤ 1,100 m; on the single wings: span ≤ 120 m, airspeed ≤ 80 m/s. The ladder's last row compares stretch-technology kites with a base-technology turbine; on the same technology basis the kite's lead at a 10.5 m/s site is about 12%, not 40%.</li>
+    <li>The momentum model is 1D and inviscid with lumped loss K. Cp_b and the diffuser ratio for each scenario are set from the literature on flanged diffusers.</li>
+    <li>The CFD is 2D and runs at a lower Reynolds number than full scale. It is meant to show how much flow is captured versus spilled, not to produce absolute Cp values. Bounce-back walls add some viscous loss in the narrow throat.</li>
+    <li>The membrane FEA uses isotropic fabric (real PVC-polyester is orthotropic, warp/fill) and quasi-static pressure (no flutter or dynamic gusts). It uses assumed external Cp. The rigid nozzle carries the last 6.3 → 0.63 m.</li>
+    <li>The frame FEA is linear-elastic with code-style utilization checks. Ring buckling uses closed-form arch formulas. There are no fatigue or dynamic analyses.</li>
+    <li>Rotary ring: semi-rigid wing cost and life ($150–250/m², 3–5 years), TRPT ring fatigue, line wear and the control of lift kites are unproven at MW scale. Daisy prototypes are around 1 kW. The kite ring's advantage is smaller than this uncertainty band, so read it as "plausibly cheaper, worth building a 100 kW prototype", not as proven.</li>
+    <li>The kite ring's cyclic inflow from the tilted rotor plane, wake interaction between stacked rotors, and farm spacing losses are not modelled. Land use is larger than for a HAWT: a 5 MW ring needs roughly a 400 m radius to swing through yaw.</li>
+    <li>Costs are ±30% concept-level estimates. Kite LCOE carries the most uncertainty. Makani wound down in 2020, in part over cost competitiveness, and AWE lifetime and O&M costs are not yet proven at MW scale.</li>
+  </ul>
+
+  <h2>Sources</h2>
+  <ol class="src">
+    <li><a href="https://www.nrel.gov/docs/fy07osti/40566.pdf">Fingersh, Hand &amp; Laxson (2006), NREL wind turbine design cost and scaling model</a>: blade, tower, foundation and BOS scaling used for the LCOE-optimised turbine in section 8</li>
+    <li><a href="https://www.mdpi.com/1996-1073/2/2/307">Archer &amp; Caldeira (2009), Global assessment of high-altitude wind power</a> · <a href="https://doi.org/10.1016/j.renene.2019.03.118">Bechtle et al. (2019), Airborne wind energy resource analysis</a>: wind at 300–1,000 m is typically 1.3–1.5× the 100 m wind over land, which the 0.14 shear exponent used here reproduces or undercuts</li>
+    <li><a href="https://doi.org/10.1007/978-3-642-39965-7_3">Luchsinger (2013), Pumping cycle kite power</a>: reel-in losses and generator peak rating for pumping kites</li>
+    <li><a href="https://www.lazard.com/research-insights/levelized-cost-of-energyplus/">Lazard LCOE+ (2024)</a>: unsubsidised onshore wind $27–73/MWh, for scale against the numbers here, which all use 7% finance on one 7.5 m/s site</li>
+    <li><a href="https://en.wikipedia.org/wiki/Diffuser-augmented_wind_turbine">Diffuser-augmented wind turbine</a>: augmentation 2–5× vs. bare rotor; exit area ratio ≈ 3 practical limit</li>
+    <li><a href="https://catalog.lib.kyushu-u.ac.jp/opac_download_md/4055203/4055203.pdf">Kyushu University</a>: wind-lens / diffuser theory</li>
+    <li><a href="https://wes.copernicus.org/articles/6/149/2021/">Wind Energy Science 6, 149 (2021)</a>: ducted-turbine momentum theory</li>
+    <li><a href="https://newatlas.com/invelox-wind-generator/27377/">New Atlas on SheerWind INVELOX</a> and <a href="https://scholars.csus.edu/esploro/outputs/graduate/Performance-improvements-of-a-ducted-wind/99257831259101671">Sacramento State CFD thesis</a>: funnel claims and an independent model finding lower gains</li>
+    <li><a href="https://awesco.eu/awe-explained/Loyd1980.pdf">Loyd (1980), Crosswind kite power</a> · <a href="https://awesco.eu/awe-explained/Diehl2013.pdf">Diehl (2013)</a></li>
+    <li><a href="https://x.company/projects/makani">Makani (X)</a>: M600, 600 kW, ~90% mass reduction claim, wound down 2020</li>
+    <li><a href="https://thekitepower.com/resources/product/New%20Powerful%20Ways%20-%20The%20Kitepower%20Falcon%20100kW.pdf">Kitepower Falcon 100 kW</a>: ~60 m² kite, Dyneema tether, pumping cycle · <a href="https://wes.copernicus.org/preprints/wes-2024-161">TU Delft AWE scaling (WES 2024)</a></li>
+    <li><a href="https://www.nrel.gov/docs/fy25osti/91775.pdf">NREL Cost of Wind Energy Review (2023 data)</a> · <a href="https://www.nrel.gov/docs/fy24osti/88335.pdf">2022 data</a></li>
+    <li><a href="https://www.mdpi.com/1996-1073/16/6/2610">Tulloch et al., A tensile rotary airborne wind energy system (Energies 2023)</a> · <a href="https://strathprints.strath.ac.uk/90464/7/ICAC24_Paper148_Understanding-of-lift-kite-operation-requirements-of-a-rotary-kite-wind-turbine.pdf">Lift-kite requirements for rotary kite turbines (Strathclyde)</a></li>
+    <li><a href="https://fagiano.faculty.polimi.it/docs/papers/Kite_FastMPC_TCST_2010.pdf">Canale, Fagiano, Milanese (IEEE TCST 2010)</a>: carousel vs yo-yo power similar · <a href="https://kitegen-power.pages.dev/carousel">KiteGen carousel claims</a></li>
+    <li><a href="https://greencoast.org/wind-turbine-costs/">Turbine component cost shares (citing WindEurope)</a>: tower 26.6%, blades 22%</li>
+    <li><a href="https://designingbuildings.co.uk/wiki/Pvc-coated_polyester">PVC-coated polyester architectural fabric</a>: type strengths · <a href="https://pvctarpaulin.com/?p=21685">tensile membrane price guide</a></li>
+  </ol>
+</section>
+<footer class="col">Models, solvers and this page were built for this study. The Python sources (momentum model, LBM CFD, membrane FEA, frame FEA, cost model) and OBJ exports of all three concepts are in the study folder.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const DATA = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt = (x, d=0) => x.toLocaleString('en-US', {maximumFractionDigits:d, minimumFractionDigits:d});
+const money = x => x >= 1e6 ? '$' + fmt(x/1e6, 2) + 'M' : '$' + fmt(x/1e3, 0) + 'k';
+
+/* ---------------- tiles + text ---------------- */
+(function text(){
+  const M = DATA.models, P = M.punch, B = M.bom, K = M.kite, FM = DATA.mem, FF = DATA.frame;
+  const sock = B["Windsock d -> d/100 (your spec)"], sock10 = B["Windsock d -> d/10 ('100x area')"], kite = B["Crosswind spinnaker kite 5 MW"], hawt = B["HAWT 5 MW (reference)"];
+  $('#cp-lens').textContent = 'C_P = ' + M.scenarios.funnel_wind_lens.cp_throat.toFixed(2);
+  const tiles = [
+    [fmt(P['funnel_wind_lens@0.01'].P_kW,1) + '<small> kW</small>', 'Windsock d→d/100 at rated wind (best-case diffuser). The target was 5,000 kW.'],
+    [fmt(P['funnel_wind_lens@0.1'].P_kW,0) + '<small> kW</small>', 'Windsock d→d/10, the "100× area" version, on the same 126 m structure.'],
+    [fmt(FM.cases[0].total_drag_on_fabric_MN,2) + '<small> MN</small>', 'Drag on the sock fabric at rated wind (FEA), vs. ~0.74 MN rotor thrust for the 5 MW turbine.'],
+    [fmt(K.area_soft_m2,0) + '<small> m²</small>', 'Soft crosswind kite area for 5 MW. The windsock needs ' + fmt(DATA.fabric_area,0) + ' m² of fabric for 1.6 kW.'],
+  ];
+  if (DATA.lcoe) { const on = DATA.lcoe.results.filter(r => r.site === 'onshore'), b = on.filter(r => !r.arch.startsWith('hawt')).sort((a, c) => a.lcoe - c.lcoe)[0], h = on.find(r => r.arch === 'hawt');
+    tiles.push(['$' + fmt(b.lcoe,0) + '<small> /MWh</small>', 'Lowest cost of energy found with every design variable free (section 8), vs $' + fmt(h.lcoe,0) + ' for the best conventional turbine on the same site.']); }
+  $('#tiles').innerHTML = tiles.map(t => `<div class="tile"><div class="v">${t[0]}</div><div class="k">${t[1]}</div></div>`).join('');
+
+  // CFD
+  const C = DATA.cfd, names = {open_d:'Open rotor, width d', open_d10:'Open rotor, width d/10', funnel:'Funnel d → d/10', funnel_dif:'Funnel d → d/10 + 2.5× diffuser'};
+  $('#cfd').innerHTML = Object.keys(names).filter(k => C[k]).map(k => `<div class="cell"><h4><span>${names[k]}</span><span class="mono" style="font-size:.85rem">C<sub>P,d</sub> = ${C[k].Cp_vs_mouth_d.toFixed(3)}</span></h4>${DATA.cfdimg[k] ? `<img alt="Mean speed field for ${names[k]}" src="${DATA.cfdimg[k]}">` : ''}</div>`).join('');
+  const base = C.open_d ? C.open_d.P : 1;
+  $('#cfd-tbl').innerHTML = '<tr><th>Case</th><th class="n">best disk loading k</th><th class="n">Power vs open rotor of width d</th><th class="n">Air through turbine / air approaching mouth</th></tr>' +
+    Object.keys(names).filter(k => C[k]).map(k => `<tr><td>${names[k]}</td><td class="n">${C[k].k}</td><td class="n">${(C[k].P/base*100).toFixed(1)}%</td><td class="n">${(C[k].mdot_actuator / C[k].mdot_freestream_through_d * 100).toFixed(1)}%</td></tr>`).join('');
+  if (C.funnel && C.open_d10 && C.open_d) {
+    $('#cfd-text').innerHTML = `The funnel turbine makes <b>${(C.funnel.P/base*100).toFixed(1)}%</b> of the big open rotor's power. Adding the diffuser gives ${(C.funnel_dif.P/base*100).toFixed(1)}%, no measurable change at this resolution. The same small rotor with no funnel at all makes ${(C.open_d10.P/base*100).toFixed(1)}%. So the funnel buys ${Math.round((C.funnel.P/C.open_d10.P-1)*100)}% over the bare small rotor, not the 10× the mouth-to-throat ratio suggests. Only ${(C.funnel.mdot_actuator / C.funnel.mdot_freestream_through_d*100).toFixed(0)}% of the air heading for the mouth goes through the turbine. The rest stalls into a pressure bubble in front of the mouth and goes around it, visible as the slow region and the deflected streamlines. The open rotor's C<sub>P</sub> reads above Betz because the channel blocks 19% of the flow; the comparisons are ratios between cases on the same grid, so that bias largely cancels.`;
+  }
+
+  // membrane
+  $('#mem-tbl').innerHTML = '<tr><th>Load case</th><th class="n">q (Pa)</th><th class="n">Max fabric tension (kN/m)</th><th class="n">Wrinkled</th><th class="n">Max deflection (m)</th><th class="n">Drag on fabric (MN)</th></tr>' +
+    FM.cases.map(c => `<tr><td>${c.name}</td><td class="n">${fmt(c.q)}</td><td class="n">${c.max_tension_kN_m.toFixed(1)}</td><td class="n">${(c.wrinkled_frac*100).toFixed(0)}%</td><td class="n">${c.max_disp_m.toFixed(2)}</td><td class="n">${c.total_drag_on_fabric_MN.toFixed(2)}</td></tr>`).join('');
+  const hoop = (DATA.models.inputs ? 1 : 1);
+  $('#mem-text').innerHTML = `Check against hand calculation: hoop force at the mouth is N<sub>θ</sub> = Δp·R/cos α. At rated wind, Δp ≈ q·(1+0.45…1.1) ≈ 115–170 Pa, giving 8–12 kN/m. The FEA gives ${FM.cases[0].max_tension_kN_m.toFixed(1)} kN/m. ✔ At the design gust the fabric needs ${fmt(FM.required_strength_kN_m_SF5,0)} kN/m strip strength (safety factor 5, the norm for membrane structures), which means <b>${FM.fabric_grade}</b>. Unfurled in a 50 m/s storm it would need ${fmt(FM.storm_required_strength_kN_m_SF2,0)} kN/m even at SF 2. <b>Verdict: ${FM.storm_verdict}.</b> The sock must furl above about 15 m/s, so the turbine at its throat loses the windiest hours, which carry the most energy.`;
+
+  // frame
+  const fr = FF;
+  const rows = [
+    ['Mouth ring (CHS ' + fmt(fr.sections.ring.D*1000) + '×' + fmt(fr.sections.ring.t*1000) + ' mm)', fmt(fr.masses_t.ring,0) + ' t'],
+    ['Axial boom (CHS ' + fmt(fr.sections.boom.D*1000) + '×' + fmt(fr.sections.boom.t*1000) + ' mm)', fmt(fr.masses_t.boom,0) + ' t'],
+    ['96 pretensioned Dyneema spokes (Ø' + fmt(fr.sections.spoke.D*1000) + ' mm, ' + fmt(fr.spoke_pretension_kN.operating,0) + ' kN pretension)', fmt(fr.masses_t.spoke,1) + ' t'],
+    ['Two 16-node spoke hubs (CHS ' + fmt(fr.sections.hubarm.D*1000) + '×' + fmt(fr.sections.hubarm.t*1000) + ' mm)', fmt(fr.masses_t.hubarm,0) + ' t'],
+    ['Rear yaw mast on 126 m-radius rail (CHS ' + fmt(fr.sections.mast.D*1000) + '×' + fmt(fr.sections.mast.t*1000) + ' mm)', fmt(fr.masses_t.mast,0) + ' t'],
+    ['Front tower / yaw pivot, 72 m, 6 → 3.6 m tapered', fmt(fr.tower_mass_t,0) + ' t (5 MW HAWT tower: 347 t)'],
+    ['Tower base moment, operating / storm', fmt(fr.base_moment_MNm.operating,0) + ' / ' + fmt(fr.base_moment_MNm.storm_furled,0) + ' MN·m (HAWT ≈ ' + fmt(fr.hawt_base_moment_MNm,0) + ')'],
+    ['Ring compression (operating)', fmt(fr.ring_compression_MN,2) + ' MN'],
+    ['Ring in-plane buckling factor (no spokes / spoke-supported)', fmt(fr.ring_buckling_factor_no_spokes,2) + ' / ' + fmt(fr.ring_buckling_factor_spoke_supported,1)],
+    ['Max deflection operating / storm', fmt(fr.max_disp_m.operating,2) + ' / ' + fmt(fr.max_disp_m.storm_furled,2) + ' m'],
+    ['Max member utilization operating / storm', fmt(fr.max_util.operating,2) + ' / ' + fmt(fr.max_util.storm_furled,2)],
+  ];
+  $('#frame-tbl').innerHTML = '<tr><th>Item</th><th class="n">Result</th></tr>' + rows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td></tr>`).join('');
+  const steel = fr.masses_t.ring + fr.masses_t.boom + fr.tower_mass_t + fr.masses_t.hubarm + fr.masses_t.mast;
+  $('#frame-text').innerHTML = `The structure works. It is a big tensioned wheel and can be built. It uses about <b>${fmt(steel,0)} t of steel</b>, against roughly 350 t of tower, 240 t of nacelle and 110 t of rotor for the 5 MW turbine. The boom is the heaviest item (${fmt(fr.masses_t.boom,0)} t, Ø${fmt(fr.sections.boom.D,1)} m). It is sized as one uniform tube, so a tapered or lattice boom could save perhaps 40%, but that would not change the conclusion. The front tower's base moment is ${fmt(fr.base_moment_ratio_vs_hawt,1)}× the HAWT's. Without its spokes the ring would buckle (factor ${fmt(fr.ring_buckling_factor_no_spokes,2)}). With them the factor is ${fmt(fr.ring_buckling_factor_spoke_supported,0)}. Structurally it is a bigger-than-5 MW machine whose rotor happens to be 1.26 m across.`;
+
+  // kite
+  const t = K.tether;
+  $('#kite-text').innerHTML = `With a soft "spinnaker" kite (C<sub>L</sub> ≈ 1, effective L/D ≈ 5.5 including tether drag), β = 28° elevation, a 62% pumping-cycle efficiency and 250 m altitude, each square metre of kite delivers <b>${K.power_per_m2_soft_kW.toFixed(2)} kW</b>. A static drag sock delivers ${K.power_per_m2_drag_sock_kW.toFixed(2)} kW per m² of capture area at best, and the HAWT ${K.hawt_power_per_m2_swept_kW.toFixed(2)} kW per m² swept. 5 MW needs a <b>${fmt(K.area_soft_m2,0)} m² soft kite</b>, or ${fmt(K.area_rigid_m2,0)} m² with a rigid wing at L/D ≈ 10. That is about 49 m × 38 m, against 12,469 m² of swept disk. The whole meganewton of thrust (${fmt(t.T/1e6,2)} MN) runs down a ${fmt(t.dia_mm,0)} mm Dyneema tether weighing ${fmt(t.mass_kg/1e3,1)} t, to a ground winch that is the generator. The cost model gives about <b>$${fmt(kite.capex_per_kW,0)}/kW</b> capex and <b>$${fmt(kite.lcoe_usd_mwh,0)}/MWh</b>, against $${fmt(hawt.lcoe_usd_mwh,0)}/MWh for the HAWT. That is competitive on paper, with large uncertainty in kite and tether replacement rates. This is your idea, with motion doing the concentrating instead of a funnel.`;
+
+  // BOM tabs
+  const keys = Object.keys(B);
+  const tabs = $('#bom-tabs');
+  keys.forEach((k, i) => { const b = document.createElement('button'); b.textContent = k; b.setAttribute('role','tab'); b.setAttribute('aria-selected', i===1); b.id = 'bt'+i; b.onclick = () => showBom(i); tabs.appendChild(b); });
+  function showBom(i){
+    [...tabs.children].forEach((b, j) => b.setAttribute('aria-selected', i===j));
+    const b = B[keys[i]];
+    $('#bom-tbl').innerHTML = '<tr><th>Item</th><th class="n">Cost</th></tr>' + b.items.map(it => `<tr><td>${it[0]}</td><td class="n">${money(it[1])}</td></tr>`).join('') +
+      `<tr class="tot"><td>Total installed capex</td><td class="n">${money(b.capex)}</td></tr>` +
+      `<tr><td>Annual O&amp;M / replacements</td><td class="n">${money(b.opex)}/yr</td></tr>` +
+      `<tr><td>Annual energy</td><td class="n">${b.aep_kwh > 1e6 ? fmt(b.aep_kwh/1e6,2)+' GWh' : fmt(b.aep_kwh/1e3,1)+' MWh'}</td></tr>` +
+      `<tr><td>Capex per rated kW</td><td class="n">$${fmt(b.capex_per_kW,0)}/kW</td></tr>` +
+      `<tr class="tot"><td>LCOE</td><td class="n">$${fmt(b.lcoe_usd_mwh,0)}/MWh</td></tr>`;
+  }
+  showBom(1);
+})();
+
+/* ---------------- charts (hand-rolled SVG with hover) ---------------- */
+function lineChart(el, {series, xlog, ylog, xlabel, ylabel, xticks, yticks, xfmt, yfmt, xr, yr}){
+  const W = 640, H = 340, m = {l:58, r:16, t:12, b:42};
+  const sx = v => { const a = xlog ? Math.log10 : (x=>x); return m.l + (a(v)-a(xr[0]))/(a(xr[1])-a(xr[0]))*(W-m.l-m.r); };
+  const sy = v => { const a = ylog ? Math.log10 : (x=>x); return H-m.b - (a(v)-a(yr[0]))/(a(yr[1])-a(yr[0]))*(H-m.t-m.b); };
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${ylabel} vs ${xlabel}">`;
+  yticks.forEach(v => s += `<line x1="${m.l}" x2="${W-m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--rule)" stroke-width="1"/><text x="${m.l-8}" y="${sy(v)+4}" text-anchor="end">${yfmt(v)}</text>`);
+  xticks.forEach(v => s += `<text x="${sx(v)}" y="${H-m.b+18}" text-anchor="middle">${xfmt(v)}</text>`);
+  s += `<line x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}" stroke="var(--ink-3)"/>`;
+  s += `<text x="${(m.l+W-m.r)/2}" y="${H-6}" text-anchor="middle">${xlabel}</text><text transform="translate(12 ${(m.t+H-m.b)/2}) rotate(-90)" text-anchor="middle">${ylabel}</text>`;
+  series.forEach(se => {
+    const d = se.x.map((x, i) => (i ? 'L' : 'M') + sx(x).toFixed(1) + ' ' + sy(Math.max(se.y[i], yr[0])).toFixed(1)).join('');
+    s += `<path d="${d}" fill="none" stroke="var(${se.c})" stroke-width="2" ${se.dash ? 'stroke-dasharray="5 4"' : ''}/>`;
+    if (se.label) { const i = se.labelAt ?? se.x.length-1; s += `<text x="${sx(se.x[i])-4}" y="${sy(se.y[i])-7}" text-anchor="end" style="fill:var(--ink)">${se.label}</text>`; }
+  });
+  s += `<line id="xh" y1="${m.t}" y2="${H-m.b}" stroke="var(--ink-3)" stroke-width="1" opacity="0"/>`;
+  series.forEach((se, j) => s += `<circle class="hd" data-j="${j}" r="4.5" fill="var(${se.c})" stroke="var(--panel)" stroke-width="2" opacity="0"/>`);
+  s += `<rect x="${m.l}" y="${m.t}" width="${W-m.l-m.r}" height="${H-m.t-m.b}" fill="transparent"/></svg>`;
+  el.innerHTML = `<div class="legend">${series.map(se => `<span><i style="background:var(${se.c})"></i>${se.name}</span>`).join('')}</div>` + s + '<div class="tip"></div>';
+  const svg = el.querySelector('svg'), tip = el.querySelector('.tip'), xh = svg.querySelector('#xh');
+  svg.addEventListener('pointermove', e => {
+    const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * W;
+    const xs = series[0].x; let bi = 0, bd = 1e9;
+    xs.forEach((x, i) => { const d = Math.abs(sx(x) - px); if (d < bd) { bd = d; bi = i; } });
+    const X = sx(xs[bi]); xh.setAttribute('x1', X); xh.setAttribute('x2', X); xh.setAttribute('opacity', .6);
+    svg.querySelectorAll('.hd').forEach(c => { const se = series[+c.dataset.j]; c.setAttribute('cx', X); c.setAttribute('cy', sy(Math.max(se.y[bi], yr[0]))); c.setAttribute('opacity', 1); });
+    tip.innerHTML = `<b>${xlabel}: ${xfmt(xs[bi], true)}</b><br>` + series.map(se => `${se.name}: ${yfmt(se.y[bi], true)}`).join('<br>');
+    tip.style.opacity = 1; const tx = X / W * r.width; tip.style.left = Math.min(tx + 14, r.width - 230) + 'px'; tip.style.top = '40px';
+  });
+  svg.addEventListener('pointerleave', () => { tip.style.opacity = 0; xh.setAttribute('opacity', 0); svg.querySelectorAll('.hd').forEach(c => c.setAttribute('opacity', 0)); });
+}
+(function charts(){
+  const S = DATA.models.sweep, x = S.dt_over_d;
+  const pf = (v, full) => v >= 1 ? fmt(v, full ? 2 : 0) + '×' : (v >= 0.01 ? (v*100).toFixed(full?1:0) + '%' : (v*100).toPrecision(2) + '%');
+  lineChart($('#ch-sweep'), {
+    series: [
+      {name:'Your hypothesis', x, y:S.user_hypothesis, c:'--s2', dash:true},
+      {name:'Heroic 4:1 diffuser', x, y:S.funnel_heroic, c:'--s1'},
+      {name:'Flanged 3:1 diffuser (wind lens)', x, y:S.funnel_wind_lens, c:'--s3'},
+      {name:'Plain funnel', x, y:S.funnel_plain, c:'--s4'},
+      {name:'Bare rotor of throat size', x, y:x.map(v => v*v), c:'--s5', dash:true},
+    ],
+    xlog:true, ylog:true, xr:[0.01,1], yr:[1e-5,10], xlabel:'throat diameter / mouth diameter', ylabel:'power / 5 MW HAWT',
+    xticks:[0.01,0.03,0.1,0.3,1], yticks:[1e-5,1e-4,1e-3,1e-2,1e-1,1,10], xfmt:(v,f)=> f ? v.toFixed(3) : (v===0.01?'d/100':v===0.1?'d/10':v===1?'d':v), yfmt:pf});
+  const L = DATA.models.loads;
+  const idx = L.V.map((v,i)=>i).filter(i => L.V[i] <= 50);
+  lineChart($('#ch-loads'), {
+    series: [
+      {name:'Windsock drag (unfurled)', x:idx.map(i=>L.V[i]), y:idx.map(i=>L.sock_drag_MN[i]), c:'--s2'},
+      {name:'5 MW HAWT rotor thrust', x:idx.map(i=>L.V[i]), y:idx.map(i=>L.V[i] <= 25 ? L.hawt_thrust_MN[i] : 0.0), c:'--s1'},
+    ], xr:[3,50], yr:[0.01,40], ylog:true, xlabel:'wind speed (m/s)', ylabel:'load (MN)', xticks:[5,10,15,20,25,30,40,50], yticks:[0.01,0.1,1,10],
+    xfmt:(v)=>v.toFixed(0), yfmt:(v,f)=> f ? v.toFixed(2)+' MN' : v});
+  // LCOE horizontal log bars
+  const B = DATA.models.bom, ks = Object.keys(B);
+  const W = 640, rowH = 46, H = ks.length*rowH + 40, l = 210, r = 70;
+  const sx = v => l + (Math.log10(v) - 1)/(6-1)*(W-l-r);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="LCOE by concept">`;
+  [10,100,1000,1e4,1e5,1e6].forEach(v => s += `<line x1="${sx(v)}" x2="${sx(v)}" y1="4" y2="${H-30}" stroke="var(--rule)"/><text x="${sx(v)}" y="${H-12}" text-anchor="middle">$${v>=1000? fmt(v/1000)+'k':v}</text>`);
+  const cols = {"HAWT 5 MW (reference)":'--s1', "Crosswind spinnaker kite 5 MW":'--s3'};
+  ks.forEach((k, i) => { const y = 10 + i*rowH, v = B[k].lcoe_usd_mwh;
+    s += `<text x="${l-10}" y="${y+18}" text-anchor="end" style="fill:var(--ink)">${k.replace(' (reference)','').replace(" ('100x area')",' (100× area)').replace(' (your spec)','')}</text>`;
+    s += `<rect class="bar" data-t="${k}: $${fmt(v)}/MWh" x="${l}" y="${y+4}" width="${Math.max(2, sx(v)-l-2)}" height="22" rx="4" fill="var(${cols[k] || '--s2'})"/>`;
+    s += `<text x="${sx(v)+6}" y="${y+20}" style="fill:var(--ink)">$${fmt(v)}/MWh</text>`; });
+  s += '</svg>';
+  $('#ch-lcoe').innerHTML = s + '<div class="tip"></div>';
+  const tip = $('#ch-lcoe .tip');
+  $('#ch-lcoe').querySelectorAll('.bar').forEach(b => { b.addEventListener('pointerenter', e => { tip.textContent = b.dataset.t; tip.style.opacity = 1; tip.style.left = '220px'; tip.style.top = (+b.getAttribute('y') - 26) + 'px'; }); b.addEventListener('pointerleave', () => tip.style.opacity = 0); });
+})();
+
+
+/* ---------------- rotary ring + comparison ---------------- */
+(function rotaryText(){
+  const RO = DATA.rot, D = RO.design, E = RO.design_eval, comp = DATA.comp;
+  const hawt = comp.find(c => c.name.startsWith('HAWT')), best = comp.find(c => c.name.startsWith('Rotary kite ring, TRPT')), fly = comp.find(c => c.name.startsWith('Rotary kite ring, fly-gen')), pump = comp.find(c => c.name.startsWith('Crosswind spinnaker'));
+  const RD_N = D.N * D.opt.stack;
+  const pct = (a, b) => Math.round((1 - a / b) * 100);
+  $('#v-rot').textContent = `${pct(best.capex_per_MW, hawt.capex_per_MW)}% lower capex/MW, LCOE parity` + (fly ? ` · fly-gen ring: ${pct(fly.capex_per_MW, hawt.capex_per_MW)}% lower` : '');
+  $('#final-text').innerHTML = `<p><b>1. The windsock concentrator cannot work.</b> A funnel can't raise the air's energy per unit volume. The d/100 throat turbine makes 1/3,000 of the 5 MW turbine's power on a heavier structure, so its capex per MW is about ${fmt(comp[1].capex_per_avgMW/hawt.capex_per_avgMW,0)}× worse. The CFD shows the funnel adds only about 13% over the same small rotor with no funnel.</p>
+  <p><b>2. The rotary kite ring reaches parity, and can beat the turbine if the wings carry the generators.</b> With a TRPT shaft verified by FEA, the optimised ring costs <b>$${fmt(best.capex_per_MW/1e6,2)}M per rated MW against $${fmt(hawt.capex_per_MW/1e6,2)}M</b> for the turbine (${pct(best.capex_per_MW, hawt.capex_per_MW)}% less). Per average MW delivered it is $${fmt(best.capex_per_avgMW/1e6,2)}M against $${fmt(hawt.capex_per_avgMW/1e6,2)}M (${pct(best.capex_per_avgMW, hawt.capex_per_avgMW)}% less). LCOE is $${fmt(best.lcoe,0)} against $${fmt(hawt.lcoe,0)}/MWh: parity. ` + (fly ? `Removing the shaft and generating on the wings (fly-gen) gives <b>$${fmt(fly.capex_per_MW/1e6,2)}M per rated MW (${pct(fly.capex_per_MW, hawt.capex_per_MW)}% less), $${fmt(fly.capex_per_avgMW/1e6,2)}M per average MW and $${fmt(fly.lcoe,0)}/MWh</b>, the best result in this study. It is also the riskiest, because fly-gen is the architecture Makani was working on when it shut down. The last three levers were the stretch ideas: cheaper ring materials (aluminium kept, with a heavier shaft and a bigger lift kite), a direct-drive generator (kept only at 1 MW, where the shaft turns at 7 rpm) and flying the fly-gen rotor at 500 m with the same rotor-height rating (kept: capacity factor 35% → 46%; 800 m lost to tether cost). Rating the rotor for a lower wind, the usual way to raise capacity factor, failed the shaft FEA. ` : '') + `The plain Daisy-type ring is ${fmt(comp.find(c=>c.name.includes('baseline')).capex_per_MW/hawt.capex_per_MW,1)}× <em>worse</em> than the turbine. Every gain comes from the levers in section 7, and every adopted lever had to pass the nonlinear shaft FEA.</p>
+  <p><b>3. The cheapest capex is the pumping kite, at $${fmt(pump.capex_per_MW/1e6,2)}M per rated MW</b>, but its frequent kite and tether replacement gives a higher LCOE ($${fmt(pump.lcoe,0)}/MWh). Its 5 MW version needs a single ${fmt(DATA.models.kite.area_soft_m2,0)} m² kite, about 5× the largest power kite flown. <b>The ground carousel loses</b> ($${fmt(comp.find(c=>c.name.startsWith('Ground')).capex_per_MW/1e6,2)}M/MW), because the rail costs more than everything that flies.</p>
+  <p><b>Bottom line:</b> tethered kites put the meganewton of thrust into rope instead of steel. That is the only route found here to beating a turbine on capex per MW. The margins of 14–32% on capex are inside a concept study's ±30% uncertainty. The next step that makes sense is a 100–250 kW rotary-ring prototype to measure wing life, TRPT fatigue and real Cp.</p>`;
+  const vs = (v, ref) => { const r = v / ref; return r < 0.97 ? `<span class="pill ok">${Math.round((1-r)*100)}% cheaper</span>` : (r < 1.03 ? '<span class="pill">≈ parity</span>' : `<span class="pill no">${r >= 10 ? fmt(r,0) + '×' : fmt(r,1) + '×'} worse</span>`); };
+  const big = v => v >= 1e9 ? '$' + fmt(v/1e9,1) + 'B' : '$' + fmt(v/1e6, v >= 1e8 ? 0 : 2) + 'M';
+  $('#comp-tbl').innerHTML = '<tr><th>Concept</th><th class="n">Rated MW</th><th class="n">Capex</th><th class="n">$ per rated MW</th><th class="n">Capacity factor</th><th class="n">$ per average MW</th><th class="n">LCOE $/MWh</th><th>vs HAWT (per avg MW)</th></tr>' +
+    comp.map(c => `<tr${c === best ? ' style="font-weight:600"' : ''}><td>${c.name.replace(" ('100x area')", ' (100× area)').replace('Crosswind spinnaker kite 5 MW', 'Pumping (yo-yo) spinnaker kite 5 MW')}</td><td class="n">${c.P_MW < 0.1 ? fmt(c.P_MW*1000,1)+' kW' : fmt(c.P_MW, 2)}</td><td class="n">${big(c.capex)}</td><td class="n">${big(c.capex_per_MW)}</td><td class="n">${(c.cf*100).toFixed(0)}%</td><td class="n">${big(c.capex_per_avgMW)}</td><td class="n">${fmt(c.lcoe,0)}</td><td>${c.name.startsWith('HAWT') ? '<span class="pill">reference</span>' : vs(c.capex_per_avgMW, hawt.capex_per_avgMW)}</td></tr>`).join('');
+  const r = D.rotor;
+  $('#rot-text').innerHTML = `<b>Optimised TRPT unit (${fmt(D.P_rated/1e6,1)} MW, FEA-verified):</b> ${D.N} wings × ${D.opt.stack} stacked rotors, rotor radius ${fmt(D.R,0)} m, wing span ${fmt(D.b,1)} m × chord ${fmt(D.c,1)} m, ${fmt(D.S_tot,0)} m² of wing in total. The shaft is ${fmt(D.L_s,0)} m long at β = ${D.beta_deg}°, putting the rotor hub at ${fmt(D.h,0)} m. The rotor turns at ${fmt(D.rpm,1)} rpm with a tip speed of ${fmt(D.tip_speed,0)} m/s, tip-speed ratio ${fmt(r.lam,1)} and C<sub>L</sub> ${fmt(r.CL,2)}. Its Cp is ${fmt(r.cp_on_V,3)} referred to the wind speed, about half a HAWT's, but over a huge, cheap annulus. Design torque is ${fmt(D.Q_design/1e6,1)} MN·m, carried by ${D.n_seg + 1} spoked ${({cfrp:'CFRP',gfrp:'GFRP',al:'aluminium'})[D.opt.ring_mat||'cfrp']} rings ${fmt(2*D.r_shaft,0)} m across (tube Ø${fmt(D.ring_D*1000,0)} mm, ${fmt(D.m_rings/1e3,1)} t in total) and ${D.n_lines} lines per bay (Ø${fmt(D.line_dia_mm,0)} mm). A ${fmt(D.S_lift,0)} m² crosswind lift kite holds the shaft up in light wind. Capacity factor is ${(E.cf*100).toFixed(0)}%. The baseline ring tops out around 500 kW because of torque: Q = P/Ω, and Ω falls as the rotor grows. The two big wins are spoked rings, which buckle between spokes instead of as a whole hoop (≈70× higher buckling load for the same tube), and a crosswind lifter.`;
+  // lever chart
+  const L = RO.levers, W = 640, rowH = 34, H = L.length*rowH + 40, l = 300, rr = 60;
+  const mx = Math.max(...L.map(x => x.capex_per_avgMW)) * 1.05;
+  const sx = v => l + v / mx * (W - l - rr);
+  let sv = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Capex per average MW by design lever">`;
+  [0, 2e6, 4e6, 6e6, 8e6, 10e6, 12e6].filter(v => v <= mx).forEach(v => sv += `<line x1="${sx(v)}" x2="${sx(v)}" y1="4" y2="${H-30}" stroke="var(--rule)"/><text x="${sx(v)}" y="${H-12}" text-anchor="middle">$${v/1e6}M</text>`);
+  L.forEach((x, i) => { const y = 8 + i*rowH;
+    sv += `<text x="${l-8}" y="${y+16}" text-anchor="end" style="fill:${x.kept ? 'var(--ink)' : 'var(--ink-3)'}">${(i ? (x.kept ? '+ ' : '× ') : '') + x.name.replace(/\s*\(.*?\)\s*/g,' ').slice(0, 46)}</text>`;
+    sv += `<rect class="bar" data-t="${x.name}: $${fmt(x.capex_per_avgMW/1e6,2)}M per avg MW, LCOE $${fmt(x.lcoe,0)}/MWh, best size ${fmt(x.best_P/1e6,2)} MW${x.kept ? '' : ' (rejected: ' + x.reason + ')'}" x="${l}" y="${y+3}" width="${Math.max(2, sx(x.capex_per_avgMW)-l-2)}" height="20" rx="4" fill="${x.kept ? 'var(--s3)' : 'var(--rule)'}"/>`;
+    sv += `<text x="${sx(x.capex_per_avgMW)+5}" y="${y+17}" style="fill:var(--ink)">$${fmt(x.capex_per_avgMW/1e6,2)}M</text>`; });
+  const hx = sx(hawt.capex_per_avgMW);
+  sv += `<line x1="${hx}" x2="${hx}" y1="0" y2="${H-30}" stroke="var(--s1)" stroke-width="2" stroke-dasharray="5 4"/><text x="${hx+4}" y="${H-34}" style="fill:var(--s1)">HAWT</text></svg>`;
+  $('#ch-levers').innerHTML = sv + '<div class="tip"></div>';
+  const tip = $('#ch-levers .tip');
+  $('#ch-levers').querySelectorAll('.bar').forEach(b => { b.addEventListener('pointerenter', () => { tip.textContent = b.dataset.t; tip.style.opacity = 1; tip.style.left = '12px'; tip.style.top = (+b.getAttribute('y') - 24) + 'px'; }); b.addEventListener('pointerleave', () => tip.style.opacity = 0); });
+  // size sweep chart
+  const base = L[0].sweep, fin = L.filter(x => x.kept).slice(-1)[0].sweep;
+  const xs = base.map(p => p.P/1e6);
+  lineChart($('#ch-size'), {series:[
+      {name:'Baseline Daisy-type ring', x:xs, y:base.map(p => p.capex_per_MW/1e6), c:'--s2'},
+      {name:'Optimised ring (all kept levers)', x:xs, y:fin.map(p => p.capex_per_MW/1e6), c:'--s3'},
+      {name:'5 MW HAWT reference', x:xs, y:xs.map(() => hawt.capex_per_MW/1e6), c:'--s1', dash:true},
+    ], xlog:true, ylog:false, xr:[0.05, 10], yr:[0, 7], xlabel:'unit rated power (MW)', ylabel:'capex per rated MW ($M)',
+    xticks:[0.05,0.1,0.25,0.5,1,2,5,10], yticks:[0,1,2,3,4,5,6,7], xfmt:(v)=> v < 1 ? fmt(v*1000,0)+' kW' : v+' MW', yfmt:(v,f)=> f ? '$'+v.toFixed(2)+'M' : '$'+v+'M'});
+  // TRPT FEA table
+  const F = RO.fea, ramp = RO.fea_ramp, coll = ramp.find(x => x.collapsed);
+  const rows = [
+    ['Design torque applied (1.6× rated)', fmt(F.Q/1e6,1) + ' MN·m'],
+    ['Twist per bay: FEA (with gravity sag) / analytic design', fmt(Math.max(...F.seg_twist_deg),1) + '° / ' + fmt(D.delta_deg,1) + '°'],
+    ['Total shaft twist at design torque', fmt(F.total_twist_deg,0) + '° over ' + D.n_seg + ' bays'],
+    ['Max line tension / line break load', fmt(F.max_line_T/1e3,0) + ' kN / ' + fmt(D.T_line*3/1e3,0) + ' kN'],
+    ['Lines slack on the lower side (gravity)', F.min_line_T < 1 ? 'yes, a few: lifter tension should be raised in light wind' : 'none'],
+    ['Max ring compression (FEA) / spoked-ring buckling load', fmt(F.max_ring_C/1e3,0) + ' kN / ' + fmt(F.ring_C_cr/1e3,0) + ' kN (SF ' + fmt(F.ring_buckling_SF,1) + ')'],
+    ['Over-twist collapse (rings collide)', coll ? fmt(coll.mult,2) + '× design torque = ' + fmt(coll.mult*1.6,1) + '× rated' : '> ' + ramp.slice(-1)[0].mult + '× design'],
+    ['Axial shortening of shaft at design torque', fmt(F.shortening,1) + ' m'],
+  ];
+  $('#trpt-tbl').innerHTML = '<tr><th>Result</th><th class="n">Value</th></tr>' + rows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td></tr>`).join('');
+  const C = RO.carousel;
+  $('#car-text').innerHTML = `${C.n_kites} soft kites of ${fmt(C.S,0)} m² pull carts around a ${fmt(2*C.Rc,0)} m diameter rail. Each kite steers inside its ±60° wind window. Where the cart heads into the wind the kite is depowered and costs energy, much like the reel-in phase of a pumping kite. The orbit-averaged model gives <b>${fmt(C.P/1e6,1)} MW</b> at rated wind with a cart speed of ${fmt(C.vc,1)} m/s, a ${(C.cf*100).toFixed(0)}% capacity factor and <b>$${fmt(C.capex_per_MW/1e6,2)}M per rated MW</b> (LCOE $${fmt(C.lcoe,0)}/MWh). The ${fmt(2*Math.PI*C.Rc/1000,1)} km rail and the foundations that resist each cart's ${fmt(C.peak_tether_T/1e6,2)} MN sideways pull cost more than everything airborne. This matches Canale, Fagiano and Milanese, who found carousel power similar to yo-yo power, but here it comes with a much bigger ground structure. <b>Verdict: worse than a HAWT and worse than the rotary ring.</b>`;
+})();
+
+/* ---------------- section 8: global LCOE search ---------------- */
+(function lcoe(){
+  const O = DATA.lcoe; if (!O) return;
+  const res = O.results, on = res.filter(r => r.site === 'onshore'), off = res.filter(r => r.site === 'offshore');
+  const big = v => v >= 1e9 ? '$' + fmt(v/1e9,1) + 'B' : '$' + fmt(v/1e6, v >= 1e8 ? 0 : 2) + 'M';
+  const pc = (a, b) => Math.round((1 - a / b) * 100);
+  const hover = el => { const tip = document.createElement('div'); tip.className = 'tip'; el.appendChild(tip);
+    el.querySelectorAll('.bar').forEach(b => { b.addEventListener('pointerenter', () => { tip.textContent = b.dataset.t; tip.style.opacity = 1; tip.style.left = '12px'; tip.style.top = (+b.getAttribute('y') - 24) + 'px'; }); b.addEventListener('pointerleave', () => tip.style.opacity = 0); }); };
+  // ranking chart
+  const names = [...new Set(res.filter(r => r.arch !== 'hawt_ref').map(r => r.name))];
+  const rowsC = names.map(n => ({name: n, on: on.find(r => r.name === n), off: off.find(r => r.name === n)})).sort((a, b) => a.on.lcoe - b.on.lcoe);
+  const refOn = on.find(r => r.arch === 'hawt_ref'), refOff = off.find(r => r.arch === 'hawt_ref');
+  rowsC.push({name: refOn.name, on: refOn, off: refOff});
+  const W = 640, rowH = 46, l = 250, rr = 56, top = 26, H = rowsC.length*rowH + top + 36;
+  const mx = Math.max(...rowsC.map(x => x.off.lcoe)) * 1.06;
+  const sx = v => l + v / mx * (W - l - rr);
+  let sv = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="LCOE by architecture and site">`;
+  sv += `<rect x="${l}" y="4" width="12" height="10" rx="2" fill="var(--s3)"/><text x="${l+16}" y="13">onshore</text><rect x="${l+90}" y="4" width="12" height="10" rx="2" fill="var(--s2)"/><text x="${l+106}" y="13">floating offshore</text>`;
+  for (let v = 0; v <= mx; v += 20) sv += `<line x1="${sx(v)}" x2="${sx(v)}" y1="${top}" y2="${H-30}" stroke="var(--rule)"/><text x="${sx(v)}" y="${H-12}" text-anchor="middle">$${v}</text>`;
+  rowsC.forEach((x, i) => { const y = top + 4 + i*rowH;
+    sv += `<text x="${l-8}" y="${y+14}" text-anchor="end" style="${x.on.arch === 'hawt_ref' ? 'fill:var(--ink-3)' : ''}">${x.name.split(' (')[0].replace('Conventional turbine, LCOE-optimised', 'Conventional turbine, optimised').replace('Conventional 5 MW turbine as built', '5 MW turbine as built').replace('Fly-gen rotary kite ring', 'Fly-gen kite ring').replace('Pumping kite, soft kite', 'Pumping kite, soft').slice(0, 36)}</text>`;
+    [['on', 'var(--s3)', 0], ['off', 'var(--s2)', 19]].forEach(([k, c, dy]) => { const r = x[k];
+      sv += `<rect class="bar" data-t="${k === 'on' ? 'Onshore' : 'Floating offshore'} · ${r.label} · $${fmt(r.capex_per_MW/1e6,2)}M per rated MW · CF ${(r.cf*100).toFixed(0)}% · $${fmt(r.lcoe,1)}/MWh" x="${l}" y="${y+dy}" width="${Math.max(2, sx(r.lcoe)-l-2)}" height="16" rx="4" fill="${c}" ${x.on.arch === 'hawt_ref' ? 'opacity=".55"' : ''}/>`;
+      sv += `<text x="${sx(r.lcoe)+5}" y="${y+dy+13}" style="fill:var(--ink)">$${fmt(r.lcoe,0)}</text>`; }); });
+  sv += '</svg>';
+  $('#ch-rank').innerHTML = sv; hover($('#ch-rank'));
+  // winner
+  const bestOn = on.filter(r => !r.arch.startsWith('hawt')).sort((a, b) => a.lcoe - b.lcoe)[0], hOn = on.find(r => r.arch === 'hawt');
+  const bestOff = off.filter(r => !r.arch.startsWith('hawt')).sort((a, b) => a.lcoe - b.lcoe)[0], hOff = off.find(r => r.arch === 'hawt');
+  $('#v-rot').textContent += ` · lowest cost of energy with everything free: $${fmt(bestOn.lcoe,0)}/MWh vs $${fmt(hOn.lcoe,0)} for the best conventional turbine (${pc(bestOn.lcoe, hOn.lcoe)}% lower)`;
+  $('#lcoe-text').innerHTML = `<b>Lowest cost of energy found: $${fmt(bestOn.lcoe,1)}/MWh onshore</b>, from the ${bestOn.name.toLowerCase()}: ${bestOn.label}. That is ${pc(bestOn.lcoe, hOn.lcoe)}% below the LCOE-optimised conventional turbine on the same site ($${fmt(hOn.lcoe,1)}/MWh: ${hOn.label}) and ${pc(bestOn.lcoe, refOn.lcoe)}% below the 5 MW turbine as built ($${fmt(refOn.lcoe,1)}). Capacity factor ${(bestOn.cf*100).toFixed(0)}% against ${(hOn.cf*100).toFixed(0)}%; capex $${fmt(bestOn.capex_per_MW/1e6,2)}M per rated MW against $${fmt(hOn.capex_per_MW/1e6,2)}M. Offshore the gap widens: $${fmt(bestOff.lcoe,0)} against $${fmt(hOff.lcoe,0)}/MWh (${pc(bestOff.lcoe, hOff.lcoe)}% lower), because a tethered machine needs a buoy where a turbine needs a floating platform that resists a 150 m lever arm. The optimiser's choices tell the story. It flew at ${fmt(bestOn.h,0)} m for stronger wind. It stacked ${bestOn.stack} rotors on one tether to share the tether and the ground station, spaced 1.5 diameters apart with each rotor downstream losing 10% to the wake of the one before. And it rated the machine for only ${fmt(bestOn.x[3],1)} m/s at rotor height, close to the mean wind there, which is what pushes the capacity factor to ${(bestOn.cf*100).toFixed(0)}%. A conventional turbine cannot follow that last move, because its swept area is made of blades, tower and foundation; the optimiser left it at ${fmt(hOn.specific_power,0)} W/m². The single-wing fly-gen machine (Makani-type) is second at $${fmt(on.find(r => r.arch === 'flywing').lcoe,0)}/MWh, limited by span and by tether drag; pumping kites lose on generator peak rating and tether and wing wear.`;
+  $('#lcoe-bom').innerHTML = '<tr><th>Winning onshore design: bill of materials</th><th class="n">Cost</th><th class="n">Share</th></tr>' + bestOn.items.map(it => `<tr><td>${it[0]}</td><td class="n">${big(it[1])}</td><td class="n">${(100*it[1]/bestOn.capex).toFixed(0)}%</td></tr>`).join('') + `<tr><td><b>Capex</b> · opex $${fmt(bestOn.opex/1e3,0)}k/yr · ${fmt(bestOn.aep_kwh/1e6,1)} GWh/yr</td><td class="n"><b>${big(bestOn.capex)}</b></td><td class="n"></td></tr>`;
+  // tornado
+  const S = O.sens_onshore, base = S.best.lcoe, rows = S.rows;
+  const W2 = 640, rH = 30, l2 = 250, H2 = rows.length*rH + 46;
+  const lo = Math.min(base, ...rows.map(r => Math.min(r.lo, r.hi))) - 2, hi = Math.max(...rows.map(r => Math.max(r.lo, r.hi))) + 5;
+  const tx = v => l2 + (v - lo) / (hi - lo) * (W2 - l2 - 70);
+  let tv = `<svg viewBox="0 0 ${W2} ${H2}" role="img" aria-label="LCOE sensitivity tornado">`;
+  for (let v = Math.ceil(lo / 5) * 5; v <= hi; v += 5) tv += `<line x1="${tx(v)}" x2="${tx(v)}" y1="4" y2="${H2-30}" stroke="var(--rule)"/><text x="${tx(v)}" y="${H2-12}" text-anchor="middle">$${v}</text>`;
+  rows.forEach((r, i) => { const y = 8 + i*rH, a = Math.min(r.lo, r.hi), b = Math.max(r.lo, r.hi);
+    tv += `<text x="${l2-8}" y="${y+15}" text-anchor="end">${r.name}</text><rect class="bar" data-t="${r.name}: $${fmt(r.lo,1)} … $${fmt(r.hi,1)}/MWh" x="${tx(a)}" y="${y+3}" width="${Math.max(2, tx(b)-tx(a))}" height="18" rx="4" fill="var(--s3)"/><text x="${tx(b)+5}" y="${y+16}" style="fill:var(--ink-3)">$${fmt(a,0)}–${fmt(b,0)}</text>`; });
+  tv += `<line x1="${tx(base)}" x2="${tx(base)}" y1="0" y2="${H2-30}" stroke="var(--s1)" stroke-width="2" stroke-dasharray="5 4"/></svg>`;
+  $('#ch-tornado').innerHTML = tv; hover($('#ch-tornado'));
+  // site sweep
+  const SW = O.site_sweep;
+  lineChart($('#ch-site'), {series:[
+      {name:'Fly-gen kite ring, re-optimised per site', x:SW.map(s => s.vmean), y:SW.map(s => s.ring.lcoe), c:'--s3'},
+      {name:'Conventional turbine, re-optimised per site', x:SW.map(s => s.vmean), y:SW.map(s => s.hawt.lcoe), c:'--s1'},
+    ], xlog:false, ylog:false, xr:[5.5, 11], yr:[0, 100], xlabel:'site mean wind at 90 m (m/s)', ylabel:'LCOE ($/MWh)',
+    xticks:[6, 7.5, 9, 10.5], yticks:[0, 20, 40, 60, 80, 100], xfmt:v => v + ' m/s', yfmt:(v, f) => '$' + (f ? v.toFixed(1) : v)});
+  // ladder + floor
+  const LE = O.ladder_hawt_end;
+  $('#lcoe-stretch').innerHTML = '<tr><th>Step</th><th class="n">LCOE $/MWh</th><th class="n">Capacity factor</th><th class="n">$ per rated MW</th></tr>' + O.ladder.map(s =>`<tr><td>${s.name}<div class="eyebrow" style="margin-top:.2rem">${s.label}</div></td><td class="n"><b>${fmt(s.lcoe,1)}</b></td><td class="n">${(s.cf*100).toFixed(0)}%</td><td class="n">$${fmt(s.capex_per_MW/1e6,2)}M</td></tr>`).join('') + `<tr style="color:var(--ink-3)"><td>For comparison: the best conventional turbine on that 10.5 m/s site with the same finance<div class="eyebrow" style="margin-top:.2rem">${LE.label}</div></td><td class="n">${fmt(LE.lcoe,1)}</td><td class="n">${(LE.cf*100).toFixed(0)}%</td><td class="n">$${fmt(LE.capex_per_MW/1e6,2)}M</td></tr>`;
+  const drive = bestOn.items.find(i => i[0].startsWith('On-wing'))[1], bos = bestOn.items.filter(i => /Balance|Ground|Launch|Foundation/.test(i[0])).reduce((a, i) => a + i[1], 0);
+  $('#lcoe-floor').innerHTML = `<b>Why it does not go to zero.</b> In the winning design, the parts every wind machine needs whatever carries the wings, the turbines, generators and power electronics (${Math.round(100*drive/bestOn.capex)}% of capex), and grid connection, control, foundation and site works (${Math.round(100*bos/bestOn.capex)}%), make up ${Math.round(100*(drive+bos)/bestOn.capex)}% of the cost. The airborne structure that replaced blades, tower and foundation is the rest. The floor for wind is set by the generator-to-grid chain and by finance, not by the structure. That is why stretch technology lands near $${fmt(O.ladder[2].lcoe,0)}/MWh on this site, and the only ways below it are cheaper money ($${fmt(O.ladder[4].lcoe,0)} with a 30-year life and 5% finance) and a windier site ($${fmt(O.ladder[5].lcoe,0)} at 10.5 m/s, where the best conventional turbine with the same finance makes $${fmt(LE.lcoe,0)}). Everything in this section is concept-level, ±30–40%, and the winning machine has ${8*bestOn.stack} wings of ${fmt(bestOn.span,0)} m span, on-wing turbines and a ${fmt(bestOn.L_t,0)} m conductive tether that nobody has built at this scale.`;
+  const ft = $('#final-text'); ft.lastElementChild.insertAdjacentHTML('beforebegin', `<p><b>4. With everything free, the cheapest MWh found is $${fmt(bestOn.lcoe,0)}/MWh</b> (section 8), from a fly-gen kite ring with ${bestOn.stack} stacked rotors flying at ${fmt(bestOn.h,0)} m and rated near the mean wind. The best conventional turbine the same model can build on this site is $${fmt(hOn.lcoe,0)}/MWh, so the gap is ${pc(bestOn.lcoe, hOn.lcoe)}%. With every technology assumption at its optimistic end it reaches $${fmt(O.ladder[2].lcoe,0)}; with a 30-year life and 5% finance, $${fmt(O.ladder[4].lcoe,0)}; and on a 10.5 m/s site, $${fmt(O.ladder[5].lcoe,0)}, against $${fmt(LE.lcoe,0)} for the best conventional turbine there.</p>`);
+})();
+
+/* ---------------- section 9: road to $10 ---------------- */
+(function t10(){
+  const T = DATA.t10; if (!T) return;
+  const money = v => '$' + fmt(v, 1);
+  $('#t10-floors').innerHTML = '<tr><th>Every belief at its floor, design re-optimised</th><th class="n">LCOE $/MWh</th><th class="n">Capacity factor</th><th class="n">$ per rated MW</th></tr>' +
+    T.floors.map(f => `<tr${f.name === T.floor_best.name ? ' style="font-weight:600"' : ''}><td>${f.name}<div class="eyebrow" style="margin-top:.2rem">${f.label}</div></td><td class="n">${fmt(f.lcoe,1)}</td><td class="n">${(f.cf*100).toFixed(0)}%</td><td class="n">$${fmt(f.capex_per_MW/1e6,2)}M</td></tr>`).join('');
+  const Lz = T.least, ind = T.indispensable.slice().sort((a, b) => b.lcoe_without - a.lcoe_without);
+  $('#t10-text').innerHTML = `<b>Yes, $${fmt(T.target,0)}/MWh is inside the model's reach</b>: with every belief at its floor the best machine makes ${money(T.floor_best.lcoe)}/MWh (${T.floor_best.name.toLowerCase()}). A conventional turbine on the same site with the same cheap money, at its own costs, makes ${money(T.floors[T.floors.length-1].lcoe)}. The table below is the least-stretched set of beliefs that just reaches $${fmt(T.target,0)}` + (Lz ? `: ${Lz.label}, capacity factor ${(Lz.cf*100).toFixed(0)}%, $${fmt(Lz.capex_per_MW/1e6,2)}M per rated MW.` : '.');
+  if (Lz) $('#t10-beliefs').innerHTML = '<tr><th>Belief</th><th class="n">Study base</th><th class="n">Needed for $' + fmt(T.target,0) + '</th><th class="n">Floor</th><th>Real-world analogue for the floor</th></tr>' +
+    T.beliefs.map((b, i) => { const t = Lz.t[i]; return `<tr${t > 0.95 ? ' style="font-weight:600"' : ''}><td>${b.label}</td><td class="n">${fmt(b.base, b.base < 20 ? 1 : 0)}</td><td class="n">${fmt(Lz.values[i], b.base < 20 ? 1 : 0)} ${t > 0.95 ? '<span class="pill no">at floor</span>' : (t < 0.03 ? '<span class="pill ok">unchanged</span>' : '')}</td><td class="n">${fmt(b.floor, b.base < 20 ? 1 : 0)}</td><td>${b.analogue}</td></tr>`; }).join('');
+  $('#t10-crit').innerHTML = `<b>One belief is indispensable.</b> With everything else at its floor but the flying drive left at today's $${fmt(ind[0].base,0)}/kW, the cost is ${money(ind[0].lcoe_without)}/MWh; no other single belief matters half as much (next: ${ind[1].label.split(',')[0].toLowerCase()}, ${money(ind[1].lcoe_without)} without it). In the base design the flying turbines, generators and converters are almost half of capex, priced like aerospace hardware. Electric-car drive units, which are the same machine built by the million, cost $15–25/kW. So the road to $10/MWh is not a better kite. It is a fast wing (60–75 m/s airspeed, so small direct-drive propeller-generators work) carrying car-industry motors and inverters, on a site with at least 9 m/s wind, financed at under 6%. Wing and tether costs can stay where they are.`;
+  const X = DATA.lbm3d; if (!X || !X.single) return;
+  const p1 = X.single.P[0];
+  $('#lbm3d-text').innerHTML = `Section 8 assumed each stacked rotor loses 10% of power to the wake of the one before it. A 3D lattice-Boltzmann simulation checks that directly: tilted actuator annuli on a 22° tether, compared with one isolated rotor in the same domain. ` + X.runs.map(r => `With ${r.n} rotors spaced ${r.spacing} diameters apart, the rotors make ${r.P.map(p => (100*p/p1).toFixed(0) + '%').join(', ')} of the isolated rotor's power.`).join(' ') + ` ${X.note}`;
+  if (X.img) { $('#lbm3d-img').src = X.img; $('#lbm3d-fig').style.display = ''; }
+})();
+
+/* ---------------- 3D model ---------------- */
+(function three(){
+  if (!window.THREE) { $('#hud').innerHTML = '<b>3D viewer unavailable</b>The 3D library could not load.'; return; }
+  const host = $('#viewer');
+  const renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  host.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 1, 8000);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x667788, 0.85));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.75); sun.position.set(-300, 500, 400); scene.add(sun);
+  // world: x downwind, y up (three), z lateral. Data z-up -> three y-up mapping: (x, y, z)data -> (x, z, -y)
+  const P = (x, y, z) => new THREE.Vector3(x, z, -y);
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(1400, 64), new THREE.MeshLambertMaterial({color:0x9fb09a}));
+  ground.rotation.x = -Math.PI/2; scene.add(ground);
+  const grid = new THREE.GridHelper(2000, 40, 0x7f907c, 0x8c9d89); grid.position.y = 0.05; scene.add(grid);
+
+  const stressColor = (v, vmax) => { // sequential: light blue -> dark blue -> accent at overload
+    const t = Math.min(v / vmax, 1);
+    const a = new THREE.Color(0xcde2fb), b = new THREE.Color(0x184f95), c = new THREE.Color(0xd4471f);
+    return t < 0.8 ? a.clone().lerp(b, t/0.8) : b.clone().lerp(c, (t-0.8)/0.2);
+  };
+  const H = 72;
+  // ---- windsock group (from FEA) ----
+  function makeSock(dtRatio){
+    const g = new THREE.Group();
+    const M = DATA.mesh;
+    const pos = new Float32Array(M.x.length * 3), col = new Float32Array(M.x.length * 3);
+    const nodeS = new Float32Array(M.x.length), cnt = new Float32Array(M.x.length);
+    M.T.forEach((t, e) => t.forEach(n => { nodeS[n] += M.s1[e]; cnt[n]++; }));
+    const vmax = DATA.mem.fabric_strength_kN_m / 5;
+    M.x.forEach((p, i) => { const v = P(p[0], p[1], p[2] + H); pos.set([v.x, v.y, v.z], i*3); });
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setIndex(M.T.flat());
+    geo.computeVertexNormals();
+    const colsFea = new Float32Array(M.x.length*3);
+    for (let i = 0; i < M.x.length; i++) { const c = stressColor(nodeS[i]/Math.max(cnt[i],1), vmax); colsFea.set([c.r, c.g, c.b], i*3); }
+    geo.setAttribute('color', new THREE.BufferAttribute(colsFea, 3));
+    const mat = new THREE.MeshLambertMaterial({vertexColors:true, side:THREE.DoubleSide, transparent:true, opacity:0.93});
+    const plain = new THREE.MeshLambertMaterial({color:0xe9e3d6, side:THREE.DoubleSide, transparent:true, opacity:0.93});
+    const mesh = new THREE.Mesh(geo, mat); g.add(mesh); g.userData.mesh = mesh; g.userData.mats = [mat, plain];
+    // rigid nozzle 6.3 -> throat
+    const rt = 63 * dtRatio, xs = (63 - 6.3) / 63 * 126;
+    if (rt < 6.3) {
+      const nz = new THREE.Mesh(new THREE.CylinderGeometry(rt, 6.3, 126 - xs - rt*2 + 2, 48, 1, true), new THREE.MeshStandardMaterial({color:0x8a9aa6, metalness:.6, roughness:.4, side:THREE.DoubleSide}));
+      nz.rotation.z = Math.PI/2; nz.position.copy(P(xs + (126-xs)/2, 0, H)); g.add(nz);
+    }
+    // turbine rotor at throat
+    const rot = new THREE.Group(); const bm = new THREE.MeshStandardMaterial({color:0xf4f4f4});
+    for (let k = 0; k < 3; k++) { const b = new THREE.Mesh(new THREE.BoxGeometry(0.15, Math.max(rt*0.95,0.5), Math.max(rt*0.12,0.08)), bm); b.position.y = rt*0.48; const h = new THREE.Group(); h.add(b); h.rotation.x = k*2*Math.PI/3; rot.add(h); }
+    rot.position.copy(P(126, 0, H)); g.add(rot); g.userData.rotor = rot;
+    // frame from FEA
+    const F = DATA.frame.viz;
+    F.elems.forEach(([a, b, grp, u]) => {
+      const pa = P(...F.nodes[a]), pb = P(...F.nodes[b]);
+      const sec = DATA.frame.sections[grp];
+      const r = Math.max(sec.D/2, grp === 'spoke' ? 0.25 : 0.3);
+      const len = pa.distanceTo(pb);
+      const cyl = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, grp === 'spoke' ? 5 : 12), new THREE.MeshStandardMaterial({color:0x51606b, metalness:.5, roughness:.5}));
+      cyl.userData.u = u; cyl.userData.isFrame = true;
+      cyl.position.copy(pa).add(pb).multiplyScalar(0.5);
+      cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), pb.clone().sub(pa).normalize());
+      g.add(cyl);
+    });
+    return g;
+  }
+  // ---- kite ----
+  function makeKite(){
+    const g = new THREE.Group();
+    const A = DATA.models.kite.area_soft_m2, span = Math.sqrt(A * 1.6), chord = A / span;
+    const geo = new THREE.BufferGeometry(); const nS = 40, nC = 8, pos = [], idx = [];
+    for (let i = 0; i <= nS; i++) for (let j = 0; j <= nC; j++) {
+      const s = (i/nS - .5), th = s * 2.2, R = span/2.2;
+      const camber = Math.sin(j/nC*Math.PI) * chord * 0.08;
+      pos.push((j/nC - .3) * chord, R*Math.cos(th) - R + camber, R*Math.sin(th));
+    }
+    for (let i = 0; i < nS; i++) for (let j = 0; j < nC; j++) { const a = i*(nC+1)+j, b = a+nC+1; idx.push(a, b, a+1, b, b+1, a+1); }
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setIndex(idx); geo.computeVertexNormals();
+    const wing = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({color:0xd4471f, side:THREE.DoubleSide}));
+    const kite = new THREE.Group(); kite.add(wing);
+    // bridle lines
+    const lineMat = new THREE.LineBasicMaterial({color:0x223344});
+    const bp = []; for (let i = 0; i <= 8; i++) { const s = (i/8-.5)*2.2, R = span/2.2; bp.push(new THREE.Vector3(0, R*Math.cos(s)-R, R*Math.sin(s)), new THREE.Vector3(0, -span*0.55, 0)); }
+    kite.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(bp), lineMat));
+    g.add(kite); g.userData.kite = kite;
+    // ground station
+    const gs = new THREE.Mesh(new THREE.BoxGeometry(14, 6, 10), new THREE.MeshStandardMaterial({color:0x51606b})); gs.position.set(0, 3, 0); g.add(gs);
+    const drum = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.2, 7, 24), new THREE.MeshStandardMaterial({color:0x9aa7b0, metalness:.6})); drum.rotation.x = Math.PI/2; drum.position.set(0, 8, 0); g.add(drum);
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 1, 30, 10), new THREE.MeshStandardMaterial({color:0x51606b})); mast.position.set(-10, 15, 0); g.add(mast);
+    const teth = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]), new THREE.LineBasicMaterial({color:0x10202b}));
+    g.add(teth); g.userData.tether = teth;
+    // trail
+    const trailN = 240, trail = new THREE.Line(new THREE.BufferGeometry().setFromPoints(Array.from({length:trailN}, () => new THREE.Vector3())), new THREE.LineBasicMaterial({color:0xd4471f, transparent:true, opacity:.45}));
+    g.add(trail); g.userData.trail = trail; g.userData.trailPts = [];
+    return g;
+  }
+  // ---- HAWT ----
+  function makeHawt(){
+    const g = new THREE.Group(); const m = new THREE.MeshStandardMaterial({color:0xf2f4f5, roughness:.6});
+    const tw = new THREE.Mesh(new THREE.CylinderGeometry(1.94, 3, 87.6, 24), m); tw.position.y = 43.8; g.add(tw);
+    const nac = new THREE.Mesh(new THREE.BoxGeometry(14, 4, 4), m); nac.position.set(3, 90, 0); g.add(nac);
+    const rot = new THREE.Group(); rot.position.set(-5, 90, 0);
+    for (let k = 0; k < 3; k++) { const b = new THREE.Mesh(new THREE.BoxGeometry(0.8, 61.5, 3.2), m); b.position.y = 31.5; const h = new THREE.Group(); h.add(b); h.rotation.x = k*2*Math.PI/3; rot.add(h); }
+    const hub = new THREE.Mesh(new THREE.SphereGeometry(2, 16, 12), m); rot.add(hub);
+    g.add(rot); g.userData.rotor = rot;
+    return g;
+  }
+
+  // ---- rotary kite ring (from the nonlinear TRPT FEA geometry) ----
+  function makeRotary(){
+    const g = new THREE.Group(), RO = DATA.rot, D = RO.design, Gm = RO.fea_geom;
+    const beta = D.beta_deg*Math.PI/180;
+    const ax = P(Math.cos(beta), 0, Math.sin(beta)).normalize();      // shaft axis in three coords
+    const spin = new THREE.Group(); g.add(spin);                     // everything that rotates about the shaft axis
+    const ringMat = new THREE.MeshStandardMaterial({color:0x2b2f33, metalness:.3, roughness:.5});
+    const lineMat = new THREE.LineBasicMaterial({color:0x51606b});
+    const segPts = [];
+    Gm.bars.forEach(([a, b], i) => {
+      const pa = P(...Gm.x[a]), pb = P(...Gm.x[b]);
+      if (Gm.kinds[i] === 0) {
+        const n = DATA.rot.design.n_lines;
+        if (Math.abs(a - b) === 2 || Math.abs(a - b) === n - 2) return;          // skip bending-proxy chords
+        const len = pa.distanceTo(pb), cyl = new THREE.Mesh(new THREE.CylinderGeometry(Math.max(D.ring_D/2, .25), Math.max(D.ring_D/2, .25), len, 6), ringMat);
+        cyl.position.copy(pa).add(pb).multiplyScalar(.5); cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), pb.clone().sub(pa).normalize()); spin.add(cyl);
+      } else segPts.push(pa, pb);
+    });
+    spin.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(segPts), lineMat));
+    // ring spokes (bicycle-wheel rings): draw on each ring
+    const n = D.n_lines, nr = D.n_seg + 1, sp = [];
+    for (let k = 0; k < nr; k++) { const c = new THREE.Vector3(); const ring = []; for (let j = 0; j < n; j++) { const v = P(...Gm.x[k*n+j]); ring.push(v); c.add(v); } c.multiplyScalar(1/n);
+      const rr = ring[0].distanceTo(c); const u = ring[0].clone().sub(c).normalize(), w = ax.clone().cross(u).normalize();
+      for (let j = 0; j < 24; j++) { const th = j/24*Math.PI*2; sp.push(c, c.clone().add(u.clone().multiplyScalar(rr*Math.cos(th))).add(w.clone().multiplyScalar(rr*Math.sin(th)))); } }
+    spin.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(sp), new THREE.LineBasicMaterial({color:0x9aa7b0, transparent:true, opacity:.5})));
+    // rotors at the top: kite wings on a ring of radius R
+    const top = new THREE.Vector3(); for (let j = 0; j < n; j++) top.add(P(...Gm.x[(nr-1)*n+j])); top.multiplyScalar(1/n);
+    const u0 = P(0, 1, 0).sub(ax.clone().multiplyScalar(0)).normalize(); const w0 = ax.clone().cross(u0).normalize();
+    const wingMat = new THREE.MeshLambertMaterial({color:0xd4471f, side:THREE.DoubleSide});
+    const rl = [];
+    for (let s = 0; s < D.opt.stack; s++) {
+      const hubC = top.clone().add(ax.clone().multiplyScalar(18 + s * 0.45 * D.R));
+      for (let i = 0; i < D.N; i++) {
+        const th = (i + s*0.5)/D.N*Math.PI*2, dir = u0.clone().multiplyScalar(Math.cos(th)).add(w0.clone().multiplyScalar(Math.sin(th)));
+        const tang = ax.clone().cross(dir).normalize();
+        const wing = new THREE.Mesh(new THREE.BoxGeometry(D.b, 1.2, D.c), wingMat);
+        const basis = new THREE.Matrix4().makeBasis(dir, ax, tang); wing.quaternion.setFromRotationMatrix(basis);
+        wing.rotateX(0.18);                                         // pitch
+        wing.position.copy(hubC).add(dir.clone().multiplyScalar(D.R)); spin.add(wing);
+        // rotor lines: wing inner/outer ends to the top ring and to neighbour wings (rotor ring)
+        const inner = hubC.clone().add(dir.clone().multiplyScalar(D.R - D.b/2)), outer = hubC.clone().add(dir.clone().multiplyScalar(D.R + D.b/2));
+        const nodeIdx = (nr-1)*n + Math.round(i/D.N*n) % n;
+        rl.push(inner, P(...Gm.x[nodeIdx]), outer, P(...Gm.x[nodeIdx]));
+        const th2 = (i + 1 + s*0.5)/D.N*Math.PI*2, dir2 = u0.clone().multiplyScalar(Math.cos(th2)).add(w0.clone().multiplyScalar(Math.sin(th2)));
+        rl.push(outer, hubC.clone().add(dir2.multiplyScalar(D.R + D.b/2)));
+      }
+    }
+    spin.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(rl), new THREE.LineBasicMaterial({color:0x223344})));
+    g.userData = {spin, ax, top};
+    // lifter kite (crosswind figure-8) above the rotor
+    const lif = new THREE.Mesh(new THREE.BoxGeometry(Math.sqrt(D.S_lift*3), 0.5, Math.sqrt(D.S_lift/3)), new THREE.MeshLambertMaterial({color:0x2a78d6, side:THREE.DoubleSide}));
+    g.add(lif); g.userData.lifter = lif;
+    const lt = new THREE.Line(new THREE.BufferGeometry().setFromPoints([top, top]), new THREE.LineBasicMaterial({color:0x10202b})); g.add(lt); g.userData.lifterLine = lt;
+    // ground station
+    const gs = new THREE.Mesh(new THREE.CylinderGeometry(14, 16, 6, 24), new THREE.MeshStandardMaterial({color:0x51606b})); gs.position.set(0, 3, 0); g.add(gs);
+    const gen = new THREE.Mesh(new THREE.BoxGeometry(10, 6, 8), new THREE.MeshStandardMaterial({color:0x8a9aa6})); gen.position.set(-8, 9, 0); g.add(gen);
+    return g;
+  }
+  // ---- ground carousel ----
+  function makeCarousel(){
+    const g = new THREE.Group(), C = DATA.rot.carousel;
+    const rail = new THREE.Mesh(new THREE.TorusGeometry(C.Rc, 2.5, 6, 180), new THREE.MeshStandardMaterial({color:0x51606b}));
+    rail.rotation.x = Math.PI/2; rail.position.y = 1.5; g.add(rail);
+    const carts = [], kites = [], lines = [];
+    for (let i = 0; i < C.n_kites; i++) {
+      const cart = new THREE.Mesh(new THREE.BoxGeometry(14, 6, 8), new THREE.MeshStandardMaterial({color:0x2b2f33})); g.add(cart); carts.push(cart);
+      const span = Math.sqrt(C.S*4), chord = C.S/span;
+      const k = new THREE.Mesh(new THREE.BoxGeometry(chord, 0.5, span), new THREE.MeshLambertMaterial({color:0xd4471f, side:THREE.DoubleSide})); g.add(k); kites.push(k);
+      const ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]), new THREE.LineBasicMaterial({color:0x223344, transparent:true, opacity:.6})); g.add(ln); lines.push(ln);
+    }
+    g.userData = {carts, kites, lines, C};
+    return g;
+  }
+
+  const sock = makeSock(0.01), sock10 = makeSock(0.1), kite = makeKite(), hawt = makeHawt(), hawtRef = makeHawt(), rotk = makeRotary(), car = makeCarousel();
+  hawtRef.position.set(-80, 0, -160);
+  [sock, sock10, kite, hawt, hawtRef, rotk, car].forEach(o => scene.add(o));
+
+  // flow particles: Rankine half-body (uniform flow + point source sized to the mouth)
+  const NP = 1600; const pg = new THREE.BufferGeometry(); const pp = new Float32Array(NP*3); const pc = new Float32Array(NP*3);
+  pg.setAttribute('position', new THREE.BufferAttribute(pp, 3)); pg.setAttribute('color', new THREE.BufferAttribute(pc, 3));
+  const pts = new THREE.Points(pg, new THREE.PointsMaterial({size:2.2, vertexColors:true, sizeAttenuation:true}));
+  scene.add(pts);
+  const part = []; let dtR = 0.01;
+  function seed(i, initial){
+    const ang = Math.random()*Math.PI*2, rr = Math.sqrt(Math.random()) * 120;
+    const capture = 63 * dtR * Math.sqrt(1.21) * (dtR > .05 ? 1 : 6);   // throat capture radius (enlarged ×6 for visibility at d/100)
+    const cap = Math.random() < 0.06;
+    part[i] = {x: initial ? -380 + Math.random()*620 : -380, r: cap ? Math.random()*capture : rr, a: ang, cap};
+  }
+  for (let i = 0; i < NP; i++) seed(i, true);
+  function stepParticles(dt){
+    const U = 11.4*3, m = U*Math.PI*63*63*1.05, xs = -8;
+    for (let i = 0; i < NP; i++) {
+      const p = part[i];
+      if (p.cap) { // captured stream tube: converges into the throat
+        const R0 = 63*dtR*Math.sqrt(1.21)*(dtR > .05 ? 1 : 6);
+        const v = p.x < 0 ? U*0.5 : U*0.5*Math.min(30, 1/Math.pow(Math.max(1 - p.x/126*0.99, 0.01), 2) * (dtR*dtR*50 + 0.02));
+        p.x += Math.min(v, 150)*dt;
+        const rr = p.x < 0 ? p.r : p.r * Math.max(1 - p.x/126, dtR);
+        p.cx = p.x; p.cr = rr;
+        if (p.x > 600) seed(i);
+      } else {
+        const dx = p.x - xs, d3 = Math.pow(dx*dx + p.r*p.r, 1.5) + 1e-3;
+        let u = U + m/(4*Math.PI)*dx/d3, vr = m/(4*Math.PI)*p.r/d3;
+        p.x += u*dt; p.r += vr*dt; p.cx = p.x; p.cr = p.r;
+        if (p.x > 700 || p.r > 400) seed(i);
+      }
+      const v = P(p.cx, p.cr*Math.cos(p.a), H + p.cr*Math.sin(p.a));
+      pp.set([v.x, v.y, v.z], i*3);
+      const c = p.cap ? [0.83, 0.28, 0.12] : [0.16, 0.47, 0.84];
+      pc.set(c, i*3);
+    }
+    pg.attributes.position.needsUpdate = true; pg.attributes.color.needsUpdate = true;
+  }
+
+  // modes
+  const M = DATA.models, B = M.bom;
+  const FMs = DATA.frame.masses_t, STEEL = FMs.ring + FMs.boom + FMs.hubarm + FMs.tower + FMs.mast;
+  const RD = DATA.rot.design, RE = DATA.rot.design_eval, RC = DATA.rot.carousel;
+  const modes = {
+    rot: {obj:rotk, cam:[-200, 170, 320], tgt:[100, 80, 0], hud:`<b>Rotary kite ring, ${fmt(RD.P_rated/1e6,1)} MW TRPT unit (optimised)</b>${RD.opt.stack} stacked rotors × ${RD.N} wings (${fmt(RD.S_tot,0)} m²) at ${fmt(RD.R,0)} m radius, turning at ${fmt(RD.rpm,1)} rpm on a ${fmt(RD.L_s,0)} m TRPT shaft of ${RD.n_seg+1} spoked rings, ${fmt(2*RD.r_shaft,0)} m across. A blue crosswind lift kite holds it up.<br><b style="display:inline;font-size:1rem">$${fmt(RE.capex_per_MW/1e6,2)}M/MW</b> rated · $${fmt(RE.capex_per_avgMW/1e6,2)}M per avg MW · LCOE $${fmt(RE.lcoe,0)}/MWh (HAWT: $1.50M · $3.94M · $51).`},
+    car: {obj:car, cam:[-700, 950, 1500], tgt:[380, 120, 0], hud:`<b>Ground carousel (KiteGen-type)</b>${RC.n_kites} kites of ${fmt(RC.S,0)} m² pull carts round a ${fmt(2*RC.Rc,0)} m rail. Grey kites are depowered on the upwind arc.<br>${fmt(RC.P/1e6,1)} MW · <b style="display:inline;font-size:1rem">$${fmt(RC.capex_per_MW/1e6,2)}M/MW</b> · LCOE $${fmt(RC.lcoe,0)}/MWh. The rail dominates the cost.`},
+    sock: {obj:sock, cam:[-300, 190, 360], tgt:[40, 55, 0], dt:0.01, hud:`<b>Windsock d → d/100</b>126 m mouth, 1.26 m throat turbine, ${fmt(DATA.fabric_area,0)} m² of fabric, ${fmt(STEEL,0)} t steel.<br><br>Rated output <b style="display:inline;font-size:1rem">${fmt(M.punch['funnel_wind_lens@0.01'].P_kW,1)} kW</b> (best-case diffuser). Red particles are the only air that passes through the turbine (drawn 6× wider so you can see it). Blue air spills around the stagnant sock.`},
+    sock10: {obj:sock10, cam:[-300, 190, 360], tgt:[40, 55, 0], dt:0.1, hud:`<b>Windsock d → d/10 ("100× area")</b>12.6 m throat turbine on the same 126 m structure.<br>Rated output <b style="display:inline;font-size:1rem">${fmt(M.punch['funnel_wind_lens@0.1'].P_kW,0)} kW</b>, 3.3% of 5 MW, at ${money(B["Windsock d -> d/10 ('100x area')"].capex)} capex.`},
+    kite: {obj:kite, cam:[180, 150, 330], tgt:[440, 230, 0], hud:`<b>Crosswind spinnaker kite, 5 MW</b>${fmt(M.kite.area_soft_m2,0)} m² soft kite flying figure-eights at 250 m on a ${fmt(M.kite.tether.dia_mm,0)} mm Dyneema tether. Reel-out at V/3 drives a ground generator; reel-in uses about 1/5 of the energy.<br>LCOE ≈ $${fmt(B["Crosswind spinnaker kite 5 MW"].lcoe_usd_mwh,0)}/MWh vs $${fmt(B["HAWT 5 MW (reference)"].lcoe_usd_mwh,0)} for the HAWT.`},
+    hawt: {obj:hawt, cam:[-220, 120, 220], tgt:[0, 70, 0], hud:`<b>NREL 5 MW reference turbine</b>126 m rotor, 90 m hub, 3 × 17.7 t blades, 347 t tower. About $1,500/kW installed. Blades are roughly 15% of project capex.`},
+  };
+  let mode = 'rot';
+  function setMode(k){
+    mode = k; const md = modes[k];
+    [sock, sock10, kite, hawt, rotk, car].forEach(o => o.visible = o === md.obj);
+    camera.position.set(...md.cam); controls.target.set(...md.tgt); controls.update();
+    $('#hud').innerHTML = md.hud;
+    ['rot','car','sock','sock10','kite','hawt'].forEach(n => $('#m-'+n).setAttribute('aria-pressed', n === k));
+    if (md.dt) { dtR = md.dt; for (let i = 0; i < NP; i++) seed(i, true); }
+    applyToggles();
+  }
+  function applyToggles(){
+    const fea = $('#t-fea').checked, flow = $('#t-flow').checked;
+    [sock, sock10].forEach(g => { g.userData.mesh.material = g.userData.mats[fea ? 0 : 1];
+      g.traverse(o => { if (o.userData.isFrame) o.material.color.copy(fea ? stressColor(o.userData.u, 1) : new THREE.Color(0x51606b)); }); });
+    pts.visible = flow && (mode === 'sock' || mode === 'sock10');
+    hawtRef.visible = $('#t-ref').checked && mode !== 'hawt' && mode !== 'car';
+    $('#legend').hidden = !(fea && (mode === 'sock' || mode === 'sock10'));
+    const g = `linear-gradient(90deg, #cde2fb, #184f95 80%, #d4471f)`;
+    $('#legend').innerHTML = `Membrane tension / design allowable &nbsp;·&nbsp; frame utilization<div class="grad" style="background:${g}"></div><div class="ends"><span>0</span><span>0.8</span><span>1.0</span></div>`;
+  }
+  ['rot','car','sock','sock10','kite','hawt'].forEach(n => $('#m-'+n).onclick = () => setMode(n));
+  ['#t-fea','#t-flow','#t-ref'].forEach(s => $(s).onchange = applyToggles);
+
+  function resize(){ const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); }
+  new ResizeObserver(resize).observe(host); resize();
+  function bg(){ scene.background = new THREE.Color(css('--viewer-bg') || '#dfe7ec'); }
+  bg(); matchMedia('(prefers-color-scheme: dark)').addEventListener('change', bg); new MutationObserver(bg).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t0 = performance.now(), T = 0;
+  setMode('rot');
+  stepParticles(0);
+  function loop(now){
+    const dt = Math.min((now - t0)/1000, 0.05); t0 = now; if (!reduce) T += dt;
+    if (!reduce) {
+      [sock, sock10].forEach(g => g.userData.rotor.rotation.x += dt * (g === sock ? 40 : 6));
+      hawt.userData.rotor.rotation.x += dt * 1.2; hawtRef.userData.rotor.rotation.x += dt * 1.2;
+      if (pts.visible) stepParticles(dt);
+    }
+    const fast = $('#t-fast').checked ? 4 : 1;
+    if (!reduce && rotk.visible) {
+      const U = rotk.userData; U.spin.rotateOnWorldAxis(U.ax, -RD.Omega * dt * fast);
+      // spin about the shaft axis through the ground station (origin)
+      const w8 = 0.25*T, lp = U.top.clone().add(U.ax.clone().multiplyScalar(0.45*RD.R*RD.opt.stack + 150)).add(new THREE.Vector3(0, 90 + 18*Math.sin(2*w8), 60*Math.sin(w8)));
+      U.lifter.position.copy(lp); U.lifter.lookAt(U.top); U.lifterLine.geometry.setFromPoints([U.top.clone().add(U.ax.clone().multiplyScalar(18 + 0.45*RD.R*(RD.opt.stack-1))), lp]);
+    }
+    if (car.visible) {
+      const U = car.userData, C = U.C, Lt = 650, cb = Math.cos(25*Math.PI/180), sb = Math.sin(25*Math.PI/180);
+      for (let i = 0; i < C.n_kites; i++) {
+        const ang = i/C.n_kites*Math.PI*2 + T * C.vc / C.Rc * fast * 6;
+        const cp = new THREE.Vector3(C.Rc*Math.cos(ang), 3, C.Rc*Math.sin(ang)); U.carts[i].position.copy(cp); U.carts[i].rotation.y = -ang;
+        let head = Math.atan2(Math.cos(ang), -Math.sin(ang));             // tangent heading azimuth from +x (downwind)
+        const th = Math.max(-1.05, Math.min(1.05, head)) + 0.25*Math.sin(1.3*T + i);
+        const on = Math.cos(head - th) > 0;
+        const kp = cp.clone().add(new THREE.Vector3(Lt*cb*Math.cos(th), Lt*sb + 25*Math.sin(2.6*T + i), -Lt*cb*Math.sin(th)));
+        U.kites[i].position.copy(kp); U.kites[i].lookAt(cp); U.kites[i].material.color.set(on ? 0xd4471f : 0x9aa7b0);
+        U.lines[i].geometry.setFromPoints([cp, kp]);
+      }
+    }
+    // kite figure-eight on a sphere of radius Lt around the ground station
+    const Lt = 560, beta = 28*Math.PI/180, w = 0.35*T;
+    const az = 0.42*Math.sin(w), el = beta + 0.16*Math.sin(2*w);
+    const kp = new THREE.Vector3(Lt*Math.cos(el)*Math.cos(az), Lt*Math.sin(el), Lt*Math.cos(el)*Math.sin(az));
+    const K = kite.userData.kite; K.position.copy(kp);
+    const dir = new THREE.Vector3(-0.42*Math.cos(w)*0.35, 0.32*Math.cos(2*w)*0.35, 0).normalize();
+    K.lookAt(0, 0, 0); K.rotateY(Math.PI/2); K.rotateX(Math.atan2(Math.cos(w), Math.cos(2*w)) * 0.6);
+    kite.userData.tether.geometry.setFromPoints([new THREE.Vector3(0, 8, 0), kp.clone().add(new THREE.Vector3(0, -24, 0))]);
+    const tp = kite.userData.trailPts; tp.push(kp.clone()); if (tp.length > 240) tp.shift();
+    kite.userData.trail.geometry.setFromPoints(tp.length > 1 ? tp : [kp, kp]);
+    controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>

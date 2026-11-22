@@ -1,0 +1,1131 @@
+{
+ "sites": {
+  "onshore": {
+   "vmean": 7.5,
+   "k": 2.0,
+   "zref": 90.0,
+   "alpha": 0.14,
+   "offshore": false,
+   "label": "Onshore, 7.5 m/s mean at 90 m"
+  },
+  "offshore": {
+   "vmean": 9.5,
+   "k": 2.2,
+   "zref": 100.0,
+   "alpha": 0.1,
+   "offshore": true,
+   "label": "Floating offshore, 9.5 m/s mean at 100 m"
+  }
+ },
+ "finance": {
+  "r": 0.05,
+  "n": 30
+ },
+ "results": [
+  {
+   "items": [
+    [
+     "Blades (3 \u00d7 73 m)",
+     1512828.0422834859
+    ],
+    [
+     "Tower (98 m hub)",
+     1864495.395900452
+    ],
+    [
+     "Nacelle: gearbox, generator, converter (4.8 MW)",
+     2564881.364914123
+    ],
+    [
+     "Foundation",
+     875198.575861358
+    ],
+    [
+     "Balance of system",
+     1954670.545434993
+    ]
+   ],
+   "capex": 8772073.924394412,
+   "opex": 205606.68484884573,
+   "aep_kwh": 19358853.940106917,
+   "cf": 0.46470408475371505,
+   "capex_per_MW": 1845867.809202309,
+   "capex_per_avgMW": 3972135.9673018283,
+   "lcoe": 49.50411260728543,
+   "obj": 49.50411260728543,
+   "x": [
+    4.752276344309434,
+    146.32674230386172,
+    98.1633879777323
+   ],
+   "P_MW": 4.752276344309434,
+   "specific_power": 282.59495061602735,
+   "D": 146.32674230386172,
+   "H": 98.1633879777323,
+   "label": "4.8 MW, 146 m rotor (283 W/m\u00b2), 98 m hub",
+   "arch": "hawt",
+   "wing": null,
+   "site_label": "Onshore, 7.5 m/s mean at 90 m",
+   "name": "Conventional turbine, LCOE-optimised (rotor, hub height, rating free)",
+   "site": "onshore"
+  },
+  {
+   "items": [
+    [
+     "6\u00d73 semi-rigid wings, 4,114 m\u00b2 (span 40 m) @ $185/m\u00b2",
+     759782.5001695915
+    ],
+    [
+     "On-wing turbines (1,185 m\u00b2 of disc at 32 m/s airspeed), generators, HV converters (7,226 kW)",
+     4776234.637224845
+    ],
+    [
+     "Conductive tether 1,358 m (\u00d881 mm main, 30 kV), 3 rotors spaced 480 m",
+     562024.7911653725
+    ],
+    [
+     "Crosswind lift kite 6,079 m\u00b2",
+     744537.5432627604
+    ],
+    [
+     "Ground: HV converter + grid connection",
+     578074.0323463995
+    ],
+    [
+     "Launch/land mast, yaw platform, controls",
+     619685.1512814496
+    ],
+    [
+     "Foundation / anchor (tension only)",
+     210648.13510824984
+    ],
+    [
+     "Balance of system",
+     1806481.3510824984
+    ]
+   ],
+   "capex": 10057468.141641166,
+   "opex": 473510.8210998161,
+   "aep_kwh": 35448348.84291817,
+   "cf": 0.5596301070538324,
+   "capex_per_MW": 1391858.8386775244,
+   "capex_per_avgMW": 2487105.002275436,
+   "lcoe": 37.704079538007164,
+   "obj": 37.704079538007164,
+   "x": [
+    7.225925404329994,
+    152.26668622913837,
+    22.499893524958217,
+    9.432455073173559,
+    3.1290147506486643,
+    0.7165014123837212,
+    1.4984888551364823
+   ],
+   "P_MW": 7.225925404329994,
+   "h": 335.9529131188264,
+   "h_low": 152.26668622913837,
+   "h_top": 519.6391400085145,
+   "L_t": 1357.8886029448445,
+   "R": 159.99913196643945,
+   "span": 39.99978299160986,
+   "S": 4114.241072680838,
+   "tip": 34.31318188476463,
+   "tether_d": 0.08087337339884347,
+   "cp": 0.16538423976344233,
+   "sag": 0.9997289356187284,
+   "rpm": 1.8203807126710536,
+   "stack": 3,
+   "N": 6,
+   "bR": 0.25,
+   "v_wing": 31.721109177391256,
+   "A_turb": 1184.643546160996,
+   "U_kV": 30.0539627260907,
+   "label": "7.2 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 152\u2013520 m, 22\u00b0 tether, rated at 9.4 m/s",
+   "arch": "ring",
+   "wing": "semi",
+   "site_label": "Onshore, 7.5 m/s mean at 90 m",
+   "name": "Fly-gen rotary kite ring, semi-rigid wings",
+   "site": "onshore"
+  },
+  {
+   "items": [
+    [
+     "6\u00d72 rigid composite wings, 1,173 m\u00b2 (span 26 m) @ $1,951/m\u00b2",
+     2288593.2796939374
+    ],
+    [
+     "On-wing turbines (372 m\u00b2 of disc at 43 m/s airspeed), generators, HV converters (5,807 kW)",
+     3693119.3007146353
+    ],
+    [
+     "Conductive tether 2,309 m (\u00d862 mm main, 27 kV), 2 rotors spaced 314 m",
+     776354.088492717
+    ],
+    [
+     "Crosswind lift kite 7,635 m\u00b2",
+     931188.943714004
+    ],
+    [
+     "Ground: HV converter + grid connection",
+     464542.4028434155
+    ],
+    [
+     "Launch/land mast, yaw platform, controls",
+     527440.702310275
+    ],
+    [
+     "Foundation / anchor (tension only)",
+     175169.50088856736
+    ],
+    [
+     "Balance of system",
+     1451695.0088856735
+    ]
+   ],
+   "capex": 10308103.227543226,
+   "opex": 483862.5462341048,
+   "aep_kwh": 23079874.554369215,
+   "cf": 0.45341575084653263,
+   "capex_per_MW": 1775184.0373577788,
+   "capex_per_avgMW": 3915135.3565540877,
+   "lcoe": 59.290019645906206,
+   "obj": 59.290019645906206,
+   "x": [
+    5.806780035542694,
+    698.7797017839521,
+    20.499999995274052,
+    12.729548481949546,
+    2.2614772499424136,
+    0.6440836742761005,
+    1.0325121867098308
+   ],
+   "P_MW": 5.806780035542694,
+   "h": 753.7457817860098,
+   "h_low": 698.7797017839521,
+   "h_top": 808.7118617880677,
+   "L_t": 2309.2370556499127,
+   "R": 104.63529698033368,
+   "span": 26.15882424508342,
+   "S": 1173.0584329459955,
+   "tip": 46.94844280257735,
+   "tether_d": 0.06224983938717,
+   "cp": 0.18032908552434554,
+   "sag": 0.9967871192664013,
+   "rpm": 3.8085691071795456,
+   "stack": 2,
+   "N": 6,
+   "bR": 0.25,
+   "v_wing": 43.40188225185576,
+   "A_turb": 371.6627147126593,
+   "U_kV": 26.94155720152116,
+   "label": "5.8 MW, 6\u00d72 wings 26 m span on a 209 m ring, rotors 699\u2013809 m, 20\u00b0 tether, rated at 12.7 m/s",
+   "arch": "ring",
+   "wing": "rigid",
+   "site_label": "Onshore, 7.5 m/s mean at 90 m",
+   "name": "Fly-gen rotary kite ring, rigid wings",
+   "site": "onshore"
+  },
+  {
+   "items": [
+    [
+     "rigid composite wing 1,200 m\u00b2, span 120 m, L/D 10.6 with tether @ $2,728/m\u00b2",
+     3273947.767356311
+    ],
+    [
+     "On-wing turbines, generators, HV converters (7,990 kW)",
+     4953592.030975832
+    ],
+    [
+     "Conductive tether 684 m, \u00d879 mm",
+     397049.520864797
+    ],
+    [
+     "Ground: HV converter + grid connection",
+     639173.1652872042
+    ],
+    [
+     "Perch / launch-land tower, controls",
+     519586.5826436021
+    ],
+    [
+     "Foundation / anchor (tension only)",
+     229741.6141522513
+    ],
+    [
+     "Balance of system",
+     1997416.141522513
+    ]
+   ],
+   "capex": 12010506.82280251,
+   "opex": 491317.4289968252,
+   "aep_kwh": 34727126.64548759,
+   "cf": 0.4958368935824688,
+   "capex_per_MW": 1503255.4525227286,
+   "capex_per_avgMW": 3031753.933559814,
+   "lcoe": 43.82583238402196,
+   "obj": 43.82583238402196,
+   "x": [
+    7.989664566090052,
+    239.91029973594544,
+    20.525415844250084,
+    9.999155001196309
+   ],
+   "P_MW": 7.989664566090052,
+   "h": 239.91029973594544,
+   "L_t": 684.2403537315702,
+   "S": 1199.9999948028762,
+   "span": 119.9999997401438,
+   "va": 65.97764561712758,
+   "LDe": 10.568399544436803,
+   "tether_d": 0.07918876426950709,
+   "label": "8.0 MW, 1,200 m\u00b2 wing (120 m span) at 240 m, 21\u00b0 tether, rated at 10.0 m/s, flies at 66 m/s",
+   "arch": "flywing",
+   "wing": "rigid",
+   "site_label": "Onshore, 7.5 m/s mean at 90 m",
+   "name": "Fly-gen rigid wing (Makani-type)",
+   "site": "onshore"
+  },
+  {
+   "items": [
+    [
+     "rigid composite wing 1,200 m\u00b2, span 120 m, L/D 10.8 with tether @ $2,728/m\u00b2",
+     3273947.0826830603
+    ],
+    [
+     "Tether 553 m, \u00d878 mm",
+     365306.1510883555
+    ],
+    [
+     "Ground station: drum winch, generator rated 12,151 kW (reel-out peak), converter",
+     4009859.172155849
+    ],
+    [
+     "Reel-in storage (supercap / battery)",
+     364532.6520141681
+    ],
+    [
+     "Kite control pod / launch-land mast",
+     393021.7680094454
+    ],
+    [
+     "Foundation / anchor (tension only)",
+     181888.6050059034
+    ],
+    [
+     "Balance of system",
+     1518886.0500590338
+    ]
+   ],
+   "capex": 10107441.481015814,
+   "opex": 495614.9007839211,
+   "aep_kwh": 23958151.66195655,
+   "cf": 0.44984889572641484,
+   "capex_per_MW": 1663627.347262649,
+   "capex_per_avgMW": 3698191.4662171793,
+   "lcoe": 56.888348536992005,
+   "obj": 56.888348536992005,
+   "x": [
+    6.075544200236135,
+    196.1524040516494,
+    20.755833564578694,
+    10.554341418258922
+   ],
+   "P_MW": 6.075544200236135,
+   "h": 196.1524040516494,
+   "L_t": 553.4989175947923,
+   "S": 1199.9997765826388,
+   "span": 119.99998882913142,
+   "va": 71.24634582748041,
+   "LDe": 10.82841920814404,
+   "tether_d": 0.07818988177933438,
+   "label": "6.1 MW avg, 1,200 m\u00b2 wing (120 m span) at 196 m, 21\u00b0 tether, rated at 10.6 m/s",
+   "arch": "pump",
+   "wing": "rigid",
+   "site_label": "Onshore, 7.5 m/s mean at 90 m",
+   "name": "Pumping kite, rigid wing",
+   "site": "onshore"
+  },
+  {
+   "items": [
+    [
+     "soft kite 2,880 m\u00b2, span 120 m, L/D 5.4 with tether @ $227/m\u00b2",
+     654789.2262088463
+    ],
+    [
+     "Tether 787 m, \u00d862 mm",
+     345546.31391033065
+    ],
+    [
+     "Ground station: drum winch, generator rated 8,003 kW (reel-out peak), converter",
+     2641001.8789486033
+    ],
+    [
+     "Reel-in storage (supercap / battery)",
+     240091.07990441847
+    ],
+    [
+     "Kite control pod / launch-land mast",
+     310060.719936279
+    ],
+    [
+     "Foundation / anchor (tension only)",
+     130037.94996017437
+    ],
+    [
+     "Balance of system",
+     1000379.4996017436
+    ]
+   ],
+   "capex": 5321906.668470396,
+   "opex": 447883.3134091336,
+   "aep_kwh": 16231081.16446845,
+   "cf": 0.4627231294873188,
+   "capex_per_MW": 1329971.9432947882,
+   "capex_per_avgMW": 2874228.363661767,
+   "lcoe": 55.73004460176457,
+   "obj": 55.73004460176457,
+   "x": [
+    4.001517998406975,
+    271.7424455214177,
+    20.19790365880776,
+    10.901808439970484
+   ],
+   "P_MW": 4.001517998406975,
+   "h": 271.7424455214177,
+   "L_t": 787.0573092428205,
+   "S": 2879.9987358591898,
+   "span": 119.99997366373023,
+   "va": 36.656711348598144,
+   "LDe": 5.374144232151049,
+   "tether_d": 0.06232281015240354,
+   "label": "4.0 MW avg, 2,880 m\u00b2 wing (120 m span) at 272 m, 20\u00b0 tether, rated at 10.9 m/s",
+   "arch": "pump",
+   "wing": "soft",
+   "site_label": "Onshore, 7.5 m/s mean at 90 m",
+   "name": "Pumping kite, soft kite",
+   "site": "onshore"
+  },
+  {
+   "items": [
+    [
+     "Blades (3 \u00d7 62 m)",
+     1050949.259716288
+    ],
+    [
+     "Tower (87 m hub)",
+     1209990.4286032966
+    ],
+    [
+     "Nacelle: gearbox, generator, converter (3.0 MW)",
+     1501451.7896135487
+    ],
+    [
+     "Floating platform + mooring",
+     6920963.59047281
+    ],
+    [
+     "Balance of system",
+     4767203.955750245
+    ]
+   ],
+   "capex": 15450559.024156187,
+   "opex": 286032.2373450147,
+   "aep_kwh": 16725481.707416266,
+   "cf": 0.6420142283442742,
+   "capex_per_MW": 5198902.612365419,
+   "capex_per_avgMW": 8097799.679258129,
+   "lcoe": 96.37107778136914,
+   "obj": 96.37107778136914,
+   "x": [
+    2.971888526514719,
+    124.89288456251003,
+    87.44644809366234
+   ],
+   "P_MW": 2.971888526514719,
+   "specific_power": 242.58684224413204,
+   "D": 124.89288456251003,
+   "H": 87.44644809366234,
+   "label": "3.0 MW, 125 m rotor (243 W/m\u00b2), 87 m hub",
+   "arch": "hawt",
+   "wing": null,
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m",
+   "name": "Conventional turbine, LCOE-optimised (rotor, hub height, rating free)",
+   "site": "offshore"
+  },
+  {
+   "items": [
+    [
+     "6\u00d73 semi-rigid wings, 4,114 m\u00b2 (span 40 m) @ $185/m\u00b2",
+     759785.1511137178
+    ],
+    [
+     "On-wing turbines (1,183 m\u00b2 of disc at 30 m/s airspeed), generators, HV converters (5,830 kW)",
+     3910382.4556988957
+    ],
+    [
+     "Conductive tether 1,388 m (\u00d875 mm main, 27 kV), 3 rotors spaced 480 m",
+     515113.8976110453
+    ],
+    [
+     "Crosswind lift kite 5,644 m\u00b2",
+     692311.2398011527
+    ],
+    [
+     "Ground: HV converter + grid connection",
+     466391.18401990423
+    ],
+    [
+     "Launch/land mast, yaw platform, controls",
+     528942.8370161722
+    ],
+    [
+     "Floating buoy + mooring (tension only)",
+     2914944.900124402
+    ],
+    [
+     "Balance of system",
+     5246900.820223924
+    ]
+   ],
+   "capex": 15034772.485609215,
+   "opex": 925468.6474720652,
+   "aep_kwh": 35619871.21122469,
+   "cf": 0.6969963968346481,
+   "capex_per_MW": 2578911.95215518,
+   "capex_per_avgMW": 3700036.275462968,
+   "lcoe": 62.20152334686239,
+   "obj": 62.20152334686239,
+   "x": [
+    5.829889800248804,
+    150.01365004784248,
+    20.499960906235206,
+    8.664163530199856,
+    3.1587393013647573,
+    1.4791567644602857,
+    0.7408826933669082
+   ],
+   "P_MW": 5.829889800248804,
+   "h": 318.11222931179475,
+   "h_low": 150.01365004784248,
+   "h_top": 486.21080857574697,
+   "L_t": 1388.3536495764101,
+   "R": 159.9993746836935,
+   "span": 39.999843670923376,
+   "S": 4114.2535552242225,
+   "tip": 31.95471467535363,
+   "tether_d": 0.075473571019119,
+   "cp": 0.17216861631738972,
+   "sag": 0.9997541722663543,
+   "rpm": 1.6952568906731624,
+   "stack": 3,
+   "N": 6,
+   "bR": 0.25,
+   "v_wing": 29.54080435773705,
+   "A_turb": 1183.4031181785506,
+   "U_kV": 26.995114836412544,
+   "label": "5.8 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 150\u2013486 m, 20\u00b0 tether, rated at 8.7 m/s",
+   "arch": "ring",
+   "wing": "semi",
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m",
+   "name": "Fly-gen rotary kite ring, semi-rigid wings",
+   "site": "offshore"
+  },
+  {
+   "items": [
+    [
+     "6\u00d73 rigid composite wings, 1,274 m\u00b2 (span 22 m) @ $1,859/m\u00b2",
+     2369012.3644856215
+    ],
+    [
+     "On-wing turbines (384 m\u00b2 of disc at 39 m/s airspeed), generators, HV converters (4,398 kW)",
+     2822720.261276614
+    ],
+    [
+     "Conductive tether 1,967 m (\u00d858 mm main, 23 kV), 3 rotors spaced 267 m",
+     551717.9499819975
+    ],
+    [
+     "Crosswind lift kite 7,137 m\u00b2",
+     871428.8772553263
+    ],
+    [
+     "Ground: HV converter + grid connection",
+     351848.90802260494
+    ],
+    [
+     "Launch/land mast, yaw platform, controls",
+     435877.2377683665
+    ],
+    [
+     "Floating buoy + mooring (tension only)",
+     2199055.675141281
+    ],
+    [
+     "Balance of system",
+     3958300.215254306
+    ]
+   ],
+   "capex": 13559961.48918612,
+   "opex": 783880.1190213567,
+   "aep_kwh": 22858040.16018627,
+   "cf": 0.5928861491198424,
+   "capex_per_MW": 3083132.8288936894,
+   "capex_per_avgMW": 5200210.585912143,
+   "lcoe": 85.19835533812689,
+   "obj": 85.19835533812689,
+   "x": [
+    4.398111350282562,
+    454.5292484344318,
+    18.499999259757562,
+    11.341165854052177,
+    2.5715613286364327,
+    0.8686987203734062,
+    0.9039724973360082
+   ],
+   "P_MW": 4.398111350282562,
+   "h": 539.2979743058625,
+   "h_low": 454.5292484344318,
+   "h_top": 624.0667001772932,
+   "L_t": 1966.7745546020055,
+   "R": 89.05083010229426,
+   "span": 22.262707525573564,
+   "S": 1274.4723763780196,
+   "tip": 42.34819012005989,
+   "tether_d": 0.05763393142834995,
+   "cp": 0.18695079126171635,
+   "sag": 0.9981811283315084,
+   "rpm": 4.036600238828769,
+   "stack": 3,
+   "N": 6,
+   "bR": 0.25,
+   "v_wing": 39.14914002364185,
+   "A_turb": 383.5648964057008,
+   "U_kV": 23.44704499047418,
+   "label": "4.4 MW, 6\u00d73 wings 22 m span on a 178 m ring, rotors 455\u2013624 m, 18\u00b0 tether, rated at 11.3 m/s",
+   "arch": "ring",
+   "wing": "rigid",
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m",
+   "name": "Fly-gen rotary kite ring, rigid wings",
+   "site": "offshore"
+  },
+  {
+   "items": [
+    [
+     "rigid composite wing 1,200 m\u00b2, span 120 m, L/D 10.9 with tether @ $2,728/m\u00b2",
+     3273946.074975999
+    ],
+    [
+     "On-wing turbines, generators, HV converters (6,348 kW)",
+     3935533.128520019
+    ],
+    [
+     "Conductive tether 559 m, \u00d874 mm",
+     294930.9551078608
+    ],
+    [
+     "Ground: HV converter + grid connection",
+     507810.72626064764
+    ],
+    [
+     "Perch / launch-land tower, controls",
+     453905.3631303238
+    ],
+    [
+     "Floating buoy + mooring (tension only)",
+     3173817.0391290477
+    ],
+    [
+     "Balance of system",
+     5712870.670432285
+    ]
+   ],
+   "capex": 17352813.957556184,
+   "opex": 970597.8186169815,
+   "aep_kwh": 36120832.05046092,
+   "cf": 0.649149006031177,
+   "capex_per_MW": 2733745.1629407895,
+   "capex_per_avgMW": 4211275.281240274,
+   "lcoe": 68.095102463662,
+   "obj": 68.095102463662,
+   "x": [
+    6.347634078258095,
+    173.35217084574225,
+    18.063442565089876,
+    8.946557455490343
+   ],
+   "P_MW": 6.347634078258095,
+   "h": 173.35217084574225,
+   "L_t": 559.074502995495,
+   "S": 1199.999455404498,
+   "span": 119.9999727702218,
+   "va": 61.70567904065737,
+   "LDe": 10.882048517798117,
+   "tether_d": 0.07350257907797111,
+   "label": "6.3 MW, 1,200 m\u00b2 wing (120 m span) at 173 m, 18\u00b0 tether, rated at 8.9 m/s, flies at 62 m/s",
+   "arch": "flywing",
+   "wing": "rigid",
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m",
+   "name": "Fly-gen rigid wing (Makani-type)",
+   "site": "offshore"
+  },
+  {
+   "items": [
+    [
+     "rigid composite wing 1,200 m\u00b2, span 120 m, L/D 11.0 with tether @ $2,728/m\u00b2",
+     3273944.517231473
+    ],
+    [
+     "Tether 468 m, \u00d874 mm",
+     288539.99138825794
+    ],
+    [
+     "Ground station: drum winch, generator rated 10,270 kW (reel-out peak), converter",
+     3389174.807523047
+    ],
+    [
+     "Reel-in storage (supercap / battery)",
+     308106.80068391334
+    ],
+    [
+     "Kite control pod / launch-land mast",
+     355404.53378927556
+    ],
+    [
+     "Floating buoy + mooring (tension only)",
+     2567556.672365945
+    ],
+    [
+     "Balance of system",
+     4621602.010258701
+    ]
+   ],
+   "capex": 14804329.333240613,
+   "opex": 884070.6103397186,
+   "aep_kwh": 27137611.086169228,
+   "cf": 0.6028650593579098,
+   "capex_per_MW": 2882960.577380121,
+   "capex_per_avgMW": 4782099.2983913515,
+   "lcoe": 79.38936705553215,
+   "obj": 79.38936705553215,
+   "x": [
+    5.13511334473189,
+    150.00003489537437,
+    18.70376979537868,
+    9.725647519886607
+   ],
+   "P_MW": 5.13511334473189,
+   "h": 150.00003489537437,
+   "L_t": 467.7629655973461,
+   "S": 1199.9989589174377,
+   "span": 119.9999479458606,
+   "va": 67.79722786620609,
+   "LDe": 11.039462820890275,
+   "tether_d": 0.07440459386679765,
+   "label": "5.1 MW avg, 1,200 m\u00b2 wing (120 m span) at 150 m, 19\u00b0 tether, rated at 9.7 m/s",
+   "arch": "pump",
+   "wing": "rigid",
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m",
+   "name": "Pumping kite, rigid wing",
+   "site": "offshore"
+  },
+  {
+   "items": [
+    [
+     "soft kite 2,880 m\u00b2, span 120 m, L/D 5.4 with tether @ $227/m\u00b2",
+     654789.0486857742
+    ],
+    [
+     "Tether 596 m, \u00d858 mm",
+     239868.49637107385
+    ],
+    [
+     "Ground station: drum winch, generator rated 6,374 kW (reel-out peak), converter",
+     2103465.5027315356
+    ],
+    [
+     "Reel-in storage (supercap / battery)",
+     191224.1366119578
+    ],
+    [
+     "Kite control pod / launch-land mast",
+     277482.7577413052
+    ],
+    [
+     "Floating buoy + mooring (tension only)",
+     1593534.471766315
+    ],
+    [
+     "Balance of system",
+     2868362.0491793673
+    ]
+   ],
+   "capex": 7928726.46308733,
+   "opex": 668017.8475593204,
+   "aep_kwh": 16985052.45883351,
+   "cf": 0.6079585462877888,
+   "capex_per_MW": 2487780.0272180256,
+   "capex_per_avgMW": 4092022.4617426256,
+   "lcoe": 79.38662359307347,
+   "obj": 79.38662359307347,
+   "x": [
+    3.18706894353263,
+    173.63925992206572,
+    16.935424842735813,
+    9.869047268785993
+   ],
+   "P_MW": 3.18706894353263,
+   "h": 173.63925992206572,
+   "L_t": 596.0968255952463,
+   "S": 2879.9980568936317,
+   "span": 119.9999595186105,
+   "va": 34.056041657854266,
+   "LDe": 5.410838081302631,
+   "tether_d": 0.057901210733620624,
+   "label": "3.2 MW avg, 2,880 m\u00b2 wing (120 m span) at 174 m, 17\u00b0 tether, rated at 9.9 m/s",
+   "arch": "pump",
+   "wing": "soft",
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m",
+   "name": "Pumping kite, soft kite",
+   "site": "offshore"
+  },
+  {
+   "items": [
+    [
+     "Blades (3 \u00d7 63 m)",
+     1072500.0
+    ],
+    [
+     "Tower (90 m hub)",
+     1267500.0
+    ],
+    [
+     "Nacelle: gearbox, generator, converter (5.0 MW)",
+     2535000.0
+    ],
+    [
+     "Foundation",
+     750000.0
+    ],
+    [
+     "Balance of system",
+     1875000.0
+    ]
+   ],
+   "capex": 7500000.0,
+   "opex": 215000.0,
+   "aep_kwh": 16705545.15379719,
+   "cf": 0.38114408290662083,
+   "capex_per_MW": 1500000.0,
+   "capex_per_avgMW": 3935519.5771660334,
+   "lcoe": 51.39484352354918,
+   "obj": 51.39484352354918,
+   "x": [
+    5.0,
+    126.0,
+    90.0
+   ],
+   "P_MW": 5.0,
+   "specific_power": 400.9950695185068,
+   "D": 126.0,
+   "H": 90.0,
+   "label": "5.0 MW, 126 m rotor (401 W/m\u00b2), 90 m hub",
+   "site": "onshore",
+   "arch": "hawt_ref",
+   "wing": null,
+   "name": "Conventional 5 MW turbine as built (126 m rotor, 90 m hub)",
+   "site_label": "Onshore, 7.5 m/s mean at 90 m"
+  },
+  {
+   "items": [
+    [
+     "Blades (3 \u00d7 63 m)",
+     1072500.0
+    ],
+    [
+     "Tower (100 m hub)",
+     1408333.3333333335
+    ],
+    [
+     "Nacelle: gearbox, generator, converter (5.0 MW)",
+     2535000.0
+    ],
+    [
+     "Floating platform + mooring",
+     10326286.197301015
+    ],
+    [
+     "Balance of system",
+     7500000.0
+    ]
+   ],
+   "capex": 22842119.530634347,
+   "opex": 450000.0,
+   "aep_kwh": 23869777.56162203,
+   "cf": 0.5445990773812921,
+   "capex_per_MW": 4568423.90612687,
+   "capex_per_avgMW": 8388600.157191163,
+   "lcoe": 100.96843529932865,
+   "obj": 100.96843529932865,
+   "x": [
+    5.0,
+    126.0,
+    100.0
+   ],
+   "P_MW": 5.0,
+   "specific_power": 400.9950695185068,
+   "D": 126.0,
+   "H": 100.0,
+   "label": "5.0 MW, 126 m rotor (401 W/m\u00b2), 100 m hub",
+   "site": "offshore",
+   "arch": "hawt_ref",
+   "wing": null,
+   "name": "Conventional 5 MW turbine as built (126 m rotor, 90 m hub)",
+   "site_label": "Floating offshore, 9.5 m/s mean at 100 m"
+  }
+ ],
+ "sens_onshore": {
+  "best": {
+   "name": "Fly-gen rotary kite ring, semi-rigid wings",
+   "lcoe": 37.704079538007164,
+   "label": "7.2 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 152\u2013520 m, 22\u00b0 tether, rated at 9.4 m/s"
+  },
+  "rows": [
+   {
+    "name": "Wing cost \u00d70.5 / \u00d72",
+    "lo": 34.42678331778432,
+    "hi": 44.25867197845286
+   },
+   {
+    "name": "Wing life \u00d71.5 / \u00d70.5",
+    "lo": 36.275178945135345,
+    "hi": 41.990781316622616
+   },
+   {
+    "name": "On-wing drive $400 / $900 per kW",
+    "lo": 32.95894007551773,
+    "hi": 43.7433479448119
+   },
+   {
+    "name": "Tether cost \u00d70.5 / \u00d72",
+    "lo": 35.697286923245336,
+    "hi": 41.71766476753083
+   },
+   {
+    "name": "Tether life 8 yr / 3 yr",
+    "lo": 36.51497311377877,
+    "hi": 39.81804651441319
+   },
+   {
+    "name": "Stacked-rotor wake loss 5 % / 15 % per rotor",
+    "lo": 37.22360500818305,
+    "hi": 38.22657209898199
+   },
+   {
+    "name": "Wind shear exponent 0.20 / 0.10",
+    "lo": 35.230014778767575,
+    "hi": 39.74236051050115
+   },
+   {
+    "name": "Site mean wind +1 / \u22121 m/s",
+    "lo": 34.02564183741186,
+    "hi": 43.94600065699444
+   },
+   {
+    "name": "Availability 97 % / 85 %",
+    "lo": 35.76057028347071,
+    "hi": 40.809121382313634
+   },
+   {
+    "name": "WACC 5 % / 9 %",
+    "lo": 33.48852453518813,
+    "hi": 42.242417240526706
+   },
+   {
+    "name": "Life 30 yr / 20 yr",
+    "lo": 36.22188476964207,
+    "hi": 40.139095642057484
+   }
+  ]
+ },
+ "sens_offshore": {
+  "best": {
+   "name": "Fly-gen rotary kite ring, semi-rigid wings",
+   "lcoe": 62.20152334686239,
+   "label": "5.8 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 150\u2013486 m, 20\u00b0 tether, rated at 8.7 m/s"
+  },
+  "rows": [
+   {
+    "name": "Wing cost \u00d70.5 / \u00d72",
+    "lo": 58.9399970956747,
+    "hi": 68.72457584923777
+   },
+   {
+    "name": "Wing life \u00d71.5 / \u00d70.5",
+    "lo": 60.77949845779935,
+    "hi": 66.46759801405149
+   },
+   {
+    "name": "On-wing drive $400 / $900 per kW",
+    "lo": 58.3915712187909,
+    "hi": 67.05055332804429
+   },
+   {
+    "name": "Tether cost \u00d70.5 / \u00d72",
+    "lo": 60.40938907807019,
+    "hi": 65.78579188444677
+   },
+   {
+    "name": "Tether life 8 yr / 3 yr",
+    "lo": 61.1169168896483,
+    "hi": 64.12971260413187
+   },
+   {
+    "name": "Stacked-rotor wake loss 5 % / 15 % per rotor",
+    "lo": 61.71759297143354,
+    "hi": 62.72432159488499
+   },
+   {
+    "name": "Wind shear exponent 0.20 / 0.10",
+    "lo": 58.9360339918569,
+    "hi": 62.20152334686239
+   },
+   {
+    "name": "Site mean wind +1 / \u22121 m/s",
+    "lo": 59.282418247276155,
+    "hi": 66.83473185887667
+   },
+   {
+    "name": "Availability 97 % / 85 %",
+    "lo": 58.99525925681793,
+    "hi": 67.32400174013341
+   },
+   {
+    "name": "WACC 5 % / 9 %",
+    "lo": 55.93009274084873,
+    "hi": 68.95315390297507
+   },
+   {
+    "name": "Life 30 yr / 20 yr",
+    "lo": 59.99647997103592,
+    "hi": 65.82406759331752
+   },
+   {
+    "name": "Offshore BOS $600 / $1,400 per kW",
+    "lo": 57.00613408131036,
+    "hi": 70.86050545611576
+   }
+  ]
+ },
+ "site_sweep": [
+  {
+   "vmean": 6.0,
+   "ring": {
+    "lcoe": 47.338616993221095,
+    "cf": 0.5092222103608738,
+    "capex_per_MW": 1504720.7208432392,
+    "label": "5.3 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 234\u2013601 m, 22\u00b0 tether, rated at 8.5 m/s"
+   },
+   "hawt": {
+    "lcoe": 69.51658502507624,
+    "cf": 0.3960864874217298,
+    "capex_per_MW": 2295348.563742951,
+    "label": "3.9 MW, 156 m rotor (202 W/m\u00b2), 103 m hub"
+   }
+  },
+  {
+   "vmean": 7.5,
+   "ring": {
+    "lcoe": 37.70468351485838,
+    "cf": 0.5595127494282591,
+    "capex_per_MW": 1391758.0000875967,
+    "label": "7.2 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 151\u2013519 m, 22\u00b0 tether, rated at 9.4 m/s"
+   },
+   "hawt": {
+    "lcoe": 49.50411260728543,
+    "cf": 0.46470408475371505,
+    "capex_per_MW": 1845867.809202309,
+    "label": "4.8 MW, 146 m rotor (283 W/m\u00b2), 98 m hub"
+   }
+  },
+  {
+   "vmean": 9.0,
+   "ring": {
+    "lcoe": 32.451586922873965,
+    "cf": 0.600851225717112,
+    "capex_per_MW": 1334953.528622874,
+    "label": "6.2 MW, 6\u00d72 wings 40 m span on a 320 m ring, rotors 176\u2013360 m, 22\u00b0 tether, rated at 10.1 m/s"
+   },
+   "hawt": {
+    "lcoe": 39.21244095876502,
+    "cf": 0.5186513299415509,
+    "capex_per_MW": 1579476.7182039127,
+    "label": "5.3 MW, 135 m rotor (367 W/m\u00b2), 93 m hub"
+   }
+  },
+  {
+   "vmean": 10.5,
+   "ring": {
+    "lcoe": 29.354428947578924,
+    "cf": 0.6280996795202552,
+    "capex_per_MW": 1294128.9911572123,
+    "label": "7.6 MW, 6\u00d72 wings 40 m span on a 320 m ring, rotors 152\u2013328 m, 21\u00b0 tether, rated at 10.7 m/s"
+   },
+   "hawt": {
+    "lcoe": 33.43367643151361,
+    "cf": 0.5581564360616454,
+    "capex_per_MW": 1408364.6329435864,
+    "label": "5.3 MW, 122 m rotor (448 W/m\u00b2), 86 m hub"
+   }
+  }
+ ],
+ "ladder": [
+  {
+   "name": "Optimised design on the study site, base assumptions",
+   "lcoe": 37.704079538007164,
+   "cf": 0.5596301070538324,
+   "capex_per_MW": 1391858.8386775244,
+   "label": "7.2 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 152\u2013520 m, 22\u00b0 tether, rated at 9.4 m/s"
+  },
+  {
+   "name": "Stretch technology, same design: wings \u221233 % cost and +60 % life, on-wing drive $400/kW, tether \u221233 % and 8-yr life, 97 % availability, BOS $200/kW",
+   "lcoe": 25.078623584984324,
+   "cf": 0.5900447867850189,
+   "capex_per_MW": 1065698.8511007512,
+   "label": "7.2 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 152\u2013520 m, 22\u00b0 tether, rated at 9.4 m/s"
+  },
+  {
+   "name": "Stretch technology, design re-optimised",
+   "lcoe": 24.956039249463586,
+   "cf": 0.6155535887048174,
+   "capex_per_MW": 1091207.514324114,
+   "label": "6.7 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 231\u2013614 m, 23\u00b0 tether, rated at 9.3 m/s"
+  },
+  {
+   "name": "+ 30-year life for the ground hardware (wings and tether are replaced anyway)",
+   "lcoe": 23.899580278234104,
+   "cf": 0.6155535887048174,
+   "capex_per_MW": 1091207.5143241142,
+   "label": "6.7 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 231\u2013614 m, 23\u00b0 tether, rated at 9.3 m/s"
+  },
+  {
+   "name": "+ utility finance, 5 % WACC",
+   "lcoe": 20.75798388906939,
+   "cf": 0.6155535887048174,
+   "capex_per_MW": 1091207.5143241142,
+   "label": "6.7 MW, 6\u00d73 wings 40 m span on a 320 m ring, rotors 231\u2013614 m, 23\u00b0 tether, rated at 9.3 m/s"
+  },
+  {
+   "name": "+ a 10.5 m/s site (Patagonia, Great Plains ridge, Horn of Africa class), re-optimised",
+   "lcoe": 16.437172442751077,
+   "cf": 0.6682178167582461,
+   "capex_per_MW": 993951.2761251641,
+   "label": "7.3 MW, 6\u00d72 wings 40 m span on a 320 m ring, rotors 159\u2013335 m, 21\u00b0 tether, rated at 10.6 m/s"
+  }
+ ],
+ "ladder_hawt_end": {
+  "lcoe": 27.41562146069037,
+  "cf": 0.5699021855156975,
+  "capex_per_MW": 1460838.6044024685,
+  "label": "6.2 MW, 135 m rotor (433 W/m\u00b2), 93 m hub"
+ }
+}
