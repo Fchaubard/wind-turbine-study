@@ -257,6 +257,17 @@ ring node load = 2·T_line·(chord/L_line)·sin(δ/2)  →  polygon compression 
   <div id="pr-bom"></div>
   <p>Build notes, the test plan and safety rules are in <code>PROTOTYPE.md</code> in the repository.</p>
 
+  <h2>11 · Prototype shoot-out and the chosen build</h2>
+  <p>The kite ring in section 10 is the right machine for testing the tension-only idea and the wrong one for making power on a beach. So nine simple machines were run through the same three years of Punta Mita wind with the same generator kit. Rotors on a pole use a standard blade-element momentum model; drag machines use published test coefficients. Each carries a field factor taken from published tests so nothing is credited with performance it has not shown.</p>
+  <div class="tbl"><table id="so-rank"></table></div>
+  <p id="so-text"></p>
+  <h3>Chosen build: 4 m cloth-sail windmill, whole-system simulation</h3>
+  <p id="so-sys"></p>
+  <div class="tbl"><table id="so-ops"></table></div>
+  <h3>Order list</h3>
+  <div id="so-bom"></div>
+  <p>Cut list, assembly steps, test plan and safety rules are in <code>SAIL_WINDMILL.md</code> in the repository.</p>
+
   <h2>Assumptions and limits</h2>
   <ul>
     <li>Reality check on every kite-ring number above: when the rotor model used throughout this study is run on the Daisy prototype's own geometry, it predicts about 3.7 times the electrical power that was measured in the field. Part of that is drivetrain loss and off-design running at 1 kW scale, but sections 7 to 9 use the uncalibrated model and should be read as upper bounds until a larger rotor is measured.</li>
@@ -588,6 +599,22 @@ function lineChart(el, {series, xlog, ylog, xlabel, ylabel, xticks, yticks, xfmt
   $('#pr-shaft').innerHTML = '<tr><th>Wind (torque basis)</th><th class="n">Torque</th><th class="n">Tension</th><th class="n">Twist per bay</th><th class="n">Peak line load</th><th class="n">Ring buckling SF</th><th>Result</th></tr>' + P.shaft.cases.filter(c => c.fea).map(c => `<tr><td>${c.v} m/s (${c.basis})</td><td class="n">${fmt(c.Q,0)} N·m</td><td class="n">${fmt(c.F_ax,0)} N</td><td class="n">${fmt(c.max_seg_twist,0)}°</td><td class="n">${fmt(c.fea.max_line_T,0)} N</td><td class="n">${fmt(c.ring_buckling_SF,1)}</td><td>${c.fea.collapsed ? '<span class="pill no">collapses</span>' : '<span class="pill ok">stable</span>'}</td></tr>`).join('');
   $('#pr-bomtext').innerHTML = `About <b>${usd(P.total)}</b> in total. Prices were read on the sellers' own pages on 22 Nov 2026 unless marked; none of the US shops can be relied on to deliver to Mexico within a week, so those parts travel in luggage.`;
   $('#pr-bom').innerHTML = Object.entries(P.bom).map(([g, rows]) => `<div class="tbl"><table><tr><th>${g} (about ${usd(P.subtotals[g])})</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Price</th></tr>` + rows.map(r => `<tr><td>${r.url ? `<a href="${r.url}">${r.item}</a>` : r.item}<div class="eyebrow" style="margin-top:.2rem;text-transform:none;letter-spacing:0">${r.where}${r.note ? ' · ' + r.note : ''}</div></td><td class="n">${r.qty}</td><td class="n">${usd(r.unit)}</td><td class="n">${usd(r.total)}</td><td>${r.status === 'verified' ? '<span class="pill ok">seen</span>' : '<span class="pill">estimate</span>'}</td></tr>`).join('') + '</table></div>').join('');
+})();
+
+/* ---------------- section 11: prototype shoot-out ---------------- */
+(function shootout(){
+  const C = DATA.concepts, B = DATA.sail; if (!C || !B) return;
+  const D = B.design, usd = v => '$' + fmt(v, 0);
+  $('#so-rank').innerHTML = '<tr><th>Concept</th><th class="n">Rotor Cp</th><th class="n">Field factor</th><th class="n">W at 6 m/s</th><th class="n">Year average</th><th class="n">Parts</th><th class="n">$ per MWh, 5 yr</th></tr>' +
+    C.concepts.map((c, i) => `<tr${i === 0 ? ' style="font-weight:600"' : ''}><td>${c.name}<div class="eyebrow" style="margin-top:.2rem;text-transform:none;letter-spacing:0">${c.notes}</div></td><td class="n">${fmt(c.cp_rotor,2)}</td><td class="n">${fmt(c.field,2)}</td><td class="n">${fmt(c.P6,0)}</td><td class="n">${fmt(c.avg_W,0)} W</td><td class="n">${usd(c.cost)}</td><td class="n">${usd(c.usd_per_MWh_5yr)}</td></tr>`).join('');
+  const kite = C.concepts.find(c => c.kind === 'kite_ring'), top = C.concepts[0];
+  $('#so-text').innerHTML = `Cloth sails on a pole come out on top, and the kite ring is ${fmt(kite.usd_per_MWh_5yr/top.usd_per_MWh_5yr,0)} times worse per dollar at this size. A sheet that only catches the wind (the drag carousel) is last, which is the windsock result again in miniature. Field factors: sails 0.75 (tunnel and truck tests give rotor Cp 0.20–0.30, matching the model's 0.23, so only site losses remain); rigid blades 0.55 (field tests of small turbines give 11–20% wind-to-electric at 6–7.5 m/s); Savonius rotor Cp 0.22 from Sandia's tunnel tests. This first ranking gives each machine its best gear ratio and load at every wind speed; the whole-system run below does not.`;
+  $('#so-sys').innerHTML = `The real machine has one bicycle chain (48:14) and a fixed resistor, so at each wind speed it settles where rotor torque equals generator torque. Run that way, the generator turned out to be the bottleneck: 5 m and 6 m rotors made no more power than a 4 m one until the load resistance was lowered. The best match for 4 m is three 2.9 Ω resistors in parallel. Result: <b>${fmt(D.avg_W,0)} W average, ${fmt(D.kWh_yr,0)} kWh a year, about ${usd(B.total)} in parts, about ${usd(B.usd_per_MWh_5yr)} per MWh over five years</b>. Spars, chain and guys all keep a safety factor above 4 up to 12 m/s.`;
+  $('#so-ops').innerHTML = '<tr><th>Wind</th>' + D.ops.map(o => `<th class="n">${o.v} m/s</th>`).join('') + '</tr>' +
+    [['Rotor speed', o => fmt(o.rpm,0) + ' rpm'], ['Volts', o => fmt(o.V,0) + ' V'], ['Amps', o => fmt(o.I,0) + ' A'], ['Electrical power', o => fmt(o.P_el,0) + ' W'], ['Thrust on the pole', o => fmt(o.thrust,0) + ' N'],
+     ['Spar stress safety factor', o => fmt(D.struct[o.v].spar_SF,1)], ['Chain safety factor', o => fmt(D.struct[o.v].chain_SF,1)]].map(([n, f]) => '<tr><td>' + n + '</td>' + D.ops.map(o => `<td class="n">${f(o)}</td>`).join('') + '</tr>').join('');
+  const groups = {}; B.rows.forEach(r => (groups[r.group] = groups[r.group] || []).push(r));
+  $('#so-bom').innerHTML = Object.entries(groups).map(([g, rows]) => `<div class="tbl"><table><tr><th>${g} (about ${usd(B.subtotals[g])})</th><th class="n">Qty</th><th class="n">Unit</th><th>Price</th></tr>` + rows.map(r => `<tr><td>${r.url ? `<a href="${r.url}">${r.item}</a>` : r.item}${r.note ? `<div class="eyebrow" style="margin-top:.2rem;text-transform:none;letter-spacing:0">${r.note}</div>` : ''}</td><td class="n">${r.qty}</td><td class="n">${r.cur === 'MXN' ? 'MX$' : '$'}${fmt(r.unit, r.cur === 'MXN' ? 0 : 2)}</td><td>${r.status === 'seen' ? '<span class="pill ok">seen</span>' : '<span class="pill">estimate</span>'}</td></tr>`).join('') + '</table></div>').join('');
 })();
 
 /* ---------------- 3D model ---------------- */

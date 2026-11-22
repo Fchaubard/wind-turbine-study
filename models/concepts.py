@@ -19,11 +19,11 @@ except FileNotFoundError:
     pass
 
 
-def bem(N, R, r_hub, chord, cd0, n_ann=14, beta=0.0):
+def bem(N, R, r_hub, chord, cd0, n_ann=14, beta=0.0, lams=None):
     """Standard blade-element momentum rotor (wake rotation, Prandtl tip + hub loss, Glauert high-induction
     correction), ideal pitch (best CL per annulus up to 1.2). Returns the best Cp on swept disc area over tip-speed ratio."""
     edges = np.linspace(r_hub, R, n_ann + 1); best = None
-    for lam in np.linspace(0.6, 9, 43):
+    for lam in (lams if lams is not None else np.linspace(0.6, 9, 43)):
         cp = ct = 0.0
         for r0, r1 in zip(edges[:-1], edges[1:]):
             r = 0.5 * (r0 + r1); dr = r1 - r0; x = lam * r / R; sig = N * chord(r) / (2 * math.pi * r)
