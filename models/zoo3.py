@@ -22,6 +22,6 @@ for i, r in enumerate(S):
     ax.barh(y, math.log10(r["usd_per_MWh"]) - 2, left=2, color=col, height=.62); ax.text(1.98, y, r["name"], ha="right", va="center", fontsize=9.3)
     ax.text(math.log10(r["usd_per_MWh"]) + .02, y, f"{D}{r['usd_per_MWh']:,.0f}  ·  {r['avg_W']:.0f} W", va="center", fontsize=8.8, weight="bold")
 ax.set_xlim(.75, 4.65); ax.set_ylim(.4, len(S) + .6); ax.axis("off"); fig.subplots_adjust(left=.01, right=.99, top=.93, bottom=.17)
-for j, (t, w) in enumerate((("No idea gets near $10 at this wind speed. Rotor size and site matter most.", "bold"), ("Corkscrew, tiny props, ducts: real tests show they lose on cost.", "normal"), ("A beach just 1.3× windier than the data cuts cost per MWh by more than half.", "normal"), ("So: measure your exact spot first. A $99 wind meter is the best next purchase.", "bold"))):
+for j, (t, w) in enumerate((("No idea gets near $10 at this wind speed. Rotor size and site matter most.", "bold"), ("Corkscrew, tiny props, ducts: lose on cost using published test data.", "normal"), ("A beach just 1.3× windier than the data cuts cost per MWh by more than half.", "normal"), ("So measure your exact spot first: a $99 wind meter is the next buy.", "bold"))):
     fig.text(.05, .125 - j * .029, t.replace("$", D), fontsize=9.6, weight=w)
 fig.savefig("out/zoo_rank.png")
