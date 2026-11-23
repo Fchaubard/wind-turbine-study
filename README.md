@@ -18,6 +18,12 @@ It starts from a windsock that funnels wind into a small turbine (it does not wo
 
 All numbers are concept-level (±30–40 %).
 
+## Current build
+
+[BUILD_V2.md](BUILD_V2.md): 7 m cloth-sail rotor, free yaw, 12 m tripod on a concrete pad, with order list and structural results.
+
+![v2](v2_summary.png)
+
 ## CAD
 
 `cad/sail_windmill.step` is the full assembly of the Punta Mita prototype (62 solids, CadQuery). `models/cad_model.py` builds it and runs the fit checks; `models/sail_fea.py` is the structural frame analysis. Both read `models/cad_params.py`.

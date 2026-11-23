@@ -1,0 +1,314 @@
+[
+ {
+  "name": "7.8 m/s, working",
+  "min_SF": 2.3055669084181285,
+  "where": "spar",
+  "worst": {
+   "leg": {
+    "yield_SF": 3.0617245098526253,
+    "buckling_SF": 8.516829145886438
+   },
+   "brace": {
+    "yield_SF": 123.57272679003913,
+    "buckling_SF": 367.8833347688223
+   },
+   "yaw post": {
+    "yield_SF": 3.1888620298076793,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.172008393642624,
+    "buckling_SF": 999.0
+   },
+   "tail boom": {
+    "yield_SF": 3.017035305009857,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 16.62166579885123,
+    "buckling_SF": 68.43972132698418
+   },
+   "spar": {
+    "yield_SF": 2.3055669084181285,
+    "buckling_SF": 67.06619758665987
+   }
+  },
+  "stay_N": 112.5287841386119,
+  "bolt_pull_kg": 310.75368169569754,
+  "foot_down_kg": 460.05120256823244,
+  "hub_move_mm": 15.74867920831486
+ },
+ {
+  "name": "12 m/s gust, sails up",
+  "min_SF": 2.0879536551314635,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 2.0879536551314635,
+    "buckling_SF": 4.028671899267564
+   },
+   "brace": {
+    "yield_SF": 116.05645060351718,
+    "buckling_SF": 356.45648314453405
+   },
+   "yaw post": {
+    "yield_SF": 2.5175835256203016,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.0332884089855785,
+    "buckling_SF": 719.7162482254183
+   },
+   "tail boom": {
+    "yield_SF": 3.01703540259686,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 13.312578971444257,
+    "buckling_SF": 28.915780519790925
+   },
+   "spar": {
+    "yield_SF": 2.105827556737462,
+    "buckling_SF": 31.630399206841318
+   }
+  },
+  "stay_N": 261.337259397749,
+  "bolt_pull_kg": 819.4835534033746,
+  "foot_down_kg": 968.781076910106,
+  "hub_move_mm": 21.718059686097657
+ },
+ {
+  "name": "17 m/s squall, sails up",
+  "min_SF": 1.3173656485906469,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 1.3173656485906469,
+    "buckling_SF": 2.099526384244306
+   },
+   "brace": {
+    "yield_SF": 102.8112899371175,
+    "buckling_SF": 336.7920212946327
+   },
+   "yaw post": {
+    "yield_SF": 1.7840796819897808,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 4.808416398756471,
+    "buckling_SF": 358.61293373928436
+   },
+   "tail boom": {
+    "yield_SF": 3.0170355727592946,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 9.882207762854646,
+    "buckling_SF": 14.407862639559324
+   },
+   "spar": {
+    "yield_SF": 1.6827132057643668,
+    "buckling_SF": 16.46318322611364
+   }
+  },
+  "stay_N": 520.8036965380016,
+  "bolt_pull_kg": 1706.5185629945197,
+  "foot_down_kg": 1855.8160910943927,
+  "hub_move_mm": 33.45229857282611
+ },
+ {
+  "name": "25 m/s storm, sails reefed",
+  "min_SF": 1.4930877924400539,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 1.4930877924400539,
+    "buckling_SF": 4.654948393344032
+   },
+   "brace": {
+    "yield_SF": 54.153616846035746,
+    "buckling_SF": 312.466354122166
+   },
+   "yaw post": {
+    "yield_SF": 3.9048242956404233,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.131688970242511,
+    "buckling_SF": 999.0
+   },
+   "tail boom": {
+    "yield_SF": 3.0170325883753932,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 15.52104872921533,
+    "buckling_SF": 49.22552678211097
+   },
+   "spar": {
+    "yield_SF": 3.7982669053074645,
+    "buckling_SF": 50.81069580216397
+   }
+  },
+  "stay_N": 155.02303899236955,
+  "bolt_pull_kg": 687.006754316799,
+  "foot_down_kg": 836.3042020778744,
+  "hub_move_mm": 33.29028067219644
+ },
+ {
+  "name": "30 m/s, sails removed",
+  "min_SF": 1.0450728050367355,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 1.0450728050367355,
+    "buckling_SF": 5.298755222688961
+   },
+   "brace": {
+    "yield_SF": 34.385144065285694,
+    "buckling_SF": 291.9850680160157
+   },
+   "yaw post": {
+    "yield_SF": 4.834343349135144,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.197983344611952,
+    "buckling_SF": 999.0
+   },
+   "tail boom": {
+    "yield_SF": 3.017030948605203,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 17.404722416758627,
+    "buckling_SF": 90.86314491236277
+   },
+   "spar": {
+    "yield_SF": 4.12700639830915,
+    "buckling_SF": 84.07090242995945
+   }
+  },
+  "stay_N": 85.66134022848082,
+  "bolt_pull_kg": 583.986132919416,
+  "foot_down_kg": 733.2835365672663,
+  "hub_move_mm": 61.303045672522614
+ },
+ {
+  "name": "35 m/s, sails removed",
+  "min_SF": 0.7578404469854644,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 0.7578404469854644,
+    "buckling_SF": 4.015553796765563
+   },
+   "brace": {
+    "yield_SF": 24.779079315880388,
+    "buckling_SF": 269.7408640138209
+   },
+   "yaw post": {
+    "yield_SF": 4.384181213152105,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.169529291780522,
+    "buckling_SF": 999.0
+   },
+   "tail boom": {
+    "yield_SF": 3.017029401098008,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 16.548334115597342,
+    "buckling_SF": 66.75659381054828
+   },
+   "spar": {
+    "yield_SF": 3.9990773558448605,
+    "buckling_SF": 65.70821359175804
+   }
+  },
+  "stay_N": 115.2728464923512,
+  "bolt_pull_kg": 817.0545046321262,
+  "foot_down_kg": 966.3518666454471,
+  "hub_move_mm": 87.25393105764878
+ },
+ {
+  "name": "40 m/s, sails removed",
+  "min_SF": 0.575373380744173,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 0.575373380744173,
+    "buckling_SF": 3.1385555859439696
+   },
+   "brace": {
+    "yield_SF": 18.738697288961525,
+    "buckling_SF": 247.9456735726058
+   },
+   "yaw post": {
+    "yield_SF": 3.9588312783833546,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.137082356269925,
+    "buckling_SF": 999.0
+   },
+   "tail boom": {
+    "yield_SF": 3.017027615543157,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 15.659289444462647,
+    "buckling_SF": 51.11051591816703
+   },
+   "spar": {
+    "yield_SF": 3.8279160609787604,
+    "buckling_SF": 52.4816760549128
+   }
+  },
+  "stay_N": 149.43996910480948,
+  "bolt_pull_kg": 1085.9795489171465,
+  "foot_down_kg": 1235.2768628898798,
+  "hub_move_mm": 117.20095836475902
+ },
+ {
+  "name": "45 m/s hurricane, sails removed",
+  "min_SF": 0.45202647858611633,
+  "where": "leg",
+  "worst": {
+   "leg": {
+    "yield_SF": 0.45202647858611633,
+    "buckling_SF": 2.5158351690787155
+   },
+   "brace": {
+    "yield_SF": 14.682360761297707,
+    "buckling_SF": 227.14511543950488
+   },
+   "yaw post": {
+    "yield_SF": 3.5666588094302,
+    "buckling_SF": 999.0
+   },
+   "head beam": {
+    "yield_SF": 5.100798078815278,
+    "buckling_SF": 999.0
+   },
+   "tail boom": {
+    "yield_SF": 3.0170255919296256,
+    "buckling_SF": 999.0
+   },
+   "bowsprit": {
+    "yield_SF": 14.760558383677175,
+    "buckling_SF": 40.383616855624425
+   },
+   "spar": {
+    "yield_SF": 3.616908218274758,
+    "buckling_SF": 42.73296500705269
+   }
+  },
+  "stay_N": 188.16270806281938,
+  "bolt_pull_kg": 1390.7612657732348,
+  "foot_down_kg": 1540.0585252997191,
+  "hub_move_mm": 151.1428653396483
+ }
+]

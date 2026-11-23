@@ -1,0 +1,80 @@
+{
+ "params": {
+  "pad": 4.0,
+  "foot_r": 2.0,
+  "apex_z": 11.75,
+  "hub_z": 12.0,
+  "leg_od": 0.073,
+  "leg_w": 0.0012,
+  "brace_z": [
+   2.94,
+   5.87,
+   8.81
+  ],
+  "brace_od": 0.0295,
+  "brace_w": 0.0012,
+  "R": 3.5,
+  "n": 8,
+  "spar_od": 0.0386,
+  "spar_w": 0.00165,
+  "spar_in": 0.25,
+  "cone_deg": 8.0,
+  "hub_d": 0.7,
+  "hub_t": 0.015,
+  "bow": 1.4,
+  "stay_d": 0.0063,
+  "luff": [
+   0.4,
+   3.4
+  ],
+  "clew_r": 0.78,
+  "belly": 0.3,
+  "overhang": 0.7,
+  "head_od": 0.0603,
+  "head_w": 0.0055,
+  "tail_boom": 3.2,
+  "tail_w": 1.6,
+  "tail_h": 1.2,
+  "gear1": [
+   53,
+   14
+  ],
+  "gear2": [
+   48,
+   12
+  ],
+  "jack_drop": 0.34,
+  "motor_drop": 0.42,
+  "rim_d": 0.4,
+  "cone": 0.13962634015954636
+ },
+ "checks": [
+  {
+   "check": "Rotor swept envelope to legs, all yaw angles",
+   "m": 0.32358937751792466,
+   "need": 0.3
+  },
+  {
+   "check": "Lowest blade tip above the pad",
+   "m": 8.5,
+   "need": 3.0
+  },
+  {
+   "check": "Tail vane to legs (below apex)",
+   "m": 1.85,
+   "need": 0.5
+  },
+  {
+   "check": "Gap between spars at the hub",
+   "m": 0.15774954084936207,
+   "need": 0.04
+  }
+ ],
+ "masses": {
+  "tower": 103.75556887077178,
+  "head": 65.01522384627428,
+  "rotor": 49.1710500678639,
+  "sails": 2.4201173495887893
+ },
+ "n": 69
+}

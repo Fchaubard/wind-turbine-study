@@ -1,0 +1,218 @@
+{
+ "total": 2708.437837837838,
+ "wear": 165.13513513513513,
+ "reef": 7.145809951436376,
+ "W": 111.88320100244165,
+ "kWh": 980.7681399874035,
+ "usd": 687.0081196605036,
+ "W13": 203.4160301376811,
+ "usd13": 377.8692735781942,
+ "curve": {
+  "3": 54.6957098987394,
+  "4": 150.0303461307696,
+  "5": 311.453039162043,
+  "6": 555.4858031923703,
+  "7": 898.6506524215627
+ },
+ "seen": 1762.4918918918918,
+ "rows": [
+  {
+   "group": "Carry in from the US",
+   "item": "48 V 1,200 W direct-drive REAR hub motor wheel, 700C",
+   "qty": 1,
+   "unit": 239.99,
+   "cur": "USD",
+   "usd": 239.99,
+   "status": "seen",
+   "url": "https://ebikeling.com/products/waterproof-48v-1200w-700c-direct-drive-front-rear-ebike-motor-wheel-only",
+   "note": "Generator. Confirm it has a screw-on freewheel thread before paying."
+  },
+  {
+   "group": "Carry in from the US",
+   "item": "1,000 W wind MPPT charge controller, 12/24/48 V",
+   "qty": 1,
+   "unit": 178.46,
+   "cur": "USD",
+   "usd": 178.46,
+   "status": "seen",
+   "url": "https://www.ato.com/1000w-wind-turbine-mppt-charge-controller",
+   "note": "Holds the rotor at its best speed."
+  },
+  {
+   "group": "Carry in from the US",
+   "item": "3-phase bridge rectifier, 90 A",
+   "qty": 1,
+   "unit": 20.65,
+   "cur": "USD",
+   "usd": 20.65,
+   "status": "seen",
+   "url": "https://windandsolar.com/products/3-phase-rectifier-90-amp",
+   "note": ""
+  },
+  {
+   "group": "Carry in from the US",
+   "item": "300 W dump resistor, 2.9 ohm",
+   "qty": 4,
+   "unit": 10.55,
+   "cur": "USD",
+   "usd": 42.2,
+   "status": "seen",
+   "url": "https://windandsolar.com/products/300-watt-divert-load-resistor",
+   "note": "Test load and overspeed protection."
+  },
+  {
+   "group": "Carry in from the US",
+   "item": "Victron SmartShunt 500 A",
+   "qty": 1,
+   "unit": 117.3,
+   "cur": "USD",
+   "usd": 117.3,
+   "status": "seen",
+   "url": "https://shopsolarkits.com/products/victron-smartshunt",
+   "note": "Logs power to your phone."
+  },
+  {
+   "group": "Home Depot Las Juntas",
+   "item": "Galvanised post tube 73 mm x 3.05 m",
+   "qty": 12,
+   "unit": 545,
+   "cur": "MXN",
+   "usd": 353.5135135135135,
+   "status": "seen",
+   "url": "https://www.homedepot.com.mx/p/tauro-tuberia-para-postes-73-mm-std-305-m-851969",
+   "note": "Three legs, four tubes each."
+  },
+  {
+   "group": "Home Depot Las Juntas",
+   "item": "Thin-wall conduit 1 in x 3 m",
+   "qty": 21,
+   "unit": 249,
+   "cur": "MXN",
+   "usd": 282.64864864864865,
+   "status": "seen",
+   "url": "https://www.homedepot.com.mx/p/rymco-tubo-conduit-metal-pared-delgada-1-pulgada-sin-rosca-830785",
+   "note": "9 braces, 12 cut into 36 one-metre leg splints."
+  },
+  {
+   "group": "Home Depot Las Juntas",
+   "item": "Thin-wall conduit 1-1/4 in x 3 m",
+   "qty": 17,
+   "unit": 329,
+   "cur": "MXN",
+   "usd": 302.3243243243243,
+   "status": "seen",
+   "url": "https://www.homedepot.com.mx/b/electrico/conduit-cajas-y-accesorios/tuberia-conduit",
+   "note": "8 spars of two sleeved lengths, plus bowsprit. Wall thickness not shown online: check it is about 1.65 mm."
+  },
+  {
+   "group": "Home Depot Las Juntas",
+   "item": "Polyethylene tarp 9.14 x 6.09 m",
+   "qty": 1,
+   "unit": 2315,
+   "cur": "MXN",
+   "usd": 125.13513513513513,
+   "status": "seen",
+   "url": "https://www.homedepot.com.mx/p/everbilt-lona-para-pintar-uso-general-914-x-609-m-polietileno-impermeable-152701-152701",
+   "note": "Eight sails. Replace about yearly."
+  },
+  {
+   "group": "Home Depot Las Juntas",
+   "item": "Polyester rope 6.3 mm x 30 m",
+   "qty": 3,
+   "unit": 219,
+   "cur": "MXN",
+   "usd": 35.513513513513516,
+   "status": "seen",
+   "url": "https://www.homedepot.com.mx/p/cuerda-de-poliester-trenzada-63-mm-304-m-mfp4100-992046",
+   "note": "16 stays, sheets, lashings."
+  },
+  {
+   "group": "Home Depot Las Juntas",
+   "item": "Plywood 15 mm, 1.22 x 2.44 m",
+   "qty": 2,
+   "unit": 599,
+   "cur": "MXN",
+   "usd": 64.75675675675676,
+   "status": "seen",
+   "url": "https://www.homedepot.com.mx/p/marini-triplay-cdx-15-mm-para-construccion-165700",
+   "note": "Hub discs and tail vane. Seal with paint."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Welding shop: apex plate, yaw post and head beam (2 in Sch 80), 3 base plates with hinges",
+   "qty": 1,
+   "unit": 4500,
+   "cur": "MXN",
+   "usd": 243.24324324324326,
+   "status": "estimate",
+   "url": "",
+   "note": "Two feet hinged so the tower can be lowered."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Two trailer wheel hubs with spindles",
+   "qty": 2,
+   "unit": 900,
+   "cur": "MXN",
+   "usd": 97.29729729729729,
+   "status": "estimate",
+   "url": "",
+   "note": "Sealed bearings: one for yaw, one for the rotor."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Motorcycle 428 chain, 53T and 14T sprockets",
+   "qty": 1,
+   "unit": 1100,
+   "cur": "MXN",
+   "usd": 59.45945945945946,
+   "status": "estimate",
+   "url": "",
+   "note": "First gear stage."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Bicycle chain, 48T ring, 12T freewheel, jackshaft, 2 pillow blocks",
+   "qty": 1,
+   "unit": 1400,
+   "cur": "MXN",
+   "usd": 75.67567567567568,
+   "status": "estimate",
+   "url": "",
+   "note": "Second gear stage, 15:1 overall."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Epoxy anchors M16 stainless (12), stainless U-bolts, bolts",
+   "qty": 1,
+   "unit": 4000,
+   "cur": "MXN",
+   "usd": 216.21621621621622,
+   "status": "estimate",
+   "url": "",
+   "note": "Foot bolts must hold 1,700 kg per foot."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Zinc primer, marine paint, 3-core cable 20 m, lugs, grease",
+   "qty": 1,
+   "unit": 2200,
+   "cur": "MXN",
+   "usd": 118.91891891891892,
+   "status": "estimate",
+   "url": "",
+   "note": "Salt protection."
+  },
+  {
+   "group": "Puerto Vallarta, estimate",
+   "item": "Hand winch, 12 m of 3/16 in cable, gin pole",
+   "qty": 1,
+   "unit": 2500,
+   "cur": "MXN",
+   "usd": 135.13513513513513,
+   "status": "estimate",
+   "url": "",
+   "note": "To raise and lower the tower."
+  }
+ ]
+}
