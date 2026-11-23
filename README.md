@@ -47,3 +47,7 @@ cd models && mkdir -p out && python lcoe_opt.py && python target10.py 10
 ## Deploy
 
 `render.yaml` describes a static site; GitHub Pages serves the same `index.html`.
+
+## Site rule: ocean pad only
+
+The machine stands on a 4 × 4 m concrete pad in the ocean. The Hilltop Dandelion, Crest Fence, Ridge Line, Zipline Sail, Kite-Lifted Line and Giant Whisk studies need a hill or anchors beyond the pad, so they are **not buildable at this site**. The pad-valid leader is the Dandelion at about $100/MWh (simulated, not physically tested).
