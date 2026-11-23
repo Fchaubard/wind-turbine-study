@@ -14,9 +14,15 @@ It starts from a windsock that funnels wind into a small turbine (it does not wo
 | Stretch technology + utility finance + 10.5 m/s site | $16/MWh |
 | Road to $10/MWh | reachable only if flying generators cost about $100/kW (car-industry drive units), on a ≥ 9 m/s site at < 6 % finance |
 
-| Prototype for Punta Mita | nine concepts simulated in local wind; a cloth-sail windmill on a pole wins; optimised to 5 m with a two-chain step-up (about $1,020 in parts, 69 W average, about $390 per MWh over five years). See `SAIL_WINDMILL.md` |
+| Prototype for Punta Mita | nine concepts simulated in local wind; a cloth-sail windmill on a pole wins; optimised to 5 m with a two-chain step-up (about $1,125 in parts after the CAD and structural redesign, 69 W average, about $425 per MWh over five years). See `SAIL_WINDMILL.md` |
 
 All numbers are concept-level (±30–40 %).
+
+## CAD
+
+`cad/sail_windmill.step` is the full assembly of the Punta Mita prototype (62 solids, CadQuery). `models/cad_model.py` builds it and runs the fit checks; `models/sail_fea.py` is the structural frame analysis. Both read `models/cad_params.py`.
+
+![CAD and structural summary](cad/summary_cad.png)
 
 ## Layout
 

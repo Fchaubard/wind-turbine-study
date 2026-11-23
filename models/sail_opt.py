@@ -8,7 +8,13 @@ import numpy as np
 with contextlib.redirect_stdout(io.StringIO()):
     import concepts as CC
 
+import sys
 RHO, W10, KV, R_M, V_D = CC.RHO, CC.W10, CC.KV, CC.R_M, CC.V_D
+SITE_MEAN = float(sys.argv[1]) if len(sys.argv) > 1 else None      # None = Punta Mita hourly record
+YEARS = int(sys.argv[2]) if len(sys.argv) > 2 else 5
+TAG = "" if SITE_MEAN is None and YEARS == 5 else f"_{SITE_MEAN or 'pm'}_{YEARS}"
+if SITE_MEAN is not None:
+    W10 = np.random.default_rng(1).weibull(2.0, 200000) * SITE_MEAN / math.gamma(1.5)
 K_T = 9.549 / KV; FIELD = CC.FF["sail"]; FX = 18.5
 LAMS = np.linspace(0.3, 3.6, 34)
 OD, WALL = 29.5e-3, 1.2e-3; ID = OD - 2 * WALL
@@ -60,13 +66,14 @@ def cost(dia, n, k, n_res, extra):
     local_mx = pole + 40 * 27 + 12 * 22 + conduit + tarp_mx + 2 * 219 + 599 + 199 + 1500 + 1850 + 495
     carry = 239.99 + 15 + 20.65 + (n_res + 1) * 10.55 + 117.30 + extra
     capex = carry + local_mx / FX
-    return capex, capex + 4 * tarp_mx / FX, sail_area              # five-year cost includes four sail replacements
+    tarp = tarp_mx / FX * (1.6 if SITE_MEAN and SITE_MEAN > 6 else 1.0)   # heavy-duty tarp on a windy site
+    return capex, capex + (YEARS - 1) * tarp + 0.02 * capex * max(YEARS - 5, 0), sail_area   # yearly sail replacement; 2 %/yr parts after year 5
 
 
 out = dict(runs=[]); best = None
 for n, k in itertools.product((6, 8, 12), (0.30, 0.45, 0.60, 0.80)):
     cps, cts = curve(n, k)
-    for dia, (rname, (ratio, eta, extra)), n_res, vf in itertools.product((3.0, 4.0, 5.0, 6.0), RATIOS.items(), (1, 2, 3, 4, 6, 8), (7.0, 8.0, 10.0, 12.0)):
+    for dia, (rname, (ratio, eta, extra)), n_res, vf in itertools.product((3.0, 4.0, 5.0, 6.0), RATIOS.items(), (1, 2, 3, 4, 6, 8, 10), (7.0, 8.0, 10.0, 12.0, 14.0)):
         Rl = 2.9 / n_res; avg = 0.0; ok = True
         for v, fr in zip(VBINS, FRAC):
             if v < 2.5 or v > vf: continue
@@ -78,7 +85,7 @@ for n, k in itertools.product((6, 8, 12), (0.30, 0.45, 0.60, 0.80)):
         if not ok: continue
         capex, cost5, area = cost(dia, n, k, n_res, extra)
         r = dict(n=n, k=k, dia=dia, ratio_name=rname, ratio=ratio, eta=eta, n_res=n_res, R_load=Rl, v_furl=vf, avg_W=avg, kWh_yr=avg * 8.766, capex=capex, cost5=cost5,
-                 sail_area=area, kWh_per_usd=avg * 8.766 * 5 / cost5, usd_per_MWh=cost5 / (avg * 8.766 * 5 / 1000) if avg > 0 else 1e9, cp_max=float(cps.max()), lam_opt=float(LAMS[cps.argmax()]))
+                 sail_area=area, kWh_per_usd=avg * 8.766 * YEARS / cost5, usd_per_MWh=cost5 / (avg * 8.766 * YEARS / 1000) if avg > 0 else 1e9, cp_max=float(cps.max()), lam_opt=float(LAMS[cps.argmax()]))
         out["runs"].append(r)
         if best is None or r["kWh_per_usd"] > best["kWh_per_usd"]: best = r; best_curves = (cps, cts)
 runs = sorted(out["runs"], key=lambda r: -r["kWh_per_usd"])
@@ -112,4 +119,4 @@ for label, r in (("4 m, one chain, three resistors (previous design)", base), ("
                  ("5 m, two chains (the build)", pick), ("6 m, two chains, 9 m pole (stretch)", pickrun(6.0, "48:14 then 28:14"))):
     if r: ladder.append(dict(label=label, avg_W=r["avg_W"], kWh_yr=r["kWh_yr"], capex=r["capex"], cost5=r["cost5"], usd_per_MWh=r["usd_per_MWh"], kWh_per_usd=r["kWh_per_usd"], n_res=r["n_res"], v_furl=r["v_furl"]))
 for l in ladder: print(f"ladder {l['label']:52s} {l['avg_W']:5.1f} W  capex ${l['capex']:.0f}  ${l['usd_per_MWh']:.0f}/MWh")
-json.dump(dict(best=best, pick=pick, previous=base, ladder=ladder, top=[r for r in runs[:200]]), open("out/sail_opt.json", "w"), indent=1, default=float)
+json.dump(dict(best=best, pick=pick, previous=base, ladder=ladder, top=[r for r in runs[:200]]), open(f"out/sail_opt{TAG}.json", "w"), indent=1, default=float)

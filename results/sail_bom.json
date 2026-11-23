@@ -1,4 +1,94 @@
 {
+ "cad": {
+  "checks": [
+   {
+    "check": "Rotor to pole",
+    "clearance_m": 0.5897695111300717,
+    "need_m": 0.25,
+    "ok": true
+   },
+   {
+    "check": "Rotor to hub-motor rim",
+    "clearance_m": 0.1838526339579246,
+    "need_m": 0.1,
+    "ok": true
+   },
+   {
+    "check": "Rotor to chainring",
+    "clearance_m": 0.13329929272073907,
+    "need_m": 0.03,
+    "ok": true
+   },
+   {
+    "check": "Rotor to guy cables",
+    "clearance_m": 0.6249092644132661,
+    "need_m": 0.25,
+    "ok": true
+   },
+   {
+    "check": "Rotor to back-prop",
+    "clearance_m": 0.6776676856311263,
+    "need_m": 0.25,
+    "ok": true
+   },
+   {
+    "check": "Hub-motor rim to pole",
+    "clearance_m": 0.41850000000000004,
+    "need_m": 0.03,
+    "ok": true
+   },
+   {
+    "check": "Hub-motor rim to step-up hub",
+    "clearance_m": 0.08650000000000002,
+    "need_m": 0.02,
+    "ok": true
+   },
+   {
+    "check": "Crank arm sweep to bracket plates",
+    "clearance_m": 0.17499999999999982,
+    "need_m": 0.03,
+    "ok": true
+   },
+   {
+    "check": "Bracket plates to hub-motor rim",
+    "clearance_m": 0.05500000000000005,
+    "need_m": 0.01,
+    "ok": true
+   },
+   {
+    "check": "Lowest blade tip above the sand",
+    "clearance_m": 3.4743298281460744,
+    "need_m": 3.0,
+    "ok": true
+   },
+   {
+    "check": "Gap between spars at the hub disc",
+    "clearance_m": 0.08830972450961724,
+    "need_m": 0.04,
+    "ok": true
+   }
+  ],
+  "masses": {
+   "pole": 30.911257830213074,
+   "guys": 3.211155698199063,
+   "rotor": 20.989332668480095,
+   "sails": 1.2220835600151845,
+   "drive": 18.891829766452027
+  },
+  "rotor_mass": 22.21141622849528,
+  "chains": {
+   "chain1_links": 100,
+   "chain2_links": 88,
+   "standard_chain_links": 116
+  }
+ },
+ "fea_rows": [
+  "| Dead load, no wind | 0 N | 5.5 | pole stress | down 77 kg | up 2 kg, sideways 2 kg |",
+  "| 7 m/s, working (reef point) | 385 N | 3.9 | spar stress | up 18 kg | down 104 kg, sideways 39 kg |",
+  "| 12 m/s gust, sails still set | 1025 N | 2.6 | spar stress | up 181 kg | down 280 kg, sideways 105 kg |",
+  "| 17 m/s squall, sails still set (worst case) | 2058 N | 1.6 | prop buckling | up 441 kg | down 565 kg, sideways 213 kg |",
+  "| 17 m/s from behind, sails reefed | -250 N | 3.0 | spar stress | down 146 kg | up 71 kg, sideways 28 kg |"
+ ],
  "ladder": [
   {
    "label": "4 m, one chain, three resistors (previous design)",
@@ -416,24 +506,24 @@
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
    "item": "Galvanised post tube 73 mm \u00d7 3.05 m (Tauro)",
-   "qty": 2,
+   "qty": 4,
    "unit": 545,
    "cur": "MXN",
-   "usd": 58.91891891891892,
+   "usd": 117.83783783783784,
    "status": "seen",
    "url": "https://www.homedepot.com.mx/p/tauro-tuberia-para-postes-73-mm-std-305-m-851969",
-   "note": "The 6 m pole, joined with an internal wooden plug and through-bolts; guy it at the joint and at the top."
+   "note": "Two make the 6.1 m pole, two make the back-prop that leans against it from 2.2 m behind. Each pair is joined with conduit splints and U-bolts."
   },
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
    "item": "Galvanised steel cable 3/16 in, per metre",
-   "qty": 40,
+   "qty": 28,
    "unit": 27,
    "cur": "MXN",
-   "usd": 58.37837837837838,
+   "usd": 40.86486486486486,
    "status": "seen",
    "url": "https://www.homedepot.com.mx/p/fiero-cable-de-acero-galvanizado-3-16-venta-por-metro-lineal-cab-3-16r-466137",
-   "note": "Six guys (three at the top, three at the joint). Rated 1,360 kg; peak simulated guy load is about 95 kg."
+   "note": "Four side guys only (two from the top, two from the joint). No cable may cross the rotor. Rated 1,360 kg; peak simulated load is about 35 kg."
   },
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
@@ -449,13 +539,13 @@
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
    "item": "Steel conduit, thin wall, 1 in \u00d7 3 m",
-   "qty": 9,
+   "qty": 11,
    "unit": 249,
    "cur": "MXN",
-   "usd": 121.13513513513513,
+   "usd": 148.05405405405406,
    "status": "seen",
    "url": "https://www.homedepot.com.mx/p/rymco-tubo-conduit-metal-pared-delgada-1-pulgada-sin-rosca-830785",
-   "note": "Eight spars cut to 2.5 m plus one bowsprit. Offcuts become anchor stakes."
+   "note": "Eight spars cut to 2.5 m, one bowsprit, six 1 m joint splints, two standoffs. Offcuts become stakes."
   },
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
@@ -471,13 +561,13 @@
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
    "item": "Polyester braided rope 6.3 mm \u00d7 30 m",
-   "qty": 2,
+   "qty": 3,
    "unit": 219,
    "cur": "MXN",
-   "usd": 23.675675675675677,
+   "usd": 35.513513513513516,
    "status": "seen",
    "url": "https://www.homedepot.com.mx/p/cuerda-de-poliester-trenzada-63-mm-304-m-mfp4100-992046",
-   "note": "Stays from bowsprit to spar tips, sail sheets, lashings."
+   "note": "Two stays per spar (to the tip and to two-thirds span), sail sheets, lashings."
   },
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
@@ -488,7 +578,7 @@
    "usd": 32.37837837837838,
    "status": "seen",
    "url": "https://www.homedepot.com.mx/p/marini-triplay-cdx-15-mm-para-construccion-165700",
-   "note": "Two 50 cm hub discs that sandwich the spars; the rest is the electronics board."
+   "note": "Two 50 cm hub discs that sandwich the spars, two 10 \u00d7 58 cm doubled plates that carry the hub motor, a 40 cm pad under the back-prop foot, the electronics board."
   },
   {
    "group": "Home Depot Las Juntas, Puerto Vallarta",
@@ -524,6 +614,17 @@
    "note": "Its crank is the rotor shaft and its own rear wheel is the step-up shaft: chain one runs chainring to the 14-tooth cog, chain two runs from the 28-tooth cog to the hub motor. Price is my guess."
   },
   {
+   "group": "Home Depot Las Juntas, Puerto Vallarta",
+   "item": "Timber 2 \u00d7 6 in, 1 m lengths, for buried anchors",
+   "qty": 4,
+   "unit": 120,
+   "cur": "MXN",
+   "usd": 25.945945945945947,
+   "status": "estimate",
+   "url": "",
+   "note": "One under the pole foot (it is pulled upward in strong wind), one behind the prop foot, one per side-guy pair."
+  },
+  {
    "group": "Puerto Vallarta, other",
    "item": "Steren HER-445 digital anemometer",
    "qty": 1,
@@ -535,13 +636,13 @@
    "note": ""
   }
  ],
- "total": 1018.8427027027026,
+ "total": 1124.950810810811,
  "subtotals": {
   "Bring with you (order now, US)": 450.14,
-  "Home Depot Las Juntas, Puerto Vallarta": 441.94594594594594,
+  "Home Depot Las Juntas, Puerto Vallarta": 548.0540540540541,
   "Puerto Vallarta, other": 126.75675675675676
  },
- "usd_per_MWh_5yr": 390.3867276028997,
- "kWh_per_usd_5yr": 2.5615624950682165,
+ "usd_per_MWh_5yr": 425.36520619437886,
+ "kWh_per_usd_5yr": 2.350921009611281,
  "fx": 18.5
 }
