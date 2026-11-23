@@ -44,7 +44,8 @@ for pad in (2.0, 3.0, 4.0, 5.0, 6.0, 8.0):
                 v = Z4.VG; f = lambda s: float(np.minimum(np.maximum(d["cp"] * .75 * .5 * 1.18 * (v * s)**3 * d["A"] - d["qd"] * d["tsr"] * v * s / d["R"], 0) * d["eta"], d["cap"]) * (v * s <= vc) @ Z4.hist(hub, "free", 1.0)) * .97
                 W = f(1.0); c5 = d["capex"] + 4 * (sail + .02 * t["cost"]); usd = c5 / (W * 8.766 * 5 / 1000)
                 if best is None or usd < best["usd"]:
-                    mass = 1.5 * T.thrust(D, 17) * hub / (0.5 * Rb * G) ; best = dict(pad=pad, D=D, hub=hub, spar=sn, W=W, capex=d["capex"], usd=usd, usd13=c5 / (f(1.3) * 8.766 * 5 / 1000), overhang=over, tower=t, pad_mass_kg=mass)
+                    mass = 1.5 * T.thrust(D, 17) * hub / (Rb * G);  # pad tips about its own edge, half a side from centre
+                    best = dict(pad=pad, D=D, hub=hub, spar=sn, W=W, capex=d["capex"], usd=usd, usd13=c5 / (f(1.3) * 8.766 * 5 / 1000), overhang=over, tower=t, pad_mass_kg=mass)
                 break
     if best:
         rows.append(best); t = best["tower"]
