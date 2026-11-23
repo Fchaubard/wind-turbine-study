@@ -1,5 +1,7 @@
 # Punta Mita prototype: 5 m cloth-sail windmill on a pole
 
+> **Correction:** the 69 W / $425 per MWh below is too optimistic. An audit (`models/energy_audit.py`) found it ignored wind direction, the 6 m hub height and drivetrain drag. As drawn (rotor fixed facing one way) expect about 22 W ($1,328/MWh). With a rotor that yaws into the wind, about 41 W ($758/MWh). **Do not order the tower parts until the yawing tower is finished.**
+
 Chosen after simulating nine concepts in three years of hourly Punta Mita wind (see `results/concepts.json`). Prices seen 22 Nov 2026; Home Depot prices are the online prices.
 
 ![CAD model](cad/view_iso.png)
