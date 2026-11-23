@@ -1,0 +1,102 @@
+[
+ {
+  "D": 4.0,
+  "hub": 10.0,
+  "spar": "1 in",
+  "spar_MPa": 45.20960000000001,
+  "gen": "salvaged washing-machine motor",
+  "reef": 12.0,
+  "W": 29.569943453543953,
+  "capex": 1474.5135135135135,
+  "usd": 1294.2395706500695,
+  "usd13": 544.7249639528095,
+  "tower": {
+   "type": "tripod",
+   "section": "73 mm post tube, 1.2 mm wall",
+   "bundle": 1,
+   "tubes": 12,
+   "braces": 0,
+   "base_radius": 4.875,
+   "cost": 468.5135135135135,
+   "sf12": 2.4188071131946347,
+   "sf17": 1.3275617704268199,
+   "uplift_kg": 159.24195107885842
+  },
+  "sail_per_year": 41.351351351351354
+ },
+ {
+  "D": 5.0,
+  "hub": 12.0,
+  "spar": "1 in",
+  "spar_MPa": 88.3,
+  "gen": "salvaged washing-machine motor",
+  "reef": 12.0,
+  "W": 54.0840248710654,
+  "capex": 1619.8254054054055,
+  "usd": 773.8176202232778,
+  "usd13": 351.1123515664733,
+  "tower": {
+   "type": "tripod",
+   "section": "73 mm post tube, 1.2 mm wall",
+   "bundle": 1,
+   "tubes": 15,
+   "braces": 1,
+   "base_radius": 3.525,
+   "cost": 613.8254054054054,
+   "sf12": 3.452108152320991,
+   "sf17": 1.8138106224696489,
+   "uplift_kg": 394.22035871230486
+  },
+  "sail_per_year": 41.351351351351354
+ },
+ {
+  "D": 6.0,
+  "hub": 12.0,
+  "spar": "1-1/4 in",
+  "spar_MPa": 65.22258723609345,
+  "gen": "salvaged washing-machine motor",
+  "reef": 9.864209083765118,
+  "W": 79.81505600473385,
+  "capex": 1683.8254054054055,
+  "usd": 571.3245433408248,
+  "usd13": 281.50313570764206,
+  "tower": {
+   "type": "tripod",
+   "section": "73 mm post tube, 1.2 mm wall",
+   "bundle": 1,
+   "tubes": 15,
+   "braces": 1,
+   "base_radius": 3.525,
+   "cost": 613.8254054054054,
+   "sf12": 2.4211077142464132,
+   "sf17": 1.2661331425947486,
+   "uplift_kg": 564.7439832123856
+  },
+  "sail_per_year": 66.43243243243244
+ },
+ {
+  "D": 7.0,
+  "hub": 12.0,
+  "spar": "1-1/4 in",
+  "spar_MPa": 103.57105287953725,
+  "gen": "salvaged washing-machine motor",
+  "reef": 7.827842604093198,
+  "W": 107.38260931564967,
+  "capex": 1941.731891891892,
+  "usd": 530.3072018060094,
+  "usd13": 292.36095445125835,
+  "tower": {
+   "type": "tripod",
+   "section": "73 mm post tube, 1.2 mm wall",
+   "bundle": 1,
+   "tubes": 15,
+   "braces": 2,
+   "base_radius": 3.525,
+   "cost": 670.7589189189189,
+   "sf12": 4.0263522637024325,
+   "sf17": 2.099571197313073,
+   "uplift_kg": 766.2719030761175
+  },
+  "sail_per_year": 125.13513513513513
+ }
+]
