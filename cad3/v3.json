@@ -1,0 +1,35 @@
+{
+ "hub": 12.0,
+ "leg": "3 in Sch 40",
+ "nbr": 2,
+ "over": 1.25,
+ "checks": [
+  {
+   "check": "Bent blade (17 m/s) to legs, all yaw",
+   "m": 0.3471164606232703,
+   "need": 0.3
+  },
+  {
+   "check": "Blade tip above pad",
+   "m": 7.0,
+   "need": 2.5
+  },
+  {
+   "check": "Tail vane forward edge past legs",
+   "m": 2.1,
+   "need": 0.5
+  }
+ ],
+ "masses": {
+  "pad": 12695.999999999996,
+  "tower": 471.5312854999464,
+  "head": 146.82014616105067,
+  "rotor": 214.57466812764142
+ },
+ "pick": {
+  "hub": 12.0,
+  "leg": "3 in Sch 40",
+  "nbr": 2
+ },
+ "n": 25
+}

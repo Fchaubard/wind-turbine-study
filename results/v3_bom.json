@@ -1,0 +1,264 @@
+{
+ "all": [
+  {
+   "hub": 8.5,
+   "capex": 5049.220290987926,
+   "W": 355.52577378351566,
+   "u20": 145.00363503427556,
+   "u5": 357.3977678919251,
+   "u20w": 84.90845939369889,
+   "W13": 607.1542213237832,
+   "seen": 992.058918918919,
+   "bl": 1298.8486486486488,
+   "el": 733.7351351351351,
+   "heatW": 445.27002116635657,
+   "heat20": 114.94272307518023,
+   "heatcap": 5008.285155852791
+  },
+  {
+   "hub": 10.0,
+   "capex": 5210.661612007691,
+   "W": 375.69004334197035,
+   "u20": 139.67196760530416,
+   "u5": 348.0195239683592,
+   "u20w": 83.57332190491177,
+   "W13": 627.8722248590078,
+   "seen": 992.058918918919,
+   "bl": 1298.8486486486488,
+   "el": 733.7351351351351,
+   "heatW": 477.2333366531757,
+   "heat20": 109.1738207525514,
+   "heatcap": 5169.726476872555
+  },
+  {
+   "hub": 12.0,
+   "capex": 5427.45106917637,
+   "W": 399.6284301745331,
+   "u20": 134.39960551330856,
+   "u5": 339.549448973193,
+   "u20w": 82.50556695572956,
+   "W13": 650.9852043823834,
+   "seen": 992.058918918919,
+   "bl": 1298.8486486486488,
+   "el": 733.7351351351351,
+   "heatW": 516.855900689957,
+   "heat20": 103.19689198823004,
+   "heatcap": 5386.515934041235
+  }
+ ],
+ "best": {
+  "hub": 12.0,
+  "capex": 5427.45106917637,
+  "W": 399.6284301745331,
+  "u20": 134.39960551330856,
+  "u5": 339.549448973193,
+  "u20w": 82.50556695572956,
+  "W13": 650.9852043823834,
+  "seen": 992.058918918919,
+  "bl": 1298.8486486486488,
+  "el": 733.7351351351351,
+  "heatW": 516.855900689957,
+  "heat20": 103.19689198823004,
+  "heatcap": 5386.515934041235
+ },
+ "items": [
+  {
+   "group": "Blades",
+   "item": "Pine planks 2x6 in x 8 ft, laminated (0.74 m3 with waste)",
+   "qty": 57,
+   "unit": 300,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 924.3243243243244
+  },
+  {
+   "group": "Blades",
+   "item": "Marine epoxy, 3 gal",
+   "qty": 3,
+   "unit": 37,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 111.0
+  },
+  {
+   "group": "Blades",
+   "item": "Glass cloth, 6 kg, leading edge and skin",
+   "qty": 6,
+   "unit": 179.2,
+   "cur": "MXN",
+   "status": "seen",
+   "usd": 58.11891891891891
+  },
+  {
+   "group": "Blades",
+   "item": "Hub plates 680 mm x 12 mm, M16 bolts (24)",
+   "qty": 1,
+   "unit": 3800,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 205.40540540540542
+  },
+  {
+   "group": "Tower",
+   "item": "3 in Sch 40 pipe, 36 m",
+   "qty": 1,
+   "unit": 24314.754779762843,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 1314.31106917637
+  },
+  {
+   "group": "Tower",
+   "item": "1-1/2 in Sch 40 braces, 13 m",
+   "qty": 1,
+   "unit": 1950,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 105.4054054054054
+  },
+  {
+   "group": "Tower",
+   "item": "Head: 5 in Sch 40, 2.5 m; tail 2-1/2 in Sch 80, 4 m",
+   "qty": 1,
+   "unit": 5205.0,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 281.35135135135135
+  },
+  {
+   "group": "Tower",
+   "item": "Welding, hinged feet, apex, galvanizing or zinc paint",
+   "qty": 1,
+   "unit": 14000,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 756.7567567567568
+  },
+  {
+   "group": "Tower",
+   "item": "M20 stainless epoxy anchors (12)",
+   "qty": 12,
+   "unit": 260,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 168.64864864864865
+  },
+  {
+   "group": "Drive",
+   "item": "7,000 lb idler hub, rotor bearing",
+   "qty": 1,
+   "unit": 112.17,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 112.17
+  },
+  {
+   "group": "Drive",
+   "item": "7,000 lb idler hub, yaw bearing",
+   "qty": 1,
+   "unit": 112.17,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 112.17
+  },
+  {
+   "group": "Drive",
+   "item": "Two spindles",
+   "qty": 2,
+   "unit": 45,
+   "cur": "USD",
+   "status": "est",
+   "usd": 90.0
+  },
+  {
+   "group": "Drive",
+   "item": "530 chain, 60T and 12T sprockets",
+   "qty": 1,
+   "unit": 2600,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 140.54054054054055
+  },
+  {
+   "group": "Drive",
+   "item": "Disc brake, furl hinge, cable",
+   "qty": 1,
+   "unit": 2500,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 135.13513513513513
+  },
+  {
+   "group": "Drive",
+   "item": "Truck shock absorber as yaw damper",
+   "qty": 1,
+   "unit": 800,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 43.24324324324324
+  },
+  {
+   "group": "Electric",
+   "item": "48 V 1,200 W hub motor",
+   "qty": 1,
+   "unit": 239.99,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 239.99
+  },
+  {
+   "group": "Electric",
+   "item": "1 kW wind MPPT controller",
+   "qty": 1,
+   "unit": 178.46,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 178.46
+  },
+  {
+   "group": "Electric",
+   "item": "Rectifier",
+   "qty": 1,
+   "unit": 20.65,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 20.65
+  },
+  {
+   "group": "Electric",
+   "item": "Dump resistors",
+   "qty": 4,
+   "unit": 10.55,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 42.2
+  },
+  {
+   "group": "Electric",
+   "item": "Victron shunt",
+   "qty": 1,
+   "unit": 117.3,
+   "cur": "USD",
+   "status": "seen",
+   "usd": 117.3
+  },
+  {
+   "group": "Electric",
+   "item": "Cable, lugs, paint",
+   "qty": 1,
+   "unit": 2500,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 135.13513513513513
+  },
+  {
+   "group": "Lift",
+   "item": "Hand winch, cable, gin pole",
+   "qty": 1,
+   "unit": 2500,
+   "cur": "MXN",
+   "status": "est",
+   "usd": 135.13513513513513
+  }
+ ]
+}
