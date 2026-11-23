@@ -6,7 +6,7 @@ d = json.load(open("out/skyline.json")); b, o, fr = d["base_kite only"], d["opti
 INK, MUTE, ACC, GR, BG = "#1b2a33", "#6b7a83", "#e4572e", "#b9c4ca", "#f7f4ee"
 f = plt.figure(figsize=(7.2, 9), facecolor=BG)
 f.text(.06, .95, "Kite-Lifted Line", fontsize=27, weight="bold", color=INK)
-f.text(.06, .915, f"Failed: ${b['usd']:,.0f}/MWh realistic, ${o['usd']:.0f} best case.", fontsize=14, color=MUTE)
+f.text(.06, .915, f"Failed: \${b['usd']:,.0f}/MWh realistic, \${o['usd']:.0f} best case.", fontsize=14, color=MUTE)
 a = f.add_axes([.04, .49, .92, .40]); a.set_xlim(-10, 110); a.set_ylim(-4, 50); a.axis("off")
 a.fill_between([-10, 110], -4, 0, color="#cfe3e8")
 for x in (8, 92):
@@ -20,7 +20,7 @@ c = f.add_axes([.42, .12, .48, .30]); N = ["High line, free supports", "Dandelio
 c.barh(N[::-1], V[::-1], color=[ACC, ACC, GR, INK, GR], height=.58); c.set_facecolor(BG); c.set_xlim(0, 1300); c.set_xticks([])
 for s in c.spines.values(): s.set_visible(False)
 c.tick_params(left=False, labelsize=12, colors=INK)
-for i, v in enumerate(V[::-1]): c.text(v + 18, i, f"${v:,}", va="center", fontsize=12.5, weight="bold", color=INK)
+for i, v in enumerate(V[::-1]): c.text(v + 18, i, f"\${v:,}", va="center", fontsize=12.5, weight="bold", color=INK)
 f.text(.06, .435, "Lifetime cost per MWh, 20 years", fontsize=13, weight="bold", color=INK)
 f.text(.06, .07, "Height is valuable. Lifting with kites is not.", fontsize=14, weight="bold", color=INK)
 f.text(.06, .037, "Simulation only. Launch, landing and storms not charged.", fontsize=12, color=MUTE)
