@@ -1,0 +1,64 @@
+{
+ "items": [
+  [
+   "Generators, 3, with shared controller",
+   1434
+  ],
+  [
+   "Extra pad concrete, 16.7 t",
+   1840.7954245575745
+  ],
+  [
+   "Used steel tripod and head",
+   1301.2196329548503
+  ],
+  [
+   "Hub, yaw, drivetrain, hardware",
+   1059.0
+  ],
+  [
+   "Laminated pine blade spars, 3",
+   744.0000000000001
+  ],
+  [
+   "Blade governors",
+   225.0
+  ],
+  [
+   "Blade hinges and fittings",
+   177
+  ],
+  [
+   "Used sailcloth, 43 m\u00b2",
+   74.51999999999997
+  ]
+ ],
+ "total": 6855.535057512425,
+ "design": {
+  "file": "out/dandelion_fin_16_12_3.json",
+  "D": 16,
+  "hub": 12.0,
+  "ng": 3,
+  "spar": "laminated pine 235x89 mm",
+  "leg": "4 in Sch 40",
+  "braces": 1,
+  "head": "5 in Sch 40",
+  "overhang": 1.35,
+  "W": 927.6076329993582,
+  "W_weak": 380.2157693497821,
+  "build": 6855.535057512425,
+  "life": 10873.936728613971,
+  "usd": 66.86379557781784,
+  "usd_weak": 163.12676156320526,
+  "score": 104.43789752017028,
+  "pad_t": 26.734503859614314,
+  "steel": 1301.2196329548503,
+  "fabric_m2": 43.19999999999999,
+  "minSF": 1.3371112231839803,
+  "foot_pull": 11968.63649716031,
+  "tower_hz": 7.9437718935932375,
+  "p1": 0.5885317293020026,
+  "p3": 1.765595187906008,
+  "concrete": 1840.7954245575745
+ }
+}
